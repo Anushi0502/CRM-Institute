@@ -4,7 +4,7 @@ import {
   requireAdminUser,
   sendJson,
   supabaseAdmin,
-} from '../../../_lib/admin.js'
+} from '../../_lib/admin.js'
 
 const validTuitionStatuses = new Set(['Current', 'Review'])
 

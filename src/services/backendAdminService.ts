@@ -135,7 +135,7 @@ export async function createBackendUser(input: CreateBackendUserInput) {
 }
 
 export async function updateBackendUserSignIn(userId: string, allowSignIn: boolean) {
-  return backendRequest<{ user: BackendUser }>(`/api/backend/users/${userId}/signin`, {
+  return backendRequest<{ user: BackendUser }>(`/api/backend/users/${userId}`, {
     method: 'PATCH',
     body: JSON.stringify({ allowSignIn }),
   })

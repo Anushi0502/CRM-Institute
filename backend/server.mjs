@@ -170,7 +170,7 @@ app.post('/api/backend/users', async (req, res) => {
   })
 })
 
-app.patch('/api/backend/users/:userId/signin', async (req, res) => {
+app.patch('/api/backend/users/:userId', async (req, res) => {
   const userId = String(req.params.userId ?? '').trim()
   const allowSignIn = req.body?.allowSignIn === undefined ? true : Boolean(req.body?.allowSignIn)
 

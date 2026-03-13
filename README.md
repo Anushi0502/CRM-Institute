@@ -1,6 +1,17 @@
 # BrightMinds Institute CRM
 
-A React + Vite + TypeScript CRM for an education institute, styled with a warm family-first theme and wired for Supabase data plus Google sign-in.
+BrightMinds Institute CRM is a comprehensive web-based Customer Relationship Management system designed specifically for educational institutes. Built with modern React 19, Vite, TypeScript, Tailwind CSS, and powered by Supabase for real-time database and authentication (including Google sign-in), it features a warm, family-first theme to foster engaging user experiences.
+
+Key capabilities include:
+- Dashboard with stats, activity feed, and quick actions
+- Student management (view, add, edit, delete)
+- Lead pipeline board and table
+- Program and section cards
+- Admissions tracking
+- Backend admin panel for user and student management
+- Demo data fallback and easy Vercel deployment
+
+Whether managing student enrollments, tracking admissions, or monitoring engagement, BrightMinds CRM streamlines institute operations with intuitive UI and secure backend API support.
 
 ## Stack
 

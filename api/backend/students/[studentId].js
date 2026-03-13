@@ -3,7 +3,7 @@ import {
   requireAdminUser,
   sendJson,
   supabaseAdmin,
-} from '../../../_lib/admin.js'
+} from '../../_lib/admin.js'
 
 export default async function handler(req, res) {
   if (!assertMethod(req, res, ['DELETE'])) {
