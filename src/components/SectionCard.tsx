@@ -1,0 +1,48 @@
+import type { ReactNode } from 'react'
+
+interface SectionCardProps {
+  eyebrow?: string
+  title: string
+  description?: string
+  actionLabel?: string
+  children: ReactNode
+}
+
+export function SectionCard({
+  eyebrow,
+  title,
+  description,
+  actionLabel,
+  children,
+}: SectionCardProps) {
+  return (
+    <section className="group relative overflow-hidden rounded-[30px] border border-white/70 bg-white/80 p-6 shadow-soft backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:shadow-float">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-[linear-gradient(90deg,rgba(31,118,110,0.16),rgba(183,221,215,0),rgba(242,123,100,0.14))]" />
+      <div className="relative z-10">
+        <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
+          <div className="space-y-2">
+            {eyebrow ? (
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-teal/70">
+                {eyebrow}
+              </p>
+            ) : null}
+            <div>
+              <h2 className="font-display text-2xl text-ink">{title}</h2>
+              {description ? (
+                <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/65">
+                  {description}
+                </p>
+              ) : null}
+            </div>
+          </div>
+          {actionLabel ? (
+            <span className="rounded-full border border-ink/10 bg-ink/5 px-3 py-1 text-xs font-semibold text-ink/70">
+              {actionLabel}
+            </span>
+          ) : null}
+        </div>
+        {children}
+      </div>
+    </section>
+  )
+}
