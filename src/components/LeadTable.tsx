@@ -9,10 +9,10 @@ const priorityClasses: Record<Lead['priority'], string> = {
 
 export function LeadTable({ leads }: { leads: Lead[] }) {
   return (
-    <div className="overflow-hidden rounded-[24px] border border-ink/5 shadow-soft">
+    <div className="kid-panel overflow-hidden rounded-[24px] border border-ink/5 shadow-soft">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-ink/5 text-left">
-          <thead className="bg-cloud/80 text-xs uppercase tracking-[0.24em] text-ink/45">
+          <thead className="bg-cloud/80 text-xs uppercase tracking-[0.24em] text-ink/60">
             <tr>
               <th className="px-5 py-4 font-semibold">Family</th>
               <th className="px-5 py-4 font-semibold">Program</th>
@@ -27,23 +27,23 @@ export function LeadTable({ leads }: { leads: Lead[] }) {
               <tr key={lead.id} className="align-top transition hover:bg-cloud/45">
                 <td className="px-5 py-4">
                   <p className="font-semibold text-ink">{lead.familyName} family</p>
-                  <p className="text-sm text-ink/55">
+                  <p className="text-sm text-ink/70">
                     {lead.childName} • {lead.ageGroup} • {lead.source}
                   </p>
                 </td>
-                <td className="px-5 py-4 text-sm text-ink/70">{lead.programInterest}</td>
-                <td className="px-5 py-4 text-sm text-ink/70">{lead.stage}</td>
+                <td className="px-5 py-4 text-sm text-ink/80">{lead.programInterest}</td>
+                <td className="px-5 py-4 text-sm text-ink/80">{lead.stage}</td>
                 <td className="px-5 py-4">
                   <span
-                    className={`rounded-full border px-2.5 py-1 text-xs font-semibold ${priorityClasses[lead.priority]}`}
+                    className={`kid-ribbon rounded-full border px-2.5 py-1 text-xs font-semibold ${priorityClasses[lead.priority]}`}
                   >
                     {lead.priority}
                   </span>
                 </td>
-                <td className="px-5 py-4 text-sm text-ink/70">
+                <td className="px-5 py-4 text-sm text-ink/80">
                   {formatDateLabel(lead.followUpDate)}
                 </td>
-                <td className="px-5 py-4 text-sm leading-6 text-ink/70">
+                <td className="px-5 py-4 text-sm leading-6 text-ink/80">
                   {lead.nextStep}
                 </td>
               </tr>

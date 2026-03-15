@@ -135,7 +135,7 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
       <div className="kid-sprinkle kid-sprinkle--three" />
 
       <div className="relative mx-auto flex max-w-[1600px] gap-5 px-4 py-4 lg:px-6">
-        <aside className="hidden w-[320px] shrink-0 flex-col gap-6 rounded-[34px] border border-white/75 bg-[var(--crm-gradient-sidebar)] p-6 shadow-float backdrop-blur xl:flex">
+        <aside className="kid-panel hidden w-[320px] shrink-0 flex-col gap-6 rounded-[34px] border border-white/75 bg-[var(--crm-gradient-sidebar)] p-6 shadow-float backdrop-blur xl:flex">
           <BrandMark />
 
           <nav className="space-y-2">
@@ -147,10 +147,10 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
                   key={item.path}
                   to={item.path}
                   className={({ isActive }) =>
-                    `flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition ${
+                    `flex items-center gap-3 rounded-[18px] px-4 py-3 text-sm font-semibold transition ${
                       isActive
                         ? 'bg-[var(--crm-gradient-nav-active)] text-white shadow-soft'
-                        : 'text-ink/70 hover:bg-cloud/90'
+                        : 'text-ink/80 hover:bg-white/80 hover:shadow-soft'
                     }`
                   }
                 >
@@ -161,19 +161,19 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
             })}
           </nav>
 
-          <div className="rounded-[28px] border border-sun/40 bg-[var(--crm-gradient-warm-card)] p-5">
+          <div className="kid-panel rounded-[28px] border border-sun/40 bg-[var(--crm-gradient-warm-card)] p-5">
             <div className="flex items-center gap-3 text-sm font-semibold text-ink">
               <Sparkles className="h-4 w-4 text-amber" />
               Kids-first visual direction
             </div>
-            <p className="mt-3 text-sm leading-6 text-ink/65">
+            <p className="mt-3 text-sm leading-6 text-ink/80">
               Colors, rounded cards, and sticker-style chips are tuned for
               families and staff supporting little learners ages 6 months to 7 years.
             </p>
           </div>
 
-          <div className="rounded-[28px] border border-ink/5 bg-white/90 p-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-ink/45">
+          <div className="kid-panel rounded-[28px] border border-ink/5 bg-white/90 p-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-ink/60">
               Learning stages
             </p>
             <div className="mt-3 space-y-2">
@@ -188,8 +188,8 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
             </div>
           </div>
 
-          <div className="rounded-[28px] border border-ink/5 bg-white/90 p-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-ink/45">
+          <div className="kid-panel rounded-[28px] border border-ink/5 bg-white/90 p-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-ink/60">
               Sync status
             </p>
             <div className="mt-3 flex items-center gap-3">
@@ -198,18 +198,18 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
               >
                 {statusLabels[dashboardState.data.source]}
               </span>
-              <span className="text-sm text-ink/55">
+              <span className="text-sm text-ink/70">
                 {dashboardState.isLoading
                   ? 'Syncing now...'
                   : formatSyncTimestamp(dashboardState.data.lastSyncedAt)}
               </span>
             </div>
-            <p className="mt-3 text-sm leading-6 text-ink/65">{dashboardState.data.message}</p>
+            <p className="mt-3 text-sm leading-6 text-ink/80">{dashboardState.data.message}</p>
           </div>
         </aside>
 
         <main className="min-w-0 flex-1 space-y-5">
-          <header className="relative overflow-hidden rounded-[34px] border border-white/70 bg-white/88 p-5 shadow-soft backdrop-blur md:p-6">
+          <header className="kid-panel relative overflow-hidden rounded-[34px] border border-white/75 bg-white/88 p-5 shadow-soft backdrop-blur md:p-6">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[var(--crm-gradient-header-top)]" />
             <div className="pointer-events-none absolute right-6 top-8 h-12 w-12 rounded-full bg-sun/35 blur-md" />
 
@@ -228,7 +228,7 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
             <div className="relative z-10 flex flex-wrap items-start justify-between gap-4">
               <div className="space-y-3">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center gap-2 rounded-full bg-cloud px-3 py-1 text-xs font-semibold uppercase tracking-[0.26em] text-ink/55">
+                  <span className="kid-ribbon bg-cloud text-ink/80">
                     <CalendarClock className="h-3.5 w-3.5 text-coral" />
                     Edina Campus CRM
                   </span>
@@ -241,7 +241,7 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
                   <h1 className="font-display text-4xl leading-tight text-ink md:text-5xl">
                     {pageMeta.title}
                   </h1>
-                  <p className="mt-3 max-w-3xl text-sm leading-7 text-ink/65 md:text-base">
+                  <p className="mt-3 max-w-3xl text-sm leading-7 text-ink/80 md:text-base">
                     {pageMeta.description}
                   </p>
                 </div>
@@ -273,14 +273,14 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
                       onClick={() => {
                         void handleSignOut()
                       }}
-                      className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 font-semibold text-ink transition hover:bg-ink hover:text-white"
+                      className="kid-ghost-button inline-flex items-center gap-2 rounded-full px-3 py-1 font-semibold text-ink transition hover:bg-ink hover:text-white"
                     >
                       <LogOut className="h-4 w-4" />
                       Sign out
                     </button>
                   </div>
                 ) : (
-                  <div className="rounded-full bg-cloud px-4 py-2 text-sm font-semibold text-ink/70">
+                  <div className="rounded-full bg-cloud px-4 py-2 text-sm font-semibold text-ink/80">
                     {authState.isConfigured ? 'User session not found' : 'Demo mode'}
                   </div>
                 )}
@@ -298,8 +298,8 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
                     to={item.path}
                     className={`inline-flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition ${
                       isActive
-                        ? 'bg-ink text-white'
-                        : 'bg-cloud text-ink/70 hover:bg-white'
+                        ? 'bg-[var(--crm-gradient-nav-active)] text-white shadow-soft'
+                        : 'kid-ghost-button text-ink/80 hover:bg-white'
                     }`}
                   >
                     <Icon className="h-4 w-4" />

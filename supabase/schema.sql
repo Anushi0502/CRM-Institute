@@ -39,6 +39,18 @@ create table if not exists public.crm_students (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.crm_backend_users (
+  id uuid primary key,
+  email text,
+  created_at timestamptz not null default now(),
+  last_sign_in_at timestamptz,
+  email_confirmed_at timestamptz,
+  is_anonymous boolean,
+  banned_until timestamptz,
+  allow_sign_in boolean not null default true,
+  updated_at timestamptz not null default now()
+);
+
 create table if not exists public.crm_programs (
   id text primary key,
   name text not null,
@@ -76,6 +88,7 @@ create table if not exists public.crm_activity (
 alter table public.crm_overview_metrics enable row level security;
 alter table public.crm_leads enable row level security;
 alter table public.crm_students enable row level security;
+alter table public.crm_backend_users enable row level security;
 alter table public.crm_programs enable row level security;
 alter table public.crm_tasks enable row level security;
 alter table public.crm_activity enable row level security;

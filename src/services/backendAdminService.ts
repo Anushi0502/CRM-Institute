@@ -104,6 +104,23 @@ async function getAccessToken() {
   return token
 }
 
+function isLocalRuntime() {
+  if (typeof window === 'undefined') {
+    return false
+  }
+
+  const host = window.location.hostname
+  return host === 'localhost' || host === '127.0.0.1' || host === '0.0.0.0'
+}
+
+function unreachableBackendMessage(target: string) {
+  if (isLocalRuntime()) {
+    return `Cannot reach backend API (${target}). Start it with "npm run dev" (or "npm run backend:dev").`
+  }
+
+  return `Cannot reach backend API (${target}). Check deployment API routes and env vars (SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, BACKEND_ADMIN_EMAILS).`
+}
+
 function toFriendlyBackendError(raw: string, status: number) {
   const cleaned = raw
     .replace(/<[^>]+>/g, ' ')
@@ -111,19 +128,19 @@ function toFriendlyBackendError(raw: string, status: number) {
     .trim()
   const target = backendApiBase || 'same-origin /api proxy'
   const lower = cleaned.toLowerCase()
-
-  if (
-    status >= 500 ||
+  const looksLikeNetworkProxyFailure =
     lower.includes('proxy error') ||
     lower.includes('econnrefused') ||
     lower.includes('connection refused') ||
     lower.includes('connect error')
-  ) {
-    return `Cannot reach backend API (${target}). Start it with "npm run backend:dev" or "npm run dev:full".`
+
+  // Prefer explicit backend JSON errors (even with 5xx) over generic reachability text.
+  if (cleaned && !looksLikeNetworkProxyFailure) {
+    return cleaned
   }
 
-  if (cleaned) {
-    return cleaned
+  if (status >= 500 || looksLikeNetworkProxyFailure) {
+    return unreachableBackendMessage(target)
   }
 
   return `Backend request failed (${status}).`
@@ -158,9 +175,7 @@ async function backendRequest<T>(path: string, init?: RequestInit) {
 
     if (lowerMessage.includes('failed to fetch') || lowerMessage.includes('load failed')) {
       const target = backendApiBase || 'same-origin /api proxy'
-      throw new Error(
-        `Cannot reach backend API (${target}). Start it with "npm run backend:dev" or "npm run dev:full".`,
-      )
+      throw new Error(unreachableBackendMessage(target))
     }
 
     throw error

@@ -16,19 +16,19 @@ const glowClasses: Record<OverviewMetric['tone'], string> = {
 
 export function StatCard({ metric }: { metric: OverviewMetric }) {
   return (
-    <article className="group relative overflow-hidden rounded-[24px] border border-ink/5 bg-white/85 p-5 shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-float">
+    <article className="kid-panel group relative overflow-hidden rounded-[24px] border border-ink/5 bg-white/85 p-5 shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-float">
       <div className={`pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-r ${glowClasses[metric.tone]}`} />
       <div className="relative z-10">
         <div className="flex items-center justify-between gap-3">
-          <p className="text-sm font-semibold text-ink/70">{metric.label}</p>
+          <p className="text-sm font-semibold text-ink/80">{metric.label}</p>
           <span
-            className={`inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold ${toneClasses[metric.tone]}`}
+            className={`kid-ribbon inline-flex rounded-full border px-2.5 py-1 text-xs font-semibold ${toneClasses[metric.tone]}`}
           >
             {metric.change}
           </span>
         </div>
         <p className="mt-5 font-display text-4xl text-ink">{metric.value}</p>
-        <p className="mt-3 text-sm leading-6 text-ink/65">{metric.detail}</p>
+        <p className="mt-3 text-sm leading-6 text-ink/80">{metric.detail}</p>
       </div>
     </article>
   )

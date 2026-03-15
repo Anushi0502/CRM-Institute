@@ -79,7 +79,7 @@ export function ProgramsPage({ state }: PageStateProps) {
           title="When to open seats"
           description="Keep waitlist communication proactive."
         >
-          <div className="space-y-3 text-sm leading-6 text-ink/70">
+          <div className="space-y-3 text-sm leading-6 text-ink/80">
             <p className="inline-flex items-center gap-2 font-semibold text-ink">
               <Building2 className="h-4 w-4 text-teal" />
               Toddler and pre-k are the tightest programs right now.
@@ -94,7 +94,7 @@ export function ProgramsPage({ state }: PageStateProps) {
           title="Educator coverage"
           description="Tie staffing decisions to demand data and tour timing."
         >
-          <div className="space-y-3 text-sm leading-6 text-ink/70">
+          <div className="space-y-3 text-sm leading-6 text-ink/80">
             <p className="inline-flex items-center gap-2 font-semibold text-ink">
               <Users className="h-4 w-4 text-coral" />
               Pair educator visibility with waitlist pressure.
@@ -109,7 +109,7 @@ export function ProgramsPage({ state }: PageStateProps) {
           title="Program positioning"
           description="Keep CRM language aligned to the institute’s developmental tone."
         >
-          <div className="space-y-3 text-sm leading-6 text-ink/70">
+          <div className="space-y-3 text-sm leading-6 text-ink/80">
             <p className="inline-flex items-center gap-2 font-semibold text-ink">
               <BookOpen className="h-4 w-4 text-amber" />
               Phrase programs around growth, confidence, and trust.

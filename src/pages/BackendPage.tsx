@@ -341,13 +341,13 @@ export function BackendPage() {
           </div>
         </div>
 
-        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.12em] text-ink/45">
+        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.12em] text-ink/60">
           API endpoint: {backendEndpointLabel}
         </p>
 
         <form onSubmit={handleCreateUser} className="grid gap-3 md:grid-cols-3">
           <label className="space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">
+            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/60">
               Email
             </span>
             <input
@@ -357,13 +357,13 @@ export function BackendPage() {
                 setEmail(event.target.value)
               }}
               placeholder="new.user@institute.com"
-              className="w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
+              className="kid-ghost-button w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
               autoComplete="email"
             />
           </label>
 
           <label className="space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">
+            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/60">
               Temporary password
             </span>
             <input
@@ -373,7 +373,7 @@ export function BackendPage() {
                 setPassword(event.target.value)
               }}
               placeholder="Minimum 8 characters"
-              className="w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
+              className="kid-ghost-button w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
               autoComplete="new-password"
             />
           </label>
@@ -382,7 +382,7 @@ export function BackendPage() {
             <button
               type="submit"
               disabled={isSavingUser}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-ink px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-ink/90 disabled:cursor-not-allowed disabled:bg-ink/30"
+              className="kid-bubble-button inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-2.5 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-50"
             >
               <UserPlus className="h-4 w-4" />
               Create user
@@ -415,7 +415,7 @@ export function BackendPage() {
         actionLabel={`${students.length} student records`}
       >
         <div className="mb-4 flex flex-wrap items-center gap-2">
-          <span className="inline-flex items-center gap-1 rounded-full border border-ink/10 bg-cloud px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-ink/65">
+          <span className="inline-flex items-center gap-1 rounded-full border border-ink/10 bg-cloud px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-ink/80">
             <Sparkles className="h-3.5 w-3.5 text-teal" />
             Quick-fill templates
           </span>
@@ -426,7 +426,7 @@ export function BackendPage() {
               onClick={() => {
                 handleApplyStudentTemplate(template.values)
               }}
-              className="rounded-full border border-ink/15 bg-white px-3 py-1.5 text-xs font-semibold text-ink/75 transition hover:border-teal/40 hover:bg-teal/10"
+              className="kid-ghost-button rounded-full border border-ink/15 bg-white px-3 py-1.5 text-xs font-semibold text-ink/75 transition hover:border-teal/40 hover:bg-teal/10"
             >
               {template.label}
             </button>
@@ -446,7 +446,7 @@ export function BackendPage() {
 
         <form onSubmit={handleCreateStudent} className="grid gap-3 md:grid-cols-2">
           <label className="space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">
+            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/60">
               Student name
             </span>
             <input
@@ -456,12 +456,12 @@ export function BackendPage() {
                 updateStudentField('name', event.target.value)
               }}
               placeholder="Harper Walker"
-              className="w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
+              className="kid-ghost-button w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
             />
           </label>
 
           <label className="space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">
+            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/60">
               Guardian
             </span>
             <input
@@ -471,12 +471,12 @@ export function BackendPage() {
                 updateStudentField('guardian', event.target.value)
               }}
               placeholder="Sofia Walker"
-              className="w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
+              className="kid-ghost-button w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
             />
           </label>
 
           <label className="space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">
+            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/60">
               Program
             </span>
             <input
@@ -486,12 +486,12 @@ export function BackendPage() {
                 updateStudentField('program', event.target.value)
               }}
               placeholder="Preschool Discovery"
-              className="w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
+              className="kid-ghost-button w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
             />
           </label>
 
           <label className="space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">
+            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/60">
               Attendance
             </span>
             <input
@@ -501,12 +501,12 @@ export function BackendPage() {
                 updateStudentField('attendance', event.target.value)
               }}
               placeholder="98%"
-              className="w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
+              className="kid-ghost-button w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
             />
           </label>
 
           <label className="space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">
+            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/60">
               Pickup window
             </span>
             <input
@@ -516,12 +516,12 @@ export function BackendPage() {
                 updateStudentField('pickupWindow', event.target.value)
               }}
               placeholder="5:15 PM"
-              className="w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
+              className="kid-ghost-button w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
             />
           </label>
 
           <label className="space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">
+            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/60">
               Tuition status
             </span>
             <select
@@ -532,7 +532,7 @@ export function BackendPage() {
                   event.target.value as BackendStudentTuitionStatus,
                 )
               }}
-              className="w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
+              className="kid-ghost-button w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
             >
               <option value="Current">Current</option>
               <option value="Review">Review</option>
@@ -540,7 +540,7 @@ export function BackendPage() {
           </label>
 
           <label className="space-y-2 md:col-span-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">
+            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/60">
               Support focus
             </span>
             <input
@@ -550,12 +550,12 @@ export function BackendPage() {
                 updateStudentField('supportFocus', event.target.value)
               }}
               placeholder="Social confidence in group play"
-              className="w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
+              className="kid-ghost-button w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
             />
           </label>
 
           <label className="space-y-2 md:col-span-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">
+            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/60">
               Milestone
             </span>
             <input
@@ -565,7 +565,7 @@ export function BackendPage() {
                 updateStudentField('milestone', event.target.value)
               }}
               placeholder="Leading circle-time storytelling."
-              className="w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
+              className="kid-ghost-button w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
             />
           </label>
 
@@ -573,7 +573,7 @@ export function BackendPage() {
             <button
               type="submit"
               disabled={isSavingStudent}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-ink px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-ink/90 disabled:cursor-not-allowed disabled:bg-ink/30"
+              className="kid-bubble-button inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-2.5 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-50"
             >
               <GraduationCap className="h-4 w-4" />
               Add student
@@ -628,7 +628,7 @@ export function BackendPage() {
               />
               <div className="flex items-center justify-between text-sm">
                 <span className="font-semibold text-ink">{swatch.name}</span>
-                <span className="font-mono text-xs text-ink/55">{swatch.hex}</span>
+                <span className="font-mono text-xs text-ink/70">{swatch.hex}</span>
               </div>
             </div>
           ))}
@@ -644,12 +644,12 @@ export function BackendPage() {
         description="These users are loaded with service-role access from your backend API."
       >
         {isLoadingUsers ? (
-          <div className="flex items-center gap-2 rounded-2xl bg-cloud px-4 py-3 text-sm text-ink/65">
+          <div className="flex items-center gap-2 rounded-2xl bg-cloud px-4 py-3 text-sm text-ink/80">
             <Server className="h-4 w-4" />
             Loading users...
           </div>
         ) : users.length === 0 ? (
-          <div className="flex items-center gap-2 rounded-2xl bg-cloud px-4 py-3 text-sm text-ink/65">
+          <div className="flex items-center gap-2 rounded-2xl bg-cloud px-4 py-3 text-sm text-ink/80">
             <ShieldUser className="h-4 w-4" />
             No users found in auth yet.
           </div>
@@ -657,7 +657,7 @@ export function BackendPage() {
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-ink/10 text-left text-sm">
               <thead>
-                <tr className="text-xs uppercase tracking-[0.12em] text-ink/45">
+                <tr className="text-xs uppercase tracking-[0.12em] text-ink/60">
                   <th className="px-3 py-2">Email</th>
                   <th className="px-3 py-2">Created</th>
                   <th className="px-3 py-2">Last sign in</th>
@@ -673,13 +673,13 @@ export function BackendPage() {
                   return (
                     <tr key={user.id}>
                       <td className="px-3 py-2.5 text-ink/75">{user.email ?? 'No email'}</td>
-                      <td className="px-3 py-2.5 text-ink/65">
+                      <td className="px-3 py-2.5 text-ink/80">
                         {new Date(user.createdAt).toLocaleString()}
                       </td>
-                      <td className="px-3 py-2.5 text-ink/65">
+                      <td className="px-3 py-2.5 text-ink/80">
                         {user.lastSignInAt ? new Date(user.lastSignInAt).toLocaleString() : 'Never'}
                       </td>
-                      <td className="px-3 py-2.5 text-ink/65">
+                      <td className="px-3 py-2.5 text-ink/80">
                         {isBlocked ? (
                           <span className="rounded-full bg-coral/10 px-2 py-1 text-xs font-semibold text-coral">
                             Blocked
@@ -697,7 +697,7 @@ export function BackendPage() {
                               void handleToggleUserSignIn(user)
                             }}
                             disabled={isToggling}
-                            className="inline-flex items-center gap-1 rounded-xl border border-ink/10 bg-white px-3 py-1.5 text-xs font-semibold text-ink transition hover:bg-cloud disabled:cursor-not-allowed disabled:opacity-50"
+                            className="kid-ghost-button inline-flex items-center gap-1 rounded-xl border border-ink/10 bg-white px-3 py-1.5 text-xs font-semibold text-ink transition hover:bg-cloud disabled:cursor-not-allowed disabled:opacity-50"
                           >
                             {isBlocked ? (
                               <ToggleRight className="h-3.5 w-3.5 text-teal" />
@@ -731,12 +731,12 @@ export function BackendPage() {
         description="Students loaded directly from crm_students using service-role access."
       >
         {isLoadingStudents ? (
-          <div className="flex items-center gap-2 rounded-2xl bg-cloud px-4 py-3 text-sm text-ink/65">
+          <div className="flex items-center gap-2 rounded-2xl bg-cloud px-4 py-3 text-sm text-ink/80">
             <Server className="h-4 w-4" />
             Loading students...
           </div>
         ) : students.length === 0 ? (
-          <div className="flex items-center gap-2 rounded-2xl bg-cloud px-4 py-3 text-sm text-ink/65">
+          <div className="flex items-center gap-2 rounded-2xl bg-cloud px-4 py-3 text-sm text-ink/80">
             <ShieldUser className="h-4 w-4" />
             No students found yet.
           </div>
@@ -744,7 +744,7 @@ export function BackendPage() {
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-ink/10 text-left text-sm">
               <thead>
-                <tr className="text-xs uppercase tracking-[0.12em] text-ink/45">
+                <tr className="text-xs uppercase tracking-[0.12em] text-ink/60">
                   <th className="px-3 py-2">Student</th>
                   <th className="px-3 py-2">Guardian</th>
                   <th className="px-3 py-2">Program</th>
@@ -757,10 +757,10 @@ export function BackendPage() {
                 {students.map((student) => (
                   <tr key={student.id}>
                     <td className="px-3 py-2.5 text-ink/75">{student.name}</td>
-                    <td className="px-3 py-2.5 text-ink/65">{student.guardian}</td>
-                    <td className="px-3 py-2.5 text-ink/65">{student.program}</td>
-                    <td className="px-3 py-2.5 text-ink/65">{student.attendance}</td>
-                    <td className="px-3 py-2.5 text-ink/65">{student.tuitionStatus}</td>
+                    <td className="px-3 py-2.5 text-ink/80">{student.guardian}</td>
+                    <td className="px-3 py-2.5 text-ink/80">{student.program}</td>
+                    <td className="px-3 py-2.5 text-ink/80">{student.attendance}</td>
+                    <td className="px-3 py-2.5 text-ink/80">{student.tuitionStatus}</td>
                     <td className="px-3 py-2.5 text-right">
                       <button
                         onClick={() => {

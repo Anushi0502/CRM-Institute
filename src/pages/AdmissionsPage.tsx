@@ -49,12 +49,12 @@ export function AdmissionsPage({ state }: PageStateProps) {
         <div className="grid gap-4 lg:grid-cols-[1.25fr,0.75fr]">
           <div className="space-y-4">
             <label className="flex items-center gap-3 rounded-[22px] border border-ink/10 bg-cloud/80 px-4 py-3">
-              <Search className="h-4 w-4 text-ink/45" />
+              <Search className="h-4 w-4 text-ink/60" />
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Search family, child, program, or source"
-                className="w-full border-0 bg-transparent text-sm text-ink outline-none placeholder:text-ink/45"
+                className="w-full border-0 bg-transparent text-sm text-ink outline-none placeholder:text-ink/60"
               />
             </label>
 
@@ -86,7 +86,7 @@ export function AdmissionsPage({ state }: PageStateProps) {
               <BarChart3 className="h-3.5 w-3.5" />
               Focus guidance
             </div>
-            <p className="mt-3 text-sm leading-6 text-ink/70">
+            <p className="mt-3 text-sm leading-6 text-ink/80">
               Keep high-priority families on a 48-hour follow-up rhythm and batch calls by stage to avoid context switching.
             </p>
             <p className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-ink/75">

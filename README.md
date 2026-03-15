@@ -26,10 +26,17 @@ Whether managing student enrollments, tracking admissions, or monitoring engagem
 ```bash
 npm install
 npm run dev
-npm run backend:dev
 ```
 
-Run both together (recommended):
+`npm run dev` now starts both frontend and backend together.
+
+Frontend only (optional):
+
+```bash
+npm run dev:frontend
+```
+
+Legacy full-stack alias (still available):
 
 ```bash
 npm run dev:full
@@ -66,7 +73,7 @@ Required backend variables:
 - `SUPABASE_URL`
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `BACKEND_PORT`
-- `BACKEND_ADMIN_EMAILS` (comma-separated allowlist for admin users)
+- `BACKEND_ADMIN_EMAILS` (comma-separated allowlist for admin users; supports exact emails plus `@domain.com`, `*@domain.com`, or `*`)
 
 Run backend API:
 
@@ -75,6 +82,8 @@ npm run backend:dev
 ```
 
 The frontend `/backend` path uses the signed-in Supabase access token and calls this API to list/create/delete auth users, toggle user sign-in access, and create/delete student records securely.
+
+User list records are now persisted in `public.crm_backend_users`. Run the latest [`supabase/schema.sql`](./supabase/schema.sql) once in Supabase SQL Editor before using backend user management.
 
 ## Vercel hosting
 

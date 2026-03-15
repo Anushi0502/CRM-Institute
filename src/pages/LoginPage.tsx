@@ -147,7 +147,7 @@ export function LoginPage({ authState }: LoginPageProps) {
               />
               <div className="absolute inset-0 bg-[var(--crm-gradient-login-overlay)]" />
 
-              <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/12 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-mint/95 backdrop-blur">
+              <div className="absolute left-5 top-5 kid-ribbon border-white/30 bg-white/15 text-mint">
                 <Sparkles className="h-3.5 w-3.5" />
                 BrightMinds CRM
               </div>
@@ -164,7 +164,7 @@ export function LoginPage({ authState }: LoginPageProps) {
                 <h1 className="font-display text-3xl leading-tight text-white md:text-5xl">
                   A joyful CRM login for infant, toddler, and early-years care teams.
                 </h1>
-                <p className="text-sm leading-6 text-white/80 md:text-base">
+                <p className="text-sm leading-6 text-white/95 md:text-base">
                   Unified access to family communication, learning milestones, and admissions flow for children from 6 months to 7 years.
                 </p>
               </div>
@@ -194,11 +194,8 @@ export function LoginPage({ authState }: LoginPageProps) {
 
             <div className="mt-6 grid gap-3 sm:grid-cols-3">
               {trustStats.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="rounded-[22px] border border-white/15 bg-white/10 px-4 py-3 backdrop-blur"
-                >
-                  <p className="text-xs uppercase tracking-[0.2em] text-white/65">{stat.label}</p>
+                <div key={stat.label} className="kid-panel rounded-[22px] border border-white/20 bg-white/12 px-4 py-3 backdrop-blur">
+                  <p className="text-xs uppercase tracking-[0.2em] text-white/90">{stat.label}</p>
                   <p className="mt-2 font-display text-3xl text-white">{stat.value}</p>
                 </div>
               ))}
@@ -208,7 +205,7 @@ export function LoginPage({ authState }: LoginPageProps) {
               {ageBandBadges.map((band) => (
                 <article key={band.title} className={`rounded-[20px] border px-4 py-3 ${band.tone}`}>
                   <p className="font-kids text-sm leading-none">{band.title}</p>
-                  <p className="mt-2 text-xs uppercase tracking-[0.2em] text-ink/65">{band.detail}</p>
+                  <p className="mt-2 text-xs uppercase tracking-[0.2em] text-ink/80">{band.detail}</p>
                 </article>
               ))}
             </div>
@@ -218,15 +215,12 @@ export function LoginPage({ authState }: LoginPageProps) {
                 const Icon = item.icon
 
                 return (
-                  <article
-                    key={item.title}
-                    className="rounded-[22px] border border-white/15 bg-white/10 p-4 backdrop-blur"
-                  >
+                  <article key={item.title} className="kid-panel rounded-[22px] border border-white/20 bg-white/12 p-4 backdrop-blur">
                     <div className="inline-flex rounded-xl bg-white/15 p-2 text-mint">
                       <Icon className="h-4 w-4" />
                     </div>
                     <p className="mt-3 text-sm font-semibold text-white">{item.title}</p>
-                    <p className="mt-2 text-xs leading-5 text-white/72">{item.detail}</p>
+                    <p className="mt-2 text-xs leading-5 text-white/90">{item.detail}</p>
                   </article>
                 )
               })}
@@ -234,15 +228,15 @@ export function LoginPage({ authState }: LoginPageProps) {
           </div>
         </section>
 
-        <section className="relative rounded-[38px] border border-white/80 bg-white/92 p-6 shadow-soft backdrop-blur md:p-8">
+        <section className="kid-panel relative rounded-[38px] border border-white/85 bg-white/92 p-6 shadow-soft backdrop-blur md:p-8">
           <div className="space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-ink/45">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-ink/60">
               Secure sign in
             </p>
             <h2 className="font-display text-4xl leading-tight text-ink md:text-5xl">
               Welcome back, care team
             </h2>
-            <p className="text-sm leading-6 text-ink/65">
+            <p className="text-sm leading-6 text-ink/80">
               Continue into your kid-focused CRM workspace.
             </p>
             <div className="kid-sticker bg-sky/20 text-ink">
@@ -251,7 +245,7 @@ export function LoginPage({ authState }: LoginPageProps) {
             </div>
           </div>
 
-          <div className="mt-5 grid gap-2 rounded-[22px] border border-ink/10 bg-cloud/70 p-3 text-xs text-ink/65 sm:grid-cols-2">
+          <div className="mt-5 grid gap-2 rounded-[22px] border border-ink/10 bg-cloud/70 p-3 text-xs text-ink/80 sm:grid-cols-2">
             <div className="inline-flex items-center gap-2 font-semibold">
               <BarChart3 className="h-3.5 w-3.5 text-teal" />
               Growth dashboards
@@ -264,9 +258,9 @@ export function LoginPage({ authState }: LoginPageProps) {
 
           <form onSubmit={handlePasswordSignIn} className="mt-6 space-y-4">
             <label className="block space-y-2">
-              <span className="text-sm font-semibold text-ink/72">Email address</span>
-              <span className="flex items-center gap-2 rounded-2xl border border-ink/10 bg-white px-3 py-2.5 shadow-soft">
-                <Mail className="h-4 w-4 text-ink/45" />
+              <span className="text-sm font-semibold text-ink/70">Email address</span>
+              <span className="kid-ghost-button flex items-center gap-2 rounded-2xl border border-ink/10 bg-white px-3 py-2.5 shadow-soft">
+                <Mail className="h-4 w-4 text-ink/60" />
                 <input
                   type="email"
                   value={email}
@@ -274,16 +268,16 @@ export function LoginPage({ authState }: LoginPageProps) {
                     setEmail(event.target.value)
                   }}
                   placeholder="you@institute.com"
-                  className="w-full bg-transparent text-sm text-ink outline-none placeholder:text-ink/35"
+                  className="w-full bg-transparent text-sm text-ink outline-none placeholder:text-ink/55"
                   autoComplete="email"
                 />
               </span>
             </label>
 
             <label className="block space-y-2">
-              <span className="text-sm font-semibold text-ink/72">Password</span>
-              <span className="flex items-center gap-2 rounded-2xl border border-ink/10 bg-white px-3 py-2.5 shadow-soft">
-                <Lock className="h-4 w-4 text-ink/45" />
+              <span className="text-sm font-semibold text-ink/70">Password</span>
+              <span className="kid-ghost-button flex items-center gap-2 rounded-2xl border border-ink/10 bg-white px-3 py-2.5 shadow-soft">
+                <Lock className="h-4 w-4 text-ink/60" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   value={password}
@@ -291,7 +285,7 @@ export function LoginPage({ authState }: LoginPageProps) {
                     setPassword(event.target.value)
                   }}
                   placeholder="Enter password"
-                  className="w-full bg-transparent text-sm text-ink outline-none placeholder:text-ink/35"
+                  className="w-full bg-transparent text-sm text-ink outline-none placeholder:text-ink/55"
                   autoComplete="current-password"
                 />
                 <button
@@ -299,7 +293,7 @@ export function LoginPage({ authState }: LoginPageProps) {
                   onClick={() => {
                     setShowPassword((previous) => !previous)
                   }}
-                  className="rounded-lg p-1 text-ink/45 transition hover:bg-cloud hover:text-ink"
+                  className="rounded-lg p-1 text-ink/60 transition hover:bg-cloud hover:text-ink"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -307,7 +301,7 @@ export function LoginPage({ authState }: LoginPageProps) {
               </span>
             </label>
 
-            <label className="inline-flex items-center gap-2 text-sm text-ink/70">
+            <label className="inline-flex items-center gap-2 text-sm text-ink/80">
               <input
                 type="checkbox"
                 checked={rememberDevice}
@@ -322,7 +316,7 @@ export function LoginPage({ authState }: LoginPageProps) {
             <button
               type="submit"
               disabled={!authState.isConfigured || isSubmitting}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-ink px-4 py-3 text-sm font-semibold text-white transition hover:bg-ink/90 disabled:cursor-not-allowed disabled:bg-ink/30"
+              className="kid-bubble-button inline-flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:opacity-50"
             >
               <ArrowRight className="h-4 w-4" />
               {isSubmitting ? 'Signing in...' : 'Sign in with email'}
@@ -341,7 +335,7 @@ export function LoginPage({ authState }: LoginPageProps) {
               void handleGoogleSignIn()
             }}
             disabled={!authState.isConfigured || isSubmitting}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-ink/15 bg-white px-4 py-3 text-sm font-semibold text-ink transition hover:bg-cloud disabled:cursor-not-allowed disabled:opacity-60"
+            className="kid-ghost-button inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-ink/15 bg-white px-4 py-3 text-sm font-semibold text-ink transition hover:bg-cloud disabled:cursor-not-allowed disabled:opacity-60"
           >
             <Chrome className="h-4 w-4" />
             Continue with Google
@@ -352,7 +346,7 @@ export function LoginPage({ authState }: LoginPageProps) {
               <CheckCircle2 className="h-4 w-4 text-teal" />
               Secure auth pipeline ready
             </div>
-            <p className="mt-2 text-sm text-ink/65">
+            <p className="mt-2 text-sm text-ink/80">
               Supabase session handling is active for email/password and Google OAuth.
             </p>
           </div>

@@ -63,7 +63,7 @@ export function DashboardPage({ state }: PageStateProps) {
               />
             </div>
             <div className="rounded-[20px] border border-ink/10 bg-cloud/70 p-4">
-              <p className="text-xs uppercase tracking-[0.2em] text-ink/55">Visual anchors</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-ink/70">Visual anchors</p>
               <p className="mt-2 text-sm text-ink/75">
                 Rainbow gradients, soft clouds, and sticker badges keep the CRM aligned with
                 children aged 6 months to 7 years and their families.
@@ -84,7 +84,7 @@ export function DashboardPage({ state }: PageStateProps) {
               key={item.label}
               className={`rounded-[18px] border px-4 py-2.5 ${item.style}`}
             >
-              <p className="text-xs uppercase tracking-[0.16em] text-ink/65">{item.label}</p>
+              <p className="text-xs uppercase tracking-[0.16em] text-ink/80">{item.label}</p>
               <p className="mt-1 font-display text-2xl">{item.value}</p>
             </article>
           ))}
@@ -166,7 +166,7 @@ export function DashboardPage({ state }: PageStateProps) {
         actionLabel="Admissions shortlist"
       >
         <LeadTable leads={spotlightLeads} />
-        <div className="mt-5 flex flex-wrap items-center gap-3 text-sm text-ink/65">
+        <div className="mt-5 flex flex-wrap items-center gap-3 text-sm text-ink/80">
           <span className="inline-flex items-center gap-2 rounded-full border border-amber/30 bg-amber/20 px-4 py-2 font-semibold text-ink">
             <Star className="h-4 w-4 text-amber" />
             Follow-ups within 48 hours convert better for this pipeline.

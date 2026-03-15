@@ -4,13 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently -k -n frontend,backend -c auto \"vite\" \"node backend/server.mjs\"",
     "dev:full": "concurrently -k -n frontend,backend -c auto \"vite\" \"node backend/server.mjs\"",
     "backend:dev": "node backend/server.mjs",
     "backend:start": "node backend/server.mjs",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:frontend": "vite"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.99.1",

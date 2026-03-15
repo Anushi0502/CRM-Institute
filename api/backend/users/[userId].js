@@ -1,21 +1,13 @@
 import {
   assertMethod,
+  deleteBackendUserRecord,
+  formatBackendUserSyncError,
+  mapAuthUser,
   requireAdminUser,
   sendJson,
   supabaseAdmin,
+  upsertBackendUserRecord,
 } from '../../_lib/admin.js'
-
-function mapAuthUser(user) {
-  return {
-    id: user.id,
-    email: user.email,
-    createdAt: user.created_at,
-    lastSignInAt: user.last_sign_in_at,
-    emailConfirmedAt: user.email_confirmed_at,
-    isAnonymous: user.is_anonymous,
-    bannedUntil: user.banned_until,
-  }
-}
 
 export default async function handler(req, res) {
   if (!assertMethod(req, res, ['PATCH', 'DELETE'])) {
@@ -52,9 +44,18 @@ export default async function handler(req, res) {
       return
     }
 
-    sendJson(res, 200, {
-      user: mapAuthUser(data.user),
-    })
+    try {
+      const syncedUser = await upsertBackendUserRecord(data.user)
+      sendJson(res, 200, { user: syncedUser })
+    } catch (syncError) {
+      sendJson(res, 500, {
+        error: formatBackendUserSyncError(
+          'Signin toggle succeeded in Supabase Auth but failed to sync crm_backend_users.',
+          syncError,
+        ),
+        user: mapAuthUser(data.user),
+      })
+    }
     return
   }
 
@@ -67,6 +68,18 @@ export default async function handler(req, res) {
 
   if (error) {
     sendJson(res, 500, { error: error.message })
+    return
+  }
+
+  try {
+    await deleteBackendUserRecord(userId)
+  } catch (syncError) {
+    sendJson(res, 500, {
+      error: formatBackendUserSyncError(
+        'User deleted from Supabase Auth but failed to remove from crm_backend_users.',
+        syncError,
+      ),
+    })
     return
   }
 

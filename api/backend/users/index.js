@@ -1,8 +1,12 @@
 import {
   assertMethod,
+  formatBackendUserSyncError,
+  listBackendUsersPage,
+  mapAuthUser,
   requireAdminUser,
   sendJson,
   supabaseAdmin,
+  upsertBackendUserRecord,
 } from '../../_lib/admin.js'
 
 export default async function handler(req, res) {
@@ -20,29 +24,18 @@ export default async function handler(req, res) {
     const page = Math.max(Number(req.query.page ?? 1), 1)
     const perPage = Math.min(Math.max(Number(req.query.perPage ?? 100), 1), 1000)
 
-    const { data, error } = await supabaseAdmin.auth.admin.listUsers({
-      page,
-      perPage,
-    })
-
-    if (error) {
-      sendJson(res, 500, { error: error.message })
-      return
+    try {
+      const users = await listBackendUsersPage(page, perPage)
+      sendJson(res, 200, {
+        page,
+        perPage,
+        users,
+      })
+    } catch (error) {
+      sendJson(res, 500, {
+        error: error instanceof Error ? error.message : 'User list failed.',
+      })
     }
-
-    sendJson(res, 200, {
-      page,
-      perPage,
-      users: data.users.map((user) => ({
-        id: user.id,
-        email: user.email,
-        createdAt: user.created_at,
-        lastSignInAt: user.last_sign_in_at,
-        emailConfirmedAt: user.email_confirmed_at,
-        isAnonymous: user.is_anonymous,
-        bannedUntil: user.banned_until,
-      })),
-    })
     return
   }
 
@@ -92,13 +85,16 @@ export default async function handler(req, res) {
     createdUser = blockedData.user
   }
 
-  sendJson(res, 201, {
-    user: {
-      id: createdUser.id,
-      email: createdUser.email,
-      createdAt: createdUser.created_at,
-      emailConfirmedAt: createdUser.email_confirmed_at,
-      bannedUntil: createdUser.banned_until,
-    },
-  })
+  try {
+    const syncedUser = await upsertBackendUserRecord(createdUser)
+    sendJson(res, 201, { user: syncedUser })
+  } catch (syncError) {
+    sendJson(res, 500, {
+      error: formatBackendUserSyncError(
+        'User was created in Supabase Auth but failed to sync crm_backend_users.',
+        syncError,
+      ),
+      user: mapAuthUser(createdUser),
+    })
+  }
 }

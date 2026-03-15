@@ -64,7 +64,7 @@ export function EngagementPage({ state }: PageStateProps) {
                 Before enrollment
               </p>
               <p className="mt-3 font-display text-2xl text-ink">Inquiry cadence</p>
-              <p className="mt-3 text-sm leading-6 text-ink/70">
+              <p className="mt-3 text-sm leading-6 text-ink/80">
                 Day 0 acknowledgement. Day 1 tuition and tour options. Day 3 classroom story. Day 7 decision support.
               </p>
             </article>
@@ -74,7 +74,7 @@ export function EngagementPage({ state }: PageStateProps) {
                 After enrollment
               </p>
               <p className="mt-3 font-display text-2xl text-ink">Retention cadence</p>
-              <p className="mt-3 text-sm leading-6 text-ink/70">
+              <p className="mt-3 text-sm leading-6 text-ink/80">
                 Day 3 confidence check. Week 2 routine recap. Month 1 milestone note. Quarterly family conversation.
               </p>
             </article>

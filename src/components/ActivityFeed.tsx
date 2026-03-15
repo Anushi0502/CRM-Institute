@@ -20,17 +20,17 @@ export function ActivityFeed({ activities }: { activities: Activity[] }) {
       {activities.map((activity) => (
         <article
           key={activity.id}
-          className="group relative overflow-hidden rounded-[22px] border border-ink/5 bg-white/90 p-4 shadow-soft transition duration-300 hover:-translate-y-0.5 hover:shadow-float"
+          className="kid-panel group relative overflow-hidden rounded-[22px] border border-ink/5 bg-white/90 p-4 shadow-soft transition duration-300 hover:-translate-y-0.5 hover:shadow-float"
         >
           <div className={`pointer-events-none absolute inset-x-0 top-0 h-14 bg-gradient-to-r ${glowClasses[activity.tone]}`} />
           <div className="relative z-10 flex items-start justify-between gap-3">
             <div>
               <p className="font-semibold text-ink">{activity.title}</p>
-              <p className="mt-2 text-sm leading-6 text-ink/65">{activity.description}</p>
-              <p className="mt-3 text-xs uppercase tracking-[0.2em] text-ink/45">{activity.time}</p>
+              <p className="mt-2 text-sm leading-6 text-ink/80">{activity.description}</p>
+              <p className="mt-3 text-xs uppercase tracking-[0.2em] text-ink/60">{activity.time}</p>
             </div>
             <span
-              className={`rounded-full border px-2.5 py-1 text-xs font-semibold ${toneClasses[activity.tone]}`}
+              className={`kid-ribbon rounded-full border px-2.5 py-1 text-xs font-semibold ${toneClasses[activity.tone]}`}
             >
               {activity.tag}
             </span>

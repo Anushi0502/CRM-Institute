@@ -83,7 +83,7 @@ export function StudentsPage({ state }: PageStateProps) {
           title="Family care habits"
           description="Small rituals that prevent larger concerns."
         >
-          <div className="space-y-3 text-sm leading-6 text-ink/70">
+          <div className="space-y-3 text-sm leading-6 text-ink/80">
             <p className="inline-flex items-center gap-2 font-semibold text-ink">
               <HeartHandshake className="h-4 w-4 text-coral" />
               Share milestone wins before discussing concerns.
@@ -98,7 +98,7 @@ export function StudentsPage({ state }: PageStateProps) {
           title="Support visibility"
           description="Simple reminders for classroom-to-family handoffs."
         >
-          <div className="space-y-3 text-sm leading-6 text-ink/70">
+          <div className="space-y-3 text-sm leading-6 text-ink/80">
             <p className="inline-flex items-center gap-2 font-semibold text-ink">
               <ShieldCheck className="h-4 w-4 text-teal" />
               Confirm allergy, medication, and pickup changes every Monday.
@@ -113,7 +113,7 @@ export function StudentsPage({ state }: PageStateProps) {
           title="Tuition follow-through"
           description="Reduce friction by making the next step explicit."
         >
-          <div className="space-y-3 text-sm leading-6 text-ink/70">
+          <div className="space-y-3 text-sm leading-6 text-ink/80">
             <p className="inline-flex items-center gap-2 font-semibold text-ink">
               <Wallet className="h-4 w-4 text-amber" />
               Tuition reviews in queue: {tuitionReviews}

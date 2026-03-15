@@ -16,7 +16,8 @@ export function SectionCard({
   children,
 }: SectionCardProps) {
   return (
-    <section className="group relative overflow-hidden rounded-[32px] border border-white/85 bg-[var(--crm-gradient-section-card)] p-6 shadow-soft backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:shadow-float">
+    <section className="kid-panel group relative overflow-hidden rounded-[32px] border border-white/85 bg-[var(--crm-gradient-section-card)] p-6 shadow-soft backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:shadow-float">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-2 bg-white/70" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[var(--crm-gradient-section-top)]" />
       <div className="pointer-events-none absolute -right-6 top-4 h-16 w-16 rounded-full bg-sun/25 blur-md" />
       <div className="pointer-events-none absolute bottom-4 left-5 h-10 w-10 rounded-full bg-leaf/25 blur-sm" />
@@ -33,14 +34,14 @@ export function SectionCard({
             <div>
               <h2 className="font-display text-2xl text-ink">{title}</h2>
               {description ? (
-                <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/65">
+                <p className="mt-2 max-w-2xl text-sm leading-6 text-ink/80">
                   {description}
                 </p>
               ) : null}
             </div>
           </div>
           {actionLabel ? (
-            <span className="rounded-full border border-berry/20 bg-berry/10 px-3 py-1 text-xs font-semibold text-ink/75">
+            <span className="kid-ribbon">
               {actionLabel}
             </span>
           ) : null}

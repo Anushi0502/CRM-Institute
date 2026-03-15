@@ -19,26 +19,26 @@ export function TaskPanel({ tasks }: { tasks: Task[] }) {
       {tasks.map((task) => (
         <article
           key={task.id}
-          className="group relative overflow-hidden rounded-[22px] border border-ink/5 bg-white/92 p-4 shadow-soft transition duration-300 hover:-translate-y-0.5 hover:shadow-float"
+          className="kid-panel group relative overflow-hidden rounded-[22px] border border-ink/5 bg-white/92 p-4 shadow-soft transition duration-300 hover:-translate-y-0.5 hover:shadow-float"
         >
           <div className="pointer-events-none absolute inset-y-3 left-0 w-1 rounded-r-full bg-[var(--crm-gradient-task-rail)]" />
 
           <div className="ml-2 flex items-start justify-between gap-3">
             <div>
               <p className="font-semibold text-ink">{task.title}</p>
-              <p className="mt-2 text-sm text-ink/55">
+              <p className="mt-2 text-sm text-ink/70">
                 {task.owner} • {task.category}
               </p>
             </div>
             <span
-              className={`rounded-full border px-2.5 py-1 text-xs font-semibold ${priorityClasses[task.priority]}`}
+              className={`kid-ribbon rounded-full border px-2.5 py-1 text-xs font-semibold ${priorityClasses[task.priority]}`}
             >
               {task.priority}
             </span>
           </div>
 
-          <div className="ml-2 mt-4 flex items-center justify-between gap-3 text-sm text-ink/65">
-            <span className={`rounded-full border px-2.5 py-1 text-xs font-semibold ${statusClasses[task.status]}`}>
+          <div className="ml-2 mt-4 flex items-center justify-between gap-3 text-sm text-ink/80">
+            <span className={`kid-ribbon rounded-full border px-2.5 py-1 text-xs font-semibold ${statusClasses[task.status]}`}>
               {task.status}
             </span>
             <span className="font-medium">Due {formatDateLabel(task.dueDate)}</span>

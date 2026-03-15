@@ -16,10 +16,10 @@ function toPercent(value: string) {
 
 export function StudentTable({ students }: { students: Student[] }) {
   return (
-    <div className="overflow-hidden rounded-[24px] border border-ink/5 shadow-soft">
+    <div className="kid-panel overflow-hidden rounded-[24px] border border-ink/5 shadow-soft">
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-ink/5 text-left">
-          <thead className="bg-cloud/80 text-xs uppercase tracking-[0.24em] text-ink/45">
+          <thead className="bg-cloud/80 text-xs uppercase tracking-[0.24em] text-ink/60">
             <tr>
               <th className="px-5 py-4 font-semibold">Student</th>
               <th className="px-5 py-4 font-semibold">Program</th>
@@ -37,10 +37,10 @@ export function StudentTable({ students }: { students: Student[] }) {
                 <tr key={student.id} className="align-top transition hover:bg-cloud/45">
                   <td className="px-5 py-4">
                     <p className="font-semibold text-ink">{student.name}</p>
-                    <p className="text-sm text-ink/55">{student.guardian}</p>
+                    <p className="text-sm text-ink/70">{student.guardian}</p>
                   </td>
-                  <td className="px-5 py-4 text-sm text-ink/70">{student.program}</td>
-                  <td className="px-5 py-4 text-sm text-ink/70">
+                  <td className="px-5 py-4 text-sm text-ink/80">{student.program}</td>
+                  <td className="px-5 py-4 text-sm text-ink/80">
                     <p className="font-semibold text-ink">{student.attendance}</p>
                     <div className="mt-2 h-1.5 w-28 rounded-full bg-ink/10">
                       <div
@@ -49,16 +49,16 @@ export function StudentTable({ students }: { students: Student[] }) {
                       />
                     </div>
                   </td>
-                  <td className="px-5 py-4 text-sm text-ink/70">{student.pickupWindow}</td>
-                  <td className="px-5 py-4 text-sm leading-6 text-ink/70">
+                  <td className="px-5 py-4 text-sm text-ink/80">{student.pickupWindow}</td>
+                  <td className="px-5 py-4 text-sm leading-6 text-ink/80">
                     <p>{student.supportFocus}</p>
-                    <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink/45">
+                    <p className="mt-1 text-xs uppercase tracking-[0.18em] text-ink/60">
                       {student.milestone}
                     </p>
                   </td>
                   <td className="px-5 py-4">
                     <span
-                      className={`rounded-full border px-2.5 py-1 text-xs font-semibold ${tuitionClasses[student.tuitionStatus]}`}
+                      className={`kid-ribbon rounded-full border px-2.5 py-1 text-xs font-semibold ${tuitionClasses[student.tuitionStatus]}`}
                     >
                       {student.tuitionStatus}
                     </span>

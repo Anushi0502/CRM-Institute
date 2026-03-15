@@ -26,7 +26,7 @@ function AuthLoadingScreen() {
         <p className="text-xs font-semibold uppercase tracking-[0.24em] text-ink/50">
           Authentication
         </p>
-        <p className="mt-2 text-sm text-ink/70">Checking your session...</p>
+        <p className="mt-2 text-sm text-ink/80">Checking your session...</p>
       </div>
     </div>
   )

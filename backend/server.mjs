@@ -30,6 +30,10 @@ const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey, {
 
 const app = express()
 const validTuitionStatuses = new Set(['Current', 'Review'])
+const backendUsersTableSelect =
+  'id, email, created_at, last_sign_in_at, email_confirmed_at, is_anonymous, banned_until'
+const missingUsersTableMessage =
+  'Missing table "crm_backend_users". Run supabase/schema.sql in Supabase SQL Editor.'
 
 app.use(cors({ origin: true }))
 app.use(express.json())
@@ -45,7 +49,7 @@ function parseBearerToken(headerValue = '') {
 function mapAuthUser(user) {
   return {
     id: user.id,
-    email: user.email,
+    email: user.email ?? null,
     createdAt: user.created_at,
     lastSignInAt: user.last_sign_in_at,
     emailConfirmedAt: user.email_confirmed_at,
@@ -69,6 +73,98 @@ function mapStudentRow(row) {
   }
 }
 
+function mapBackendUserRow(row) {
+  return {
+    id: row.id,
+    email: row.email,
+    createdAt: row.created_at,
+    lastSignInAt: row.last_sign_in_at,
+    emailConfirmedAt: row.email_confirmed_at,
+    isAnonymous: row.is_anonymous,
+    bannedUntil: row.banned_until,
+  }
+}
+
+function toIsoOrNull(value) {
+  return value ? new Date(value).toISOString() : null
+}
+
+function isMissingUsersTableError(error) {
+  const code = String(error?.code ?? '')
+  const message = String(error?.message ?? '').toLowerCase()
+  return code === '42P01' || message.includes('crm_backend_users')
+}
+
+function toBackendUsersTableErrorMessage(error) {
+  if (isMissingUsersTableError(error)) {
+    return missingUsersTableMessage
+  }
+
+  return String(error?.message ?? 'crm_backend_users request failed.')
+}
+
+async function upsertBackendUserRecord(user) {
+  const mapped = mapAuthUser(user)
+  const { error } = await supabaseAdmin.from('crm_backend_users').upsert(
+    {
+      id: mapped.id,
+      email: mapped.email,
+      created_at: toIsoOrNull(mapped.createdAt) ?? new Date().toISOString(),
+      last_sign_in_at: toIsoOrNull(mapped.lastSignInAt),
+      email_confirmed_at: toIsoOrNull(mapped.emailConfirmedAt),
+      is_anonymous: mapped.isAnonymous,
+      banned_until: toIsoOrNull(mapped.bannedUntil),
+      allow_sign_in: !mapped.bannedUntil,
+      updated_at: new Date().toISOString(),
+    },
+    { onConflict: 'id' },
+  )
+
+  if (error) {
+    if (isMissingUsersTableError(error)) {
+      return mapped
+    }
+
+    throw new Error(toBackendUsersTableErrorMessage(error))
+  }
+
+  return mapped
+}
+
+async function deleteBackendUserRecord(userId) {
+  const { error } = await supabaseAdmin.from('crm_backend_users').delete().eq('id', userId)
+
+  if (error) {
+    if (isMissingUsersTableError(error)) {
+      return
+    }
+
+    throw new Error(toBackendUsersTableErrorMessage(error))
+  }
+}
+
+function isAllowedAdminEmail(email) {
+  if (adminEmails.length === 0) {
+    return true
+  }
+
+  return adminEmails.some((rule) => {
+    if (rule === '*') {
+      return true
+    }
+
+    if (rule.startsWith('*@')) {
+      return email.endsWith(rule.slice(1))
+    }
+
+    if (rule.startsWith('@')) {
+      return email.endsWith(rule)
+    }
+
+    return rule === email
+  })
+}
+
 async function requireAdminUser(req, res, next) {
   const token = parseBearerToken(req.headers.authorization)
 
@@ -84,8 +180,10 @@ async function requireAdminUser(req, res, next) {
 
   const email = data.user.email?.toLowerCase() ?? ''
 
-  if (adminEmails.length > 0 && !adminEmails.includes(email)) {
-    return res.status(403).json({ error: 'This user is not allowed for backend admin.' })
+  if (!isAllowedAdminEmail(email)) {
+    return res.status(403).json({
+      error: `This user is not allowed for backend admin. Add "${email}" to BACKEND_ADMIN_EMAILS.`,
+    })
   }
 
   req.authUser = data.user
@@ -105,20 +203,126 @@ app.use('/api/backend', requireAdminUser)
 app.get('/api/backend/users', async (req, res) => {
   const page = Math.max(Number(req.query.page ?? 1), 1)
   const perPage = Math.min(Math.max(Number(req.query.perPage ?? 100), 1), 1000)
+  const start = (page - 1) * perPage
+  const end = start + perPage - 1
 
-  const { data, error } = await supabaseAdmin.auth.admin.listUsers({
-    page,
-    perPage,
-  })
+  const loadFromTable = async () => {
+    const result = await supabaseAdmin
+      .from('crm_backend_users')
+      .select(backendUsersTableSelect)
+      .order('created_at', { ascending: false })
+      .range(start, end)
+
+    if (result.error && isMissingUsersTableError(result.error)) {
+      return null
+    }
+
+    return result
+  }
+
+  let tableResult = await loadFromTable()
+
+  if (tableResult === null) {
+    const { data: authData, error: authError } = await supabaseAdmin.auth.admin.listUsers({
+      page,
+      perPage,
+    })
+
+    if (authError) {
+      return res.status(500).json({ error: authError.message })
+    }
+
+    return res.json({
+      page,
+      perPage,
+      users: (authData.users ?? []).map(mapAuthUser),
+    })
+  }
+
+  let { data, error } = tableResult
 
   if (error) {
-    return res.status(500).json({ error: error.message })
+    return res.status(500).json({ error: toBackendUsersTableErrorMessage(error) })
+  }
+
+  if (page === 1 && (data ?? []).length === 0) {
+    const perPageLimit = 1000
+    let cursor = 1
+
+    while (true) {
+      const { data: authData, error: authError } = await supabaseAdmin.auth.admin.listUsers({
+        page: cursor,
+        perPage: perPageLimit,
+      })
+
+      if (authError) {
+        return res.status(500).json({ error: authError.message })
+      }
+
+      const users = authData.users ?? []
+
+      if (users.length === 0) {
+        break
+      }
+
+      const payload = users.map((user) => ({
+        id: user.id,
+        email: user.email ?? null,
+        created_at: toIsoOrNull(user.created_at) ?? new Date().toISOString(),
+        last_sign_in_at: toIsoOrNull(user.last_sign_in_at),
+        email_confirmed_at: toIsoOrNull(user.email_confirmed_at),
+        is_anonymous: user.is_anonymous,
+        banned_until: toIsoOrNull(user.banned_until),
+        allow_sign_in: !user.banned_until,
+        updated_at: new Date().toISOString(),
+      }))
+
+      const { error: upsertError } = await supabaseAdmin
+        .from('crm_backend_users')
+        .upsert(payload, { onConflict: 'id' })
+
+      if (upsertError) {
+        return res.status(500).json({ error: toBackendUsersTableErrorMessage(upsertError) })
+      }
+
+      if (users.length < perPageLimit) {
+        break
+      }
+
+      cursor += 1
+    }
+
+    tableResult = await loadFromTable()
+
+    if (tableResult === null) {
+      const { data: authData, error: authError } = await supabaseAdmin.auth.admin.listUsers({
+        page,
+        perPage,
+      })
+
+      if (authError) {
+        return res.status(500).json({ error: authError.message })
+      }
+
+      return res.json({
+        page,
+        perPage,
+        users: (authData.users ?? []).map(mapAuthUser),
+      })
+    }
+
+    data = tableResult.data
+    error = tableResult.error
+
+    if (error) {
+      return res.status(500).json({ error: toBackendUsersTableErrorMessage(error) })
+    }
   }
 
   res.json({
     page,
     perPage,
-    users: data.users.map(mapAuthUser),
+    users: (data ?? []).map(mapBackendUserRow),
   })
 })
 
@@ -165,9 +369,15 @@ app.post('/api/backend/users', async (req, res) => {
     createdUser = blockedData.user
   }
 
-  res.status(201).json({
-    user: mapAuthUser(createdUser),
-  })
+  try {
+    const syncedUser = await upsertBackendUserRecord(createdUser)
+    res.status(201).json({ user: syncedUser })
+  } catch (syncError) {
+    res.status(500).json({
+      error: `User was created in Supabase Auth but failed to sync crm_backend_users. ${syncError instanceof Error ? syncError.message : 'Unknown sync error.'}`,
+      user: mapAuthUser(createdUser),
+    })
+  }
 })
 
 app.patch('/api/backend/users/:userId', async (req, res) => {
@@ -190,9 +400,15 @@ app.patch('/api/backend/users/:userId', async (req, res) => {
     return res.status(500).json({ error: error?.message ?? 'Signin toggle failed.' })
   }
 
-  res.json({
-    user: mapAuthUser(data.user),
-  })
+  try {
+    const syncedUser = await upsertBackendUserRecord(data.user)
+    res.json({ user: syncedUser })
+  } catch (syncError) {
+    res.status(500).json({
+      error: `Signin toggle succeeded in Supabase Auth but failed to sync crm_backend_users. ${syncError instanceof Error ? syncError.message : 'Unknown sync error.'}`,
+      user: mapAuthUser(data.user),
+    })
+  }
 })
 
 app.delete('/api/backend/users/:userId', async (req, res) => {
@@ -210,6 +426,14 @@ app.delete('/api/backend/users/:userId', async (req, res) => {
 
   if (error) {
     return res.status(500).json({ error: error.message })
+  }
+
+  try {
+    await deleteBackendUserRecord(userId)
+  } catch (syncError) {
+    return res.status(500).json({
+      error: `User deleted from Supabase Auth but failed to remove from crm_backend_users. ${syncError instanceof Error ? syncError.message : 'Unknown sync error.'}`,
+    })
   }
 
   res.status(204).send()
