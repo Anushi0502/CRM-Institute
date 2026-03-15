@@ -2,13 +2,17 @@ import { startTransition, useEffect, useState } from 'react'
 import {
   GraduationCap,
   Paintbrush,
+  RotateCcw,
   Server,
   ShieldUser,
+  Sparkles,
   ToggleLeft,
   ToggleRight,
   Trash2,
   UserPlus,
 } from 'lucide-react'
+import kidsCloudStrip from '../assets/kids-cloud-strip.svg'
+import kidsPlayLane from '../assets/kids-play-lane.svg'
 import { SectionCard } from '../components/SectionCard'
 import {
   backendEndpointLabel,
@@ -23,6 +27,13 @@ import {
   type BackendStudentTuitionStatus,
   type BackendUser,
 } from '../services/backendAdminService'
+import {
+  applyCrmTheme,
+  crmThemes,
+  getStoredCrmTheme,
+  saveCrmTheme,
+  type CrmThemeKey,
+} from '../services/themeService'
 
 interface StudentFormState {
   name: string
@@ -46,13 +57,46 @@ const initialStudentForm: StudentFormState = {
   milestone: '',
 }
 
-const paletteSwatches = [
-  { name: 'Ink', className: 'bg-ink', hex: '#18353d' },
-  { name: 'Teal', className: 'bg-teal', hex: '#1f766e' },
-  { name: 'Mint', className: 'bg-mint', hex: '#b7ddd7' },
-  { name: 'Coral', className: 'bg-coral', hex: '#f27b64' },
-  { name: 'Amber', className: 'bg-amber', hex: '#f0b45b' },
-  { name: 'Plum', className: 'bg-plum', hex: '#72507d' },
+const studentTemplates: Array<{ label: string; values: StudentFormState }> = [
+  {
+    label: 'Infant care starter',
+    values: {
+      name: 'Mia Hudson',
+      guardian: 'Ava Hudson',
+      program: 'Infant Nest',
+      attendance: '97%',
+      pickupWindow: '4:45 PM',
+      supportFocus: 'Sleep transition comfort',
+      tuitionStatus: 'Current',
+      milestone: 'Responding to story-time songs',
+    },
+  },
+  {
+    label: 'Toddler explorer',
+    values: {
+      name: 'Noah Rivera',
+      guardian: 'Liam Rivera',
+      program: 'Toddler Explorers',
+      attendance: '94%',
+      pickupWindow: '5:30 PM',
+      supportFocus: 'Snack-time sharing cues',
+      tuitionStatus: 'Current',
+      milestone: 'Independent cleanup routine',
+    },
+  },
+  {
+    label: 'Early years launch',
+    values: {
+      name: 'Aria Brooks',
+      guardian: 'Mason Brooks',
+      program: 'Early Years Launch',
+      attendance: '92%',
+      pickupWindow: '5:10 PM',
+      supportFocus: 'Letter sound confidence',
+      tuitionStatus: 'Review',
+      milestone: 'Completed first phonics mini-project',
+    },
+  },
 ]
 
 export function BackendPage() {
@@ -70,6 +114,8 @@ export function BackendPage() {
   const [password, setPassword] = useState('')
   const [allowSignIn, setAllowSignIn] = useState(true)
   const [studentForm, setStudentForm] = useState<StudentFormState>(initialStudentForm)
+  const [selectedTheme, setSelectedTheme] = useState<CrmThemeKey>(() => getStoredCrmTheme())
+  const activeTheme = crmThemes.find((theme) => theme.key === selectedTheme) ?? crmThemes[0]
 
   async function loadUsers() {
     try {
@@ -110,6 +156,12 @@ export function BackendPage() {
   useEffect(() => {
     void Promise.all([loadUsers(), loadStudents()])
   }, [])
+
+  function handleThemeSelect(theme: CrmThemeKey) {
+    applyCrmTheme(theme)
+    saveCrmTheme(theme)
+    setSelectedTheme(theme)
+  }
 
   async function handleCreateUser(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -193,6 +245,11 @@ export function BackendPage() {
     }))
   }
 
+  function handleApplyStudentTemplate(template: StudentFormState) {
+    setStudentForm({ ...template })
+    setStudentError(null)
+  }
+
   async function handleCreateStudent(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
@@ -267,6 +324,23 @@ export function BackendPage() {
         description="Manage authenticated users through the secured backend API."
         actionLabel={`${users.length} user records`}
       >
+        <div className="mb-4 grid gap-3 md:grid-cols-[1.2fr,0.8fr]">
+          <div className="overflow-hidden rounded-[20px] border border-sky/30 bg-white/70">
+            <img
+              src={kidsCloudStrip}
+              alt="Backend cloud visual"
+              className="h-20 w-full object-cover"
+            />
+          </div>
+          <div className="overflow-hidden rounded-[20px] border border-leaf/30 bg-white/70">
+            <img
+              src={kidsPlayLane}
+              alt="Backend care visual"
+              className="h-20 w-full object-cover"
+            />
+          </div>
+        </div>
+
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.12em] text-ink/45">
           API endpoint: {backendEndpointLabel}
         </p>
@@ -340,6 +414,36 @@ export function BackendPage() {
         description="Create new students in crm_students through the secured backend API."
         actionLabel={`${students.length} student records`}
       >
+        <div className="mb-4 flex flex-wrap items-center gap-2">
+          <span className="inline-flex items-center gap-1 rounded-full border border-ink/10 bg-cloud px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-ink/65">
+            <Sparkles className="h-3.5 w-3.5 text-teal" />
+            Quick-fill templates
+          </span>
+          {studentTemplates.map((template) => (
+            <button
+              key={template.label}
+              type="button"
+              onClick={() => {
+                handleApplyStudentTemplate(template.values)
+              }}
+              className="rounded-full border border-ink/15 bg-white px-3 py-1.5 text-xs font-semibold text-ink/75 transition hover:border-teal/40 hover:bg-teal/10"
+            >
+              {template.label}
+            </button>
+          ))}
+          <button
+            type="button"
+            onClick={() => {
+              setStudentForm(initialStudentForm)
+              setStudentError(null)
+            }}
+            className="inline-flex items-center gap-1 rounded-full border border-coral/25 bg-coral/10 px-3 py-1.5 text-xs font-semibold text-coral transition hover:bg-coral hover:text-white"
+          >
+            <RotateCcw className="h-3.5 w-3.5" />
+            Clear
+          </button>
+        </div>
+
         <form onSubmit={handleCreateStudent} className="grid gap-3 md:grid-cols-2">
           <label className="space-y-2">
             <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">
@@ -486,13 +590,40 @@ export function BackendPage() {
 
       <SectionCard
         title="Theme palette flair"
-        description="Campus brand swatches for quick visual checks while adjusting UI."
+        description="Switch between three full-page palettes. The selected theme is saved for next sign-in."
       >
+        <div className="mb-4 grid gap-2 lg:grid-cols-3">
+          {crmThemes.map((theme) => {
+            const isActive = selectedTheme === theme.key
+
+            return (
+              <button
+                key={theme.key}
+                type="button"
+                onClick={() => {
+                  handleThemeSelect(theme.key)
+                }}
+                className={`rounded-2xl border px-4 py-3 text-left transition ${
+                  isActive
+                    ? 'border-ink bg-ink text-white shadow-soft'
+                    : 'border-ink/10 bg-white text-ink/75 hover:border-teal/40 hover:bg-cloud/90'
+                }`}
+              >
+                <p className="text-sm font-semibold">{theme.label}</p>
+                <p className={`mt-1 inline-flex rounded-full border px-2 py-0.5 text-xs ${isActive ? 'border-white/30 bg-white/15 text-white' : theme.chipClassName}`}>
+                  {theme.subtitle}
+                </p>
+              </button>
+            )
+          })}
+        </div>
+
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {paletteSwatches.map((swatch) => (
+          {activeTheme.palette.map((swatch) => (
             <div key={swatch.name} className="rounded-2xl border border-ink/10 bg-white p-3 shadow-soft">
               <div
-                className={`mb-3 h-12 rounded-xl ${swatch.className}`}
+                className="mb-3 h-12 rounded-xl"
+                style={{ backgroundColor: swatch.hex }}
                 aria-label={`${swatch.name} swatch`}
               />
               <div className="flex items-center justify-between text-sm">
@@ -504,7 +635,7 @@ export function BackendPage() {
         </div>
         <div className="mt-4 flex items-center gap-2 rounded-2xl border border-teal/20 bg-teal/10 px-4 py-3 text-sm text-ink/75">
           <Paintbrush className="h-4 w-4 text-teal" />
-          Use these tones for cards, states, and CTA accents to keep the design aligned.
+          Active theme: {activeTheme.label}. Palette now applies across all pages.
         </div>
       </SectionCard>
 

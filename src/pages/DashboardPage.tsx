@@ -6,6 +6,8 @@ import { ProgramCard } from '../components/ProgramCard'
 import { SectionCard } from '../components/SectionCard'
 import { StatCard } from '../components/StatCard'
 import { TaskPanel } from '../components/TaskPanel'
+import kidsPlayLane from '../assets/kids-play-lane.svg'
+import kidsRainbowBanner from '../assets/kids-rainbow-banner.svg'
 import type { PageStateProps } from '../types/crm'
 
 export function DashboardPage({ state }: PageStateProps) {
@@ -16,14 +18,77 @@ export function DashboardPage({ state }: PageStateProps) {
   const tuitionReviews = state.data.students.filter(
     (student) => student.tuitionStatus === 'Review',
   ).length
+  const infantStudents = state.data.students.filter((student) => /infant/i.test(student.program)).length
+  const toddlerStudents = state.data.students.filter((student) => /toddler/i.test(student.program)).length
+  const earlyYearsStudents = state.data.students.filter((student) => /preschool|pre-k|prek/i.test(student.program)).length
+  const ageBandOverview = [
+    {
+      label: 'Infant nest (6m+)',
+      value: infantStudents,
+      style: 'border-sky/30 bg-sky/15 text-ink',
+    },
+    {
+      label: 'Toddler explorers',
+      value: toddlerStudents,
+      style: 'border-berry/25 bg-berry/12 text-ink',
+    },
+    {
+      label: 'Early years launch',
+      value: earlyYearsStudents,
+      style: 'border-leaf/30 bg-leaf/15 text-ink',
+    },
+  ]
 
   return (
     <div className="space-y-5">
       <SectionCard
+        eyebrow="Visual moodboard"
+        title="Aesthetic cues for kids-first care"
+        description="A richer visual language for nursery, toddler, and early-years teams so every screen feels warm and welcoming."
+      >
+        <div className="grid gap-4 lg:grid-cols-[1.2fr,0.8fr]">
+          <div className="overflow-hidden rounded-[22px] border border-sky/30 bg-white/70">
+            <img
+              src={kidsPlayLane}
+              alt="Play lane visual motif"
+              className="h-52 w-full object-cover"
+            />
+          </div>
+          <div className="space-y-3">
+            <div className="overflow-hidden rounded-[20px] border border-berry/30 bg-white/70">
+              <img
+                src={kidsRainbowBanner}
+                alt="Rainbow themed classroom motif"
+                className="h-24 w-full object-cover"
+              />
+            </div>
+            <div className="rounded-[20px] border border-ink/10 bg-cloud/70 p-4">
+              <p className="text-xs uppercase tracking-[0.2em] text-ink/55">Visual anchors</p>
+              <p className="mt-2 text-sm text-ink/75">
+                Rainbow gradients, soft clouds, and sticker badges keep the CRM aligned with
+                children aged 6 months to 7 years and their families.
+              </p>
+            </div>
+          </div>
+        </div>
+      </SectionCard>
+
+      <SectionCard
         eyebrow="Executive strip"
         title="Today’s operating pulse"
-        description="Quick-read metrics so leadership, admissions, and family care teams align in the first minute."
+        description="Quick-read metrics so leadership, admissions, and family care teams align around little-learner needs in the first minute."
       >
+        <div className="mb-4 grid gap-2 sm:grid-cols-3">
+          {ageBandOverview.map((item) => (
+            <article
+              key={item.label}
+              className={`rounded-[18px] border px-4 py-2.5 ${item.style}`}
+            >
+              <p className="text-xs uppercase tracking-[0.16em] text-ink/65">{item.label}</p>
+              <p className="mt-1 font-display text-2xl">{item.value}</p>
+            </article>
+          ))}
+        </div>
         <div className="grid gap-3 sm:grid-cols-3">
           <article className="rounded-[20px] border border-teal/20 bg-teal/10 px-4 py-3">
             <p className="text-xs uppercase tracking-[0.2em] text-teal/75">High-priority leads</p>
@@ -43,8 +108,8 @@ export function DashboardPage({ state }: PageStateProps) {
       <div className="grid gap-5 xl:grid-cols-[1.35fr,0.85fr]">
         <SectionCard
           eyebrow="Campus pulse"
-          title="Warm, parent-friendly operations with CRM clarity"
-          description="The dashboard surfaces admissions energy, student care signals, and program capacity in one screen so your team can act faster."
+          title="Warm, family-first operations with playful clarity"
+          description="The dashboard surfaces admissions energy, student care signals, and room capacity from infant to early-years in one screen."
         >
           <div className="grid gap-4 md:grid-cols-2">
             {state.data.metrics.map((metric) => (

@@ -1,8 +1,37 @@
 import { hasSupabaseConfig, supabase } from './supabase'
 
-const backendApiBase = (import.meta.env.VITE_BACKEND_API_URL ?? '').replace(/\/$/, '')
+const backendApiRaw = String(import.meta.env.VITE_BACKEND_API_URL ?? '').trim()
 
-export const backendEndpointLabel = backendApiBase || 'same-origin (/api/backend)'
+function normalizeBackendApiBase(input: string) {
+  const unquoted = input.replace(/^['"]|['"]$/g, '').trim()
+
+  if (!unquoted) {
+    return ''
+  }
+
+  if (unquoted.startsWith('/')) {
+    return unquoted.replace(/\/$/, '')
+  }
+
+  const looksLikeLocalHost = /^(localhost|127(?:\.\d{1,3}){3})(:\d+)?(\/.*)?$/i.test(unquoted)
+  const withProtocol =
+    /^[a-z][a-z\d+\-.]*:\/\//i.test(unquoted) || !looksLikeLocalHost
+      ? unquoted
+      : `http://${unquoted}`
+
+  try {
+    return new URL(withProtocol).toString().replace(/\/$/, '')
+  } catch {
+    return ''
+  }
+}
+
+const backendApiBase = normalizeBackendApiBase(backendApiRaw)
+const hasBackendApiConfigError = Boolean(backendApiRaw) && !backendApiBase
+
+export const backendEndpointLabel = hasBackendApiConfigError
+  ? `invalid VITE_BACKEND_API_URL (${backendApiRaw}) -> same-origin (/api/backend)`
+  : backendApiBase || 'same-origin (/api/backend)'
 
 export interface BackendUser {
   id: string
@@ -75,6 +104,31 @@ async function getAccessToken() {
   return token
 }
 
+function toFriendlyBackendError(raw: string, status: number) {
+  const cleaned = raw
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+  const target = backendApiBase || 'same-origin /api proxy'
+  const lower = cleaned.toLowerCase()
+
+  if (
+    status >= 500 ||
+    lower.includes('proxy error') ||
+    lower.includes('econnrefused') ||
+    lower.includes('connection refused') ||
+    lower.includes('connect error')
+  ) {
+    return `Cannot reach backend API (${target}). Start it with "npm run backend:dev" or "npm run dev:full".`
+  }
+
+  if (cleaned) {
+    return cleaned
+  }
+
+  return `Backend request failed (${status}).`
+}
+
 async function backendRequest<T>(path: string, init?: RequestInit) {
   const accessToken = await getAccessToken()
   let response: Response
@@ -93,8 +147,16 @@ async function backendRequest<T>(path: string, init?: RequestInit) {
       error instanceof Error && error.message
         ? error.message
         : 'Network request failed.'
+    const lowerMessage = message.toLowerCase()
 
-    if (message.toLowerCase().includes('failed to fetch')) {
+    if (lowerMessage.includes('did not match the expected pattern')) {
+      const target = backendApiBase || 'same-origin /api proxy'
+      throw new Error(
+        `Backend URL is invalid (${target}). Set VITE_BACKEND_API_URL to a valid URL like "http://127.0.0.1:8787" or leave it blank for same-origin.`,
+      )
+    }
+
+    if (lowerMessage.includes('failed to fetch') || lowerMessage.includes('load failed')) {
       const target = backendApiBase || 'same-origin /api proxy'
       throw new Error(
         `Cannot reach backend API (${target}). Start it with "npm run backend:dev" or "npm run dev:full".`,
@@ -108,10 +170,30 @@ async function backendRequest<T>(path: string, init?: RequestInit) {
     return undefined as T
   }
 
-  const payload = (await response.json()) as { error?: string }
+  const contentType = response.headers.get('content-type') ?? ''
+  let payload: { error?: string } | undefined
+  let fallbackText = ''
+
+  if (contentType.toLowerCase().includes('application/json')) {
+    try {
+      payload = (await response.json()) as { error?: string }
+    } catch {
+      payload = undefined
+    }
+  } else {
+    try {
+      fallbackText = await response.text()
+    } catch {
+      fallbackText = ''
+    }
+  }
 
   if (!response.ok) {
-    throw new Error(payload.error ?? 'Backend request failed.')
+    throw new Error(toFriendlyBackendError(payload?.error ?? fallbackText, response.status))
+  }
+
+  if (payload === undefined) {
+    throw new Error(`Backend response was empty (${response.status}) for ${path}.`)
   }
 
   return payload as T

@@ -1,5 +1,7 @@
 import { BarChart3, Search, Sparkles } from 'lucide-react'
 import { useDeferredValue, useState } from 'react'
+import kidsCloudStrip from '../assets/kids-cloud-strip.svg'
+import kidsRainbowBanner from '../assets/kids-rainbow-banner.svg'
 import { LeadTable } from '../components/LeadTable'
 import { PipelineBoard } from '../components/PipelineBoard'
 import { SectionCard } from '../components/SectionCard'
@@ -36,6 +38,14 @@ export function AdmissionsPage({ state }: PageStateProps) {
         description="Use one command surface to find families quickly, balance the stage mix, and focus team attention."
         actionLabel={`${filteredLeads.length} visible records`}
       >
+        <div className="mb-4 overflow-hidden rounded-[22px] border border-sky/30 bg-white/70">
+          <img
+            src={kidsCloudStrip}
+            alt="Admissions visual cloud strip"
+            className="h-20 w-full object-cover"
+          />
+        </div>
+
         <div className="grid gap-4 lg:grid-cols-[1.25fr,0.75fr]">
           <div className="space-y-4">
             <label className="flex items-center gap-3 rounded-[22px] border border-ink/10 bg-cloud/80 px-4 py-3">
@@ -65,6 +75,13 @@ export function AdmissionsPage({ state }: PageStateProps) {
           </div>
 
           <article className="rounded-[22px] border border-ink/10 bg-white/85 p-4 shadow-soft">
+            <div className="mb-3 overflow-hidden rounded-xl border border-white/70">
+              <img
+                src={kidsRainbowBanner}
+                alt="Colorful admissions guidance banner"
+                className="h-16 w-full object-cover"
+              />
+            </div>
             <div className="inline-flex items-center gap-2 rounded-full border border-teal/20 bg-teal/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-teal">
               <BarChart3 className="h-3.5 w-3.5" />
               Focus guidance

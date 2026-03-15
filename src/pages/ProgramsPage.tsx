@@ -1,4 +1,6 @@
 import { BookOpen, Building2, Users } from 'lucide-react'
+import kidsPlayLane from '../assets/kids-play-lane.svg'
+import kidsRainbowBanner from '../assets/kids-rainbow-banner.svg'
 import { ProgramCard } from '../components/ProgramCard'
 import { SectionCard } from '../components/SectionCard'
 import type { PageStateProps } from '../types/crm'
@@ -26,6 +28,23 @@ export function ProgramsPage({ state }: PageStateProps) {
         title="Programs designed for capacity and confidence"
         description="Balance seats, staffing, and waitlist pressure without losing the human story families care about."
       >
+        <div className="mb-4 grid gap-3 md:grid-cols-[1fr,1fr]">
+          <div className="overflow-hidden rounded-[20px] border border-berry/30 bg-white/70">
+            <img
+              src={kidsRainbowBanner}
+              alt="Programs rainbow visual"
+              className="h-20 w-full object-cover"
+            />
+          </div>
+          <div className="overflow-hidden rounded-[20px] border border-leaf/30 bg-white/70">
+            <img
+              src={kidsPlayLane}
+              alt="Programs play visual"
+              className="h-20 w-full object-cover"
+            />
+          </div>
+        </div>
+
         <div className="grid gap-3 sm:grid-cols-3">
           <article className="rounded-[20px] border border-teal/20 bg-teal/10 px-4 py-3">
             <p className="text-xs uppercase tracking-[0.2em] text-teal/80">Total seats</p>

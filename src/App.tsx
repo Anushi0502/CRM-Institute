@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { useDashboardData } from './hooks/useDashboardData'
 import { useSupabaseAuth } from './hooks/useSupabaseAuth'
@@ -9,6 +10,7 @@ import { EngagementPage } from './pages/EngagementPage'
 import { LoginPage } from './pages/LoginPage'
 import { ProgramsPage } from './pages/ProgramsPage'
 import { StudentsPage } from './pages/StudentsPage'
+import { initializeCrmTheme } from './services/themeService'
 import type { AuthState } from './types/auth'
 import type { DashboardState } from './types/crm'
 
@@ -57,6 +59,10 @@ function ProtectedLayout({ authState, dashboardState }: ProtectedLayoutProps) {
 function App() {
   const authState = useSupabaseAuth()
   const dashboardState = useDashboardData(authState.user?.id)
+
+  useEffect(() => {
+    initializeCrmTheme()
+  }, [])
 
   return (
     <Routes>

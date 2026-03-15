@@ -1,4 +1,6 @@
 import { MessageCircleHeart, Megaphone, Sparkles } from 'lucide-react'
+import kidsCloudStrip from '../assets/kids-cloud-strip.svg'
+import kidsRainbowBanner from '../assets/kids-rainbow-banner.svg'
 import { ActivityFeed } from '../components/ActivityFeed'
 import { SectionCard } from '../components/SectionCard'
 import { TaskPanel } from '../components/TaskPanel'
@@ -16,6 +18,23 @@ export function EngagementPage({ state }: PageStateProps) {
         title="Communication heartbeat"
         description="Keep family touchpoints proactive with a clear mix of immediate, weekly, and high-priority work."
       >
+        <div className="mb-4 grid gap-3 md:grid-cols-[1.2fr,0.8fr]">
+          <div className="overflow-hidden rounded-[20px] border border-sky/30 bg-white/70">
+            <img
+              src={kidsCloudStrip}
+              alt="Family engagement cloud strip"
+              className="h-20 w-full object-cover"
+            />
+          </div>
+          <div className="overflow-hidden rounded-[20px] border border-berry/30 bg-white/70">
+            <img
+              src={kidsRainbowBanner}
+              alt="Family engagement rainbow visual"
+              className="h-20 w-full object-cover"
+            />
+          </div>
+        </div>
+
         <div className="grid gap-3 sm:grid-cols-3">
           <article className="rounded-[20px] border border-coral/20 bg-coral/10 px-4 py-3">
             <p className="text-xs uppercase tracking-[0.2em] text-coral/80">Today tasks</p>

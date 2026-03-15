@@ -12,6 +12,11 @@ export default {
         amber: '#f0b45b',
         plum: '#72507d',
         cloud: '#f6f1e7',
+        sky: '#9ed8ff',
+        sun: '#ffd86b',
+        berry: '#ff8fab',
+        leaf: '#8dd9b8',
+        lilac: '#cbb9ff',
       },
       boxShadow: {
         float: '0 24px 70px rgba(24, 53, 61, 0.14)',
@@ -20,6 +25,7 @@ export default {
       fontFamily: {
         sans: ['Manrope', 'sans-serif'],
         display: ['Fraunces', 'serif'],
+        kids: ['Baloo 2', 'cursive'],
       },
     },
   },

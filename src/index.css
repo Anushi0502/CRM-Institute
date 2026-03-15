@@ -1,17 +1,78 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  color: #18353d;
-  background-color: #fcf8ef;
+  --crm-body-text: #2f2e4d;
+  --crm-surface: #fff7ef;
+  --crm-bg-radial-1: rgba(255, 122, 89, 0.28);
+  --crm-bg-radial-2: rgba(255, 95, 135, 0.26);
+  --crm-bg-radial-3: rgba(255, 190, 61, 0.24);
+  --crm-bg-gradient-start: #fff6eb;
+  --crm-bg-gradient-mid: #fff0f5;
+  --crm-bg-gradient-end: #fff9e9;
+  --crm-orb-teal: 255, 122, 89;
+  --crm-orb-coral: 255, 95, 135;
+  --crm-orb-plum: 255, 190, 61;
+  --crm-sprinkle-2: 255, 190, 61;
+  --crm-sprinkle-3: 146, 217, 255;
+  color: var(--crm-body-text);
+  background-color: var(--crm-surface);
   font-family: 'Manrope', sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+[data-crm-theme='playful-meadow'] {
+  --crm-body-text: #18353d;
+  --crm-surface: #fcf8ef;
+  --crm-bg-radial-1: rgba(255, 143, 171, 0.3);
+  --crm-bg-radial-2: rgba(158, 216, 255, 0.44);
+  --crm-bg-radial-3: rgba(203, 185, 255, 0.2);
+  --crm-bg-gradient-start: #fffaf1;
+  --crm-bg-gradient-mid: #fdf5ff;
+  --crm-bg-gradient-end: #f5fbff;
+  --crm-orb-teal: 31, 118, 110;
+  --crm-orb-coral: 242, 123, 100;
+  --crm-orb-plum: 114, 80, 125;
+  --crm-sprinkle-2: 255, 216, 107;
+  --crm-sprinkle-3: 141, 217, 184;
+}
+
+[data-crm-theme='sunrise-carnival'] {
+  --crm-body-text: #2f2e4d;
+  --crm-surface: #fff7ef;
+  --crm-bg-radial-1: rgba(255, 122, 89, 0.28);
+  --crm-bg-radial-2: rgba(255, 95, 135, 0.26);
+  --crm-bg-radial-3: rgba(255, 190, 61, 0.24);
+  --crm-bg-gradient-start: #fff6eb;
+  --crm-bg-gradient-mid: #fff0f5;
+  --crm-bg-gradient-end: #fff9e9;
+  --crm-orb-teal: 255, 122, 89;
+  --crm-orb-coral: 255, 95, 135;
+  --crm-orb-plum: 255, 190, 61;
+  --crm-sprinkle-2: 255, 190, 61;
+  --crm-sprinkle-3: 146, 217, 255;
+}
+
+[data-crm-theme='lagoon-breeze'] {
+  --crm-body-text: #12314c;
+  --crm-surface: #effaff;
+  --crm-bg-radial-1: rgba(105, 201, 141, 0.22);
+  --crm-bg-radial-2: rgba(77, 210, 255, 0.3);
+  --crm-bg-radial-3: rgba(247, 217, 74, 0.22);
+  --crm-bg-gradient-start: #f1fcff;
+  --crm-bg-gradient-mid: #ecfff7;
+  --crm-bg-gradient-end: #fffceb;
+  --crm-orb-teal: 0, 168, 168;
+  --crm-orb-coral: 77, 210, 255;
+  --crm-orb-plum: 255, 127, 106;
+  --crm-sprinkle-2: 247, 217, 74;
+  --crm-sprinkle-3: 105, 201, 141;
 }
 
 html {
@@ -23,11 +84,16 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-image:
-    radial-gradient(circle at 8% 8%, rgba(242, 123, 100, 0.22), transparent 28%),
-    radial-gradient(circle at 88% 4%, rgba(183, 221, 215, 0.58), transparent 35%),
-    radial-gradient(circle at 50% 120%, rgba(114, 80, 125, 0.12), transparent 38%),
-    linear-gradient(180deg, #fcf8ef 0%, #f6f1e7 100%);
-  color: #18353d;
+    radial-gradient(circle at 8% 10%, var(--crm-bg-radial-1), transparent 30%),
+    radial-gradient(circle at 90% 8%, var(--crm-bg-radial-2), transparent 32%),
+    radial-gradient(circle at 50% 118%, var(--crm-bg-radial-3), transparent 42%),
+    linear-gradient(
+      180deg,
+      var(--crm-bg-gradient-start) 0%,
+      var(--crm-bg-gradient-mid) 52%,
+      var(--crm-bg-gradient-end) 100%
+    );
+  color: var(--crm-body-text);
 }
 
 body::before {
@@ -99,6 +165,30 @@ textarea {
   }
 }
 
+@keyframes kid-pop {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes kid-tilt {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(6deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
 .crm-orb {
   position: absolute;
   border-radius: 9999px;
@@ -112,7 +202,7 @@ textarea {
   height: 340px;
   left: -120px;
   top: -120px;
-  background: radial-gradient(circle, rgba(31, 118, 110, 0.35), rgba(31, 118, 110, 0));
+  background: radial-gradient(circle, rgba(var(--crm-orb-teal), 0.35), rgba(var(--crm-orb-teal), 0));
   animation: crm-drift 12s ease-in-out infinite;
 }
 
@@ -121,7 +211,7 @@ textarea {
   height: 300px;
   right: -100px;
   top: 120px;
-  background: radial-gradient(circle, rgba(242, 123, 100, 0.28), rgba(242, 123, 100, 0));
+  background: radial-gradient(circle, rgba(var(--crm-orb-coral), 0.28), rgba(var(--crm-orb-coral), 0));
   animation: crm-drift-slow 15s ease-in-out infinite;
 }
 
@@ -130,6 +220,89 @@ textarea {
   height: 260px;
   right: 22%;
   bottom: -120px;
-  background: radial-gradient(circle, rgba(114, 80, 125, 0.2), rgba(114, 80, 125, 0));
+  background: radial-gradient(circle, rgba(var(--crm-orb-plum), 0.2), rgba(var(--crm-orb-plum), 0));
   animation: crm-drift 16s ease-in-out infinite;
+}
+
+.kid-sprinkle {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 999px;
+  background: radial-gradient(circle at 32% 32%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.25));
+  box-shadow: 0 10px 24px rgba(24, 53, 61, 0.12);
+  opacity: 0.78;
+}
+
+.kid-sprinkle--one {
+  top: 12%;
+  right: 28%;
+  width: 22px;
+  height: 22px;
+  animation: kid-pop 7s ease-in-out infinite;
+}
+
+.kid-sprinkle--two {
+  top: 24%;
+  right: 7%;
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(
+    circle at 32% 32%,
+    rgba(var(--crm-sprinkle-2), 0.95),
+    rgba(var(--crm-sprinkle-2), 0.32)
+  );
+  animation: kid-pop 8.5s ease-in-out infinite;
+}
+
+.kid-sprinkle--three {
+  bottom: 14%;
+  left: 8%;
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(
+    circle at 32% 32%,
+    rgba(var(--crm-sprinkle-3), 0.95),
+    rgba(var(--crm-sprinkle-3), 0.3)
+  );
+  animation: kid-pop 6.5s ease-in-out infinite;
+}
+
+.kid-sticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 9999px;
+  padding: 0.32rem 0.74rem;
+  font-family: 'Baloo 2', cursive;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(255, 255, 255, 0.54);
+  backdrop-filter: blur(4px);
+  animation: kid-tilt 6s ease-in-out infinite;
+}
+
+.kid-confetti {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 999px;
+  box-shadow: 0 8px 18px rgba(47, 46, 77, 0.12);
+  animation: kid-pop 7s ease-in-out infinite;
+}
+
+.kid-confetti--one {
+  top: 1rem;
+  right: 4rem;
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(var(--crm-sprinkle-2), 0.72));
+}
+
+.kid-confetti--two {
+  top: 2.1rem;
+  right: 2.25rem;
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(var(--crm-sprinkle-3), 0.74));
+  animation-delay: 0.7s;
 }

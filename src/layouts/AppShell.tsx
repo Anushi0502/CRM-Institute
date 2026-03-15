@@ -13,6 +13,7 @@ import {
 import type { LucideIcon } from 'lucide-react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { BrandMark } from '../components/BrandMark'
+import kidsRainbowBanner from '../assets/kids-rainbow-banner.svg'
 import { signOutUser } from '../services/authService'
 import type { AuthState } from '../types/auth'
 import type { ConnectionState, DashboardState } from '../types/crm'
@@ -43,7 +44,7 @@ const pageTitles: Record<string, { title: string; description: string }> = {
   '/': {
     title: 'Institute overview',
     description:
-      'A calm CRM for admissions movement, family trust, and student support visibility.',
+      'A family-friendly CRM for admissions movement, family trust, and student care from 6 months to 7 years.',
   },
   '/admissions': {
     title: 'Admissions pipeline',
@@ -71,6 +72,21 @@ const pageTitles: Record<string, { title: string; description: string }> = {
       'Control Supabase auth and data operations from a secured backend path, including user sign-in toggles and student management.',
   },
 }
+
+const learningStages = [
+  {
+    label: 'Infant care · 6 to 18 months',
+    style: 'border-sky/35 bg-sky/15',
+  },
+  {
+    label: 'Toddler play · 18 months to 3 years',
+    style: 'border-berry/30 bg-berry/15',
+  },
+  {
+    label: 'Early years · 3 to 7 years',
+    style: 'border-leaf/35 bg-leaf/15',
+  },
+]
 
 const statusStyles: Record<ConnectionState, string> = {
   demo: 'bg-amber/20 text-amber-700',
@@ -114,9 +130,12 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
       <div className="crm-orb crm-orb--teal" />
       <div className="crm-orb crm-orb--coral" />
       <div className="crm-orb crm-orb--plum" />
+      <div className="kid-sprinkle kid-sprinkle--one" />
+      <div className="kid-sprinkle kid-sprinkle--two" />
+      <div className="kid-sprinkle kid-sprinkle--three" />
 
       <div className="relative mx-auto flex max-w-[1600px] gap-5 px-4 py-4 lg:px-6">
-        <aside className="hidden w-[320px] shrink-0 flex-col gap-6 rounded-[34px] border border-white/70 bg-white/80 p-6 shadow-float backdrop-blur xl:flex">
+        <aside className="hidden w-[320px] shrink-0 flex-col gap-6 rounded-[34px] border border-white/70 bg-[linear-gradient(165deg,rgba(255,255,255,0.92),rgba(255,251,242,0.92))] p-6 shadow-float backdrop-blur xl:flex">
           <BrandMark />
 
           <nav className="space-y-2">
@@ -130,8 +149,8 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
                   className={({ isActive }) =>
                     `flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition ${
                       isActive
-                        ? 'bg-ink text-white shadow-soft'
-                        : 'text-ink/70 hover:bg-cloud/80'
+                        ? 'bg-[linear-gradient(135deg,rgba(24,53,61,1),rgba(36,92,98,1))] text-white shadow-soft'
+                        : 'text-ink/70 hover:bg-cloud/90'
                     }`
                   }
                 >
@@ -142,15 +161,31 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
             })}
           </nav>
 
-          <div className="rounded-[28px] bg-cloud/90 p-5">
+          <div className="rounded-[28px] border border-sun/30 bg-[linear-gradient(145deg,rgba(255,216,107,0.2),rgba(255,255,255,0.7))] p-5">
             <div className="flex items-center gap-3 text-sm font-semibold text-ink">
-              <Sparkles className="h-4 w-4 text-coral" />
-              Bright theme direction
+              <Sparkles className="h-4 w-4 text-amber" />
+              Kids-first visual direction
             </div>
             <p className="mt-3 text-sm leading-6 text-ink/65">
-              The UI leans warm, playful, and family-first so the CRM matches the
-              tone of an early learning institute instead of a cold back office.
+              Colors, rounded cards, and sticker-style chips are tuned for
+              families and staff supporting little learners ages 6 months to 7 years.
             </p>
+          </div>
+
+          <div className="rounded-[28px] border border-ink/5 bg-white/90 p-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-ink/45">
+              Learning stages
+            </p>
+            <div className="mt-3 space-y-2">
+              {learningStages.map((stage) => (
+                <p
+                  key={stage.label}
+                  className={`rounded-2xl border px-3 py-2 text-sm font-semibold text-ink/75 ${stage.style}`}
+                >
+                  {stage.label}
+                </p>
+              ))}
+            </div>
           </div>
 
           <div className="rounded-[28px] border border-ink/5 bg-white/90 p-5">
@@ -174,14 +209,33 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
         </aside>
 
         <main className="min-w-0 flex-1 space-y-5">
-          <header className="relative overflow-hidden rounded-[34px] border border-white/70 bg-white/85 p-5 shadow-soft backdrop-blur md:p-6">
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(90deg,rgba(31,118,110,0.18),rgba(183,221,215,0),rgba(242,123,100,0.2))]" />
+          <header className="relative overflow-hidden rounded-[34px] border border-white/70 bg-white/88 p-5 shadow-soft backdrop-blur md:p-6">
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(90deg,rgba(158,216,255,0.34),rgba(183,221,215,0),rgba(255,143,171,0.25))]" />
+            <div className="pointer-events-none absolute right-6 top-8 h-12 w-12 rounded-full bg-sun/35 blur-md" />
+
+            <div className="relative z-10 mb-4 overflow-hidden rounded-[22px] border border-white/70 bg-white/60">
+              <img
+                src={kidsRainbowBanner}
+                alt="Colorful early-learning visual"
+                className="h-20 w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(24,53,61,0.45),rgba(24,53,61,0.06),rgba(24,53,61,0.4))]" />
+              <p className="absolute left-4 top-1/2 -translate-y-1/2 font-kids text-sm text-white md:text-base">
+                Designed for infant, toddler, and early-years teams
+              </p>
+            </div>
 
             <div className="relative z-10 flex flex-wrap items-start justify-between gap-4">
               <div className="space-y-3">
-                <div className="inline-flex items-center gap-2 rounded-full bg-cloud px-3 py-1 text-xs font-semibold uppercase tracking-[0.26em] text-ink/55">
-                  <CalendarClock className="h-3.5 w-3.5 text-coral" />
-                  Edina Campus CRM
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-cloud px-3 py-1 text-xs font-semibold uppercase tracking-[0.26em] text-ink/55">
+                    <CalendarClock className="h-3.5 w-3.5 text-coral" />
+                    Edina Campus CRM
+                  </span>
+                  <span className="kid-sticker bg-sun/30 text-ink">
+                    <Sparkles className="h-3.5 w-3.5" />
+                    Ages 6 months to 7 years
+                  </span>
                 </div>
                 <div>
                   <h1 className="font-display text-4xl leading-tight text-ink md:text-5xl">

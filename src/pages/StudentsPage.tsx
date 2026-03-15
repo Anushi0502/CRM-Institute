@@ -1,4 +1,6 @@
 import { HeartHandshake, ShieldCheck, Wallet } from 'lucide-react'
+import kidsCloudStrip from '../assets/kids-cloud-strip.svg'
+import kidsPlayLane from '../assets/kids-play-lane.svg'
 import { SectionCard } from '../components/SectionCard'
 import { StudentTable } from '../components/StudentTable'
 import type { PageStateProps } from '../types/crm'
@@ -30,6 +32,23 @@ export function StudentsPage({ state }: PageStateProps) {
         title="Family-facing student snapshot"
         description="The roster balances operations details with the softer context teams need before calling families."
       >
+        <div className="mb-4 grid gap-3 md:grid-cols-[1.15fr,0.85fr]">
+          <div className="overflow-hidden rounded-[20px] border border-sky/30 bg-white/70">
+            <img
+              src={kidsCloudStrip}
+              alt="Student care cloud visual"
+              className="h-20 w-full object-cover"
+            />
+          </div>
+          <div className="overflow-hidden rounded-[20px] border border-leaf/30 bg-white/70">
+            <img
+              src={kidsPlayLane}
+              alt="Student care play visual"
+              className="h-20 w-full object-cover"
+            />
+          </div>
+        </div>
+
         <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
           <article className="rounded-[20px] border border-teal/20 bg-teal/10 px-4 py-3">
             <p className="text-xs uppercase tracking-[0.2em] text-teal/80">Total students</p>
