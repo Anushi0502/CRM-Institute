@@ -5,19 +5,108 @@
 @tailwind utilities;
 
 :root {
-  --crm-body-text: #2f2e4d;
-  --crm-surface: #fff7ef;
-  --crm-bg-radial-1: rgba(255, 122, 89, 0.28);
-  --crm-bg-radial-2: rgba(255, 95, 135, 0.26);
-  --crm-bg-radial-3: rgba(255, 190, 61, 0.24);
-  --crm-bg-gradient-start: #fff6eb;
-  --crm-bg-gradient-mid: #fff0f5;
-  --crm-bg-gradient-end: #fff9e9;
-  --crm-orb-teal: 255, 122, 89;
-  --crm-orb-coral: 255, 95, 135;
-  --crm-orb-plum: 255, 190, 61;
-  --crm-sprinkle-2: 255, 190, 61;
-  --crm-sprinkle-3: 146, 217, 255;
+  --crm-color-canvas: 255 245 229;
+  --crm-color-white: 255 252 247;
+  --crm-color-ink: 41 35 72;
+  --crm-color-teal: 255 106 76;
+  --crm-color-mint: 255 224 177;
+  --crm-color-coral: 255 89 131;
+  --crm-color-amber: 255 185 53;
+  --crm-color-amber-700: 161 84 16;
+  --crm-color-plum: 140 79 149;
+  --crm-color-cloud: 255 236 218;
+  --crm-color-sky: 136 214 255;
+  --crm-color-sky-700: 27 109 161;
+  --crm-color-sun: 255 217 92;
+  --crm-color-berry: 255 95 154;
+  --crm-color-leaf: 136 211 127;
+  --crm-color-lilac: 204 165 255;
+  --crm-shadow-color: 41, 35, 72;
+  --crm-body-text: rgb(var(--crm-color-ink));
+  --crm-surface: rgb(var(--crm-color-canvas));
+  --crm-bg-radial-1: rgba(255, 122, 89, 0.42);
+  --crm-bg-radial-2: rgba(255, 95, 135, 0.36);
+  --crm-bg-radial-3: rgba(255, 190, 61, 0.34);
+  --crm-bg-gradient-start: #ffefda;
+  --crm-bg-gradient-mid: #ffe2ef;
+  --crm-bg-gradient-end: #fff1cf;
+  --crm-orb-teal: 255, 106, 76;
+  --crm-orb-coral: 255, 89, 131;
+  --crm-orb-plum: 255, 185, 53;
+  --crm-sprinkle-2: 255, 185, 53;
+  --crm-sprinkle-3: 136, 214, 255;
+  --crm-gradient-section-card: linear-gradient(
+    165deg,
+    rgba(var(--crm-color-white), 0.94),
+    rgba(var(--crm-color-canvas), 0.88)
+  );
+  --crm-gradient-section-top: linear-gradient(
+    90deg,
+    rgba(var(--crm-color-sky), 0.38),
+    rgba(var(--crm-color-white), 0),
+    rgba(var(--crm-color-berry), 0.3)
+  );
+  --crm-gradient-sidebar: linear-gradient(
+    165deg,
+    rgba(var(--crm-color-white), 0.95),
+    rgba(var(--crm-color-canvas), 0.9)
+  );
+  --crm-gradient-nav-active: linear-gradient(
+    135deg,
+    rgba(var(--crm-color-ink), 1),
+    rgba(var(--crm-color-plum), 0.95)
+  );
+  --crm-gradient-warm-card: linear-gradient(
+    145deg,
+    rgba(var(--crm-color-sun), 0.26),
+    rgba(var(--crm-color-white), 0.82)
+  );
+  --crm-gradient-header-top: linear-gradient(
+    90deg,
+    rgba(var(--crm-color-sky), 0.38),
+    rgba(var(--crm-color-mint), 0.06),
+    rgba(var(--crm-color-berry), 0.3)
+  );
+  --crm-gradient-banner-overlay: linear-gradient(
+    90deg,
+    rgba(var(--crm-color-ink), 0.55),
+    rgba(var(--crm-color-ink), 0.08),
+    rgba(var(--crm-color-ink), 0.44)
+  );
+  --crm-gradient-brand: linear-gradient(
+    145deg,
+    rgba(var(--crm-color-teal), 0.98) 0%,
+    rgba(var(--crm-color-sky-700), 0.98) 50%,
+    rgba(var(--crm-color-plum), 0.96) 100%
+  );
+  --crm-gradient-brand-overlay: linear-gradient(
+    90deg,
+    rgba(var(--crm-color-ink), 0.58),
+    rgba(var(--crm-color-ink), 0.12),
+    rgba(var(--crm-color-ink), 0.48)
+  );
+  --crm-gradient-login-shell: linear-gradient(
+    150deg,
+    rgba(var(--crm-color-teal), 0.98),
+    rgba(var(--crm-color-sky-700), 0.96),
+    rgba(var(--crm-color-plum), 0.93)
+  );
+  --crm-gradient-login-overlay: linear-gradient(
+    115deg,
+    rgba(var(--crm-color-ink), 0.76),
+    rgba(var(--crm-color-ink), 0.22),
+    rgba(var(--crm-color-ink), 0.68)
+  );
+  --crm-gradient-progress: linear-gradient(
+    90deg,
+    rgb(var(--crm-color-teal)) 0%,
+    rgb(var(--crm-color-amber)) 100%
+  );
+  --crm-gradient-task-rail: linear-gradient(
+    180deg,
+    rgb(var(--crm-color-teal)) 0%,
+    rgb(var(--crm-color-coral)) 100%
+  );
   color: var(--crm-body-text);
   background-color: var(--crm-surface);
   font-family: 'Manrope', sans-serif;
@@ -28,51 +117,102 @@
 }
 
 [data-crm-theme='playful-meadow'] {
-  --crm-body-text: #18353d;
-  --crm-surface: #fcf8ef;
-  --crm-bg-radial-1: rgba(255, 143, 171, 0.3);
-  --crm-bg-radial-2: rgba(158, 216, 255, 0.44);
-  --crm-bg-radial-3: rgba(203, 185, 255, 0.2);
-  --crm-bg-gradient-start: #fffaf1;
-  --crm-bg-gradient-mid: #fdf5ff;
-  --crm-bg-gradient-end: #f5fbff;
-  --crm-orb-teal: 31, 118, 110;
-  --crm-orb-coral: 242, 123, 100;
-  --crm-orb-plum: 114, 80, 125;
-  --crm-sprinkle-2: 255, 216, 107;
-  --crm-sprinkle-3: 141, 217, 184;
+  --crm-color-canvas: 248 253 244;
+  --crm-color-white: 255 255 251;
+  --crm-color-ink: 20 57 66;
+  --crm-color-teal: 20 140 125;
+  --crm-color-mint: 186 240 228;
+  --crm-color-coral: 248 103 123;
+  --crm-color-amber: 245 174 62;
+  --crm-color-amber-700: 152 90 22;
+  --crm-color-plum: 126 91 158;
+  --crm-color-cloud: 236 248 241;
+  --crm-color-sky: 130 210 255;
+  --crm-color-sky-700: 31 115 158;
+  --crm-color-sun: 255 214 99;
+  --crm-color-berry: 247 120 172;
+  --crm-color-leaf: 117 209 149;
+  --crm-color-lilac: 190 173 255;
+  --crm-shadow-color: 20, 57, 66;
+  --crm-body-text: rgb(var(--crm-color-ink));
+  --crm-surface: rgb(var(--crm-color-canvas));
+  --crm-bg-radial-1: rgba(248, 103, 123, 0.42);
+  --crm-bg-radial-2: rgba(130, 210, 255, 0.44);
+  --crm-bg-radial-3: rgba(190, 173, 255, 0.34);
+  --crm-bg-gradient-start: #fafff2;
+  --crm-bg-gradient-mid: #f7f0ff;
+  --crm-bg-gradient-end: #ecfaff;
+  --crm-orb-teal: 20, 140, 125;
+  --crm-orb-coral: 248, 103, 123;
+  --crm-orb-plum: 126, 91, 158;
+  --crm-sprinkle-2: 255, 214, 99;
+  --crm-sprinkle-3: 117, 209, 149;
 }
 
 [data-crm-theme='sunrise-carnival'] {
-  --crm-body-text: #2f2e4d;
-  --crm-surface: #fff7ef;
-  --crm-bg-radial-1: rgba(255, 122, 89, 0.28);
-  --crm-bg-radial-2: rgba(255, 95, 135, 0.26);
-  --crm-bg-radial-3: rgba(255, 190, 61, 0.24);
-  --crm-bg-gradient-start: #fff6eb;
-  --crm-bg-gradient-mid: #fff0f5;
-  --crm-bg-gradient-end: #fff9e9;
-  --crm-orb-teal: 255, 122, 89;
-  --crm-orb-coral: 255, 95, 135;
-  --crm-orb-plum: 255, 190, 61;
-  --crm-sprinkle-2: 255, 190, 61;
-  --crm-sprinkle-3: 146, 217, 255;
+  --crm-color-canvas: 255 245 229;
+  --crm-color-white: 255 252 247;
+  --crm-color-ink: 41 35 72;
+  --crm-color-teal: 255 106 76;
+  --crm-color-mint: 255 224 177;
+  --crm-color-coral: 255 89 131;
+  --crm-color-amber: 255 185 53;
+  --crm-color-amber-700: 161 84 16;
+  --crm-color-plum: 140 79 149;
+  --crm-color-cloud: 255 236 218;
+  --crm-color-sky: 136 214 255;
+  --crm-color-sky-700: 27 109 161;
+  --crm-color-sun: 255 217 92;
+  --crm-color-berry: 255 95 154;
+  --crm-color-leaf: 136 211 127;
+  --crm-color-lilac: 204 165 255;
+  --crm-shadow-color: 41, 35, 72;
+  --crm-body-text: rgb(var(--crm-color-ink));
+  --crm-surface: rgb(var(--crm-color-canvas));
+  --crm-bg-radial-1: rgba(255, 122, 89, 0.42);
+  --crm-bg-radial-2: rgba(255, 95, 135, 0.36);
+  --crm-bg-radial-3: rgba(255, 190, 61, 0.34);
+  --crm-bg-gradient-start: #ffefda;
+  --crm-bg-gradient-mid: #ffe2ef;
+  --crm-bg-gradient-end: #fff1cf;
+  --crm-orb-teal: 255, 106, 76;
+  --crm-orb-coral: 255, 89, 131;
+  --crm-orb-plum: 255, 185, 53;
+  --crm-sprinkle-2: 255, 185, 53;
+  --crm-sprinkle-3: 136, 214, 255;
 }
 
 [data-crm-theme='lagoon-breeze'] {
-  --crm-body-text: #12314c;
-  --crm-surface: #effaff;
-  --crm-bg-radial-1: rgba(105, 201, 141, 0.22);
-  --crm-bg-radial-2: rgba(77, 210, 255, 0.3);
-  --crm-bg-radial-3: rgba(247, 217, 74, 0.22);
-  --crm-bg-gradient-start: #f1fcff;
-  --crm-bg-gradient-mid: #ecfff7;
-  --crm-bg-gradient-end: #fffceb;
-  --crm-orb-teal: 0, 168, 168;
-  --crm-orb-coral: 77, 210, 255;
-  --crm-orb-plum: 255, 127, 106;
-  --crm-sprinkle-2: 247, 217, 74;
-  --crm-sprinkle-3: 105, 201, 141;
+  --crm-color-canvas: 236 250 255;
+  --crm-color-white: 248 255 255;
+  --crm-color-ink: 15 52 81;
+  --crm-color-teal: 0 163 169;
+  --crm-color-mint: 181 247 233;
+  --crm-color-coral: 255 109 90;
+  --crm-color-amber: 252 206 65;
+  --crm-color-amber-700: 139 99 14;
+  --crm-color-plum: 66 108 182;
+  --crm-color-cloud: 229 246 252;
+  --crm-color-sky: 58 199 255;
+  --crm-color-sky-700: 0 112 170;
+  --crm-color-sun: 251 228 100;
+  --crm-color-berry: 255 124 159;
+  --crm-color-leaf: 104 211 151;
+  --crm-color-lilac: 155 203 255;
+  --crm-shadow-color: 15, 52, 81;
+  --crm-body-text: rgb(var(--crm-color-ink));
+  --crm-surface: rgb(var(--crm-color-canvas));
+  --crm-bg-radial-1: rgba(104, 211, 151, 0.35);
+  --crm-bg-radial-2: rgba(58, 199, 255, 0.4);
+  --crm-bg-radial-3: rgba(252, 206, 65, 0.32);
+  --crm-bg-gradient-start: #ecfbff;
+  --crm-bg-gradient-mid: #e2fff2;
+  --crm-bg-gradient-end: #fff8da;
+  --crm-orb-teal: 0, 163, 169;
+  --crm-orb-coral: 58, 199, 255;
+  --crm-orb-plum: 255, 109, 90;
+  --crm-sprinkle-2: 252, 206, 65;
+  --crm-sprinkle-3: 104, 211, 151;
 }
 
 html {
@@ -137,8 +277,8 @@ textarea {
 }
 
 ::selection {
-  background: rgba(240, 180, 91, 0.45);
-  color: #18353d;
+  background: rgba(var(--crm-color-amber), 0.55);
+  color: rgb(var(--crm-color-ink));
 }
 
 @keyframes crm-drift {

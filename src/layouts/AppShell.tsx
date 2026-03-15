@@ -135,7 +135,7 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
       <div className="kid-sprinkle kid-sprinkle--three" />
 
       <div className="relative mx-auto flex max-w-[1600px] gap-5 px-4 py-4 lg:px-6">
-        <aside className="hidden w-[320px] shrink-0 flex-col gap-6 rounded-[34px] border border-white/70 bg-[linear-gradient(165deg,rgba(255,255,255,0.92),rgba(255,251,242,0.92))] p-6 shadow-float backdrop-blur xl:flex">
+        <aside className="hidden w-[320px] shrink-0 flex-col gap-6 rounded-[34px] border border-white/75 bg-[var(--crm-gradient-sidebar)] p-6 shadow-float backdrop-blur xl:flex">
           <BrandMark />
 
           <nav className="space-y-2">
@@ -149,7 +149,7 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
                   className={({ isActive }) =>
                     `flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition ${
                       isActive
-                        ? 'bg-[linear-gradient(135deg,rgba(24,53,61,1),rgba(36,92,98,1))] text-white shadow-soft'
+                        ? 'bg-[var(--crm-gradient-nav-active)] text-white shadow-soft'
                         : 'text-ink/70 hover:bg-cloud/90'
                     }`
                   }
@@ -161,7 +161,7 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
             })}
           </nav>
 
-          <div className="rounded-[28px] border border-sun/30 bg-[linear-gradient(145deg,rgba(255,216,107,0.2),rgba(255,255,255,0.7))] p-5">
+          <div className="rounded-[28px] border border-sun/40 bg-[var(--crm-gradient-warm-card)] p-5">
             <div className="flex items-center gap-3 text-sm font-semibold text-ink">
               <Sparkles className="h-4 w-4 text-amber" />
               Kids-first visual direction
@@ -210,7 +210,7 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
 
         <main className="min-w-0 flex-1 space-y-5">
           <header className="relative overflow-hidden rounded-[34px] border border-white/70 bg-white/88 p-5 shadow-soft backdrop-blur md:p-6">
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(90deg,rgba(158,216,255,0.34),rgba(183,221,215,0),rgba(255,143,171,0.25))]" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[var(--crm-gradient-header-top)]" />
             <div className="pointer-events-none absolute right-6 top-8 h-12 w-12 rounded-full bg-sun/35 blur-md" />
 
             <div className="relative z-10 mb-4 overflow-hidden rounded-[22px] border border-white/70 bg-white/60">
@@ -219,7 +219,7 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
                 alt="Colorful early-learning visual"
                 className="h-20 w-full object-cover"
               />
-              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(24,53,61,0.45),rgba(24,53,61,0.06),rgba(24,53,61,0.4))]" />
+              <div className="absolute inset-0 bg-[var(--crm-gradient-banner-overlay)]" />
               <p className="absolute left-4 top-1/2 -translate-y-1/2 font-kids text-sm text-white md:text-base">
                 Designed for infant, toddler, and early-years teams
               </p>

@@ -3,7 +3,7 @@ import type { Program } from '../types/crm'
 export function ProgramCard({ program }: { program: Program }) {
   return (
     <article className="group relative overflow-hidden rounded-[24px] border border-ink/5 bg-white/90 p-5 shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-float">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-[linear-gradient(90deg,rgba(31,118,110,0.16),rgba(240,180,91,0),rgba(242,123,100,0.14))]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-[var(--crm-gradient-section-top)]" />
       <div className="relative z-10">
         <div className="flex items-start justify-between gap-3">
           <div>
@@ -24,7 +24,7 @@ export function ProgramCard({ program }: { program: Program }) {
           </div>
           <div className="h-2 rounded-full bg-ink/10">
             <div
-              className="h-2 rounded-full bg-[linear-gradient(90deg,#1f766e_0%,#f0b45b_100%)]"
+              className="h-2 rounded-full bg-[var(--crm-gradient-progress)]"
               style={{ width: `${program.fillRate}%` }}
             />
           </div>

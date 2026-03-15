@@ -134,7 +134,7 @@ export function LoginPage({ authState }: LoginPageProps) {
       <div className="kid-sprinkle kid-sprinkle--three" />
 
       <div className="mx-auto grid min-h-[calc(100vh-2rem)] w-full max-w-[1600px] gap-5 xl:grid-cols-[1.35fr,0.75fr]">
-        <section className="relative overflow-hidden rounded-[38px] border border-white/80 bg-[linear-gradient(150deg,rgba(24,87,95,0.97),rgba(39,99,136,0.95),rgba(114,80,125,0.92))] p-5 text-white shadow-float md:p-7">
+        <section className="relative overflow-hidden rounded-[38px] border border-white/80 bg-[var(--crm-gradient-login-shell)] p-5 text-white shadow-float md:p-7">
           <div className="pointer-events-none absolute -right-20 -top-24 h-80 w-80 rounded-full bg-sky/30 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-24 left-1/3 h-80 w-80 rounded-full bg-berry/25 blur-3xl" />
 
@@ -145,7 +145,7 @@ export function LoginPage({ authState }: LoginPageProps) {
                 alt="BrightMinds Institute campus and learning atmosphere"
                 className="h-[280px] w-full object-cover md:h-[360px]"
               />
-              <div className="absolute inset-0 bg-[linear-gradient(115deg,rgba(8,39,38,0.74),rgba(11,55,52,0.24),rgba(24,53,61,0.72))]" />
+              <div className="absolute inset-0 bg-[var(--crm-gradient-login-overlay)]" />
 
               <div className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/12 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-mint/95 backdrop-blur">
                 <Sparkles className="h-3.5 w-3.5" />
@@ -177,7 +177,7 @@ export function LoginPage({ authState }: LoginPageProps) {
                   alt="Rainbow classroom visual"
                   className="h-24 w-full object-cover"
                 />
-                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,39,38,0.46),rgba(8,39,38,0.08),rgba(8,39,38,0.38))]" />
+                <div className="absolute inset-0 bg-[var(--crm-gradient-banner-overlay)]" />
                 <p className="absolute left-3 top-1/2 -translate-y-1/2 font-kids text-sm text-white md:text-base">
                   Joyful visuals for little learners
                 </p>
