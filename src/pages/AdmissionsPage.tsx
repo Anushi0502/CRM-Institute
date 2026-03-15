@@ -1,13 +1,15 @@
 import { BarChart3, Search, Sparkles } from 'lucide-react'
-import { useDeferredValue, useState } from 'react'
+import { useDeferredValue, useEffect, useState } from 'react'
 import kidsCloudStrip from '../assets/kids-cloud-strip.svg'
 import kidsRainbowBanner from '../assets/kids-rainbow-banner.svg'
 import { LeadTable } from '../components/LeadTable'
 import { PipelineBoard } from '../components/PipelineBoard'
 import { SectionCard } from '../components/SectionCard'
+import { useGamificationContext } from '../context/GamificationContext'
 import type { PageStateProps } from '../types/crm'
 
 export function AdmissionsPage({ state }: PageStateProps) {
+  const { logAdmissionsSearch, reviewLead, reviewedLeadIds } = useGamificationContext()
   const [query, setQuery] = useState('')
   const deferredQuery = useDeferredValue(query.trim().toLowerCase())
 
@@ -29,6 +31,12 @@ export function AdmissionsPage({ state }: PageStateProps) {
   const highPriorityCount = filteredLeads.filter((lead) => lead.priority === 'High').length
   const toursBooked = filteredLeads.filter((lead) => lead.stage === 'Tour Booked').length
   const enrolledCount = filteredLeads.filter((lead) => lead.stage === 'Enrolled').length
+
+  useEffect(() => {
+    if (deferredQuery.length >= 2) {
+      logAdmissionsSearch(deferredQuery)
+    }
+  }, [deferredQuery, logAdmissionsSearch])
 
   return (
     <div className="space-y-5">
@@ -110,7 +118,11 @@ export function AdmissionsPage({ state }: PageStateProps) {
         title="All admissions records"
         description="A structured follow-up table for coordinators, directors, and family care staff."
       >
-        <LeadTable leads={filteredLeads} />
+        <LeadTable
+          leads={filteredLeads}
+          reviewedLeadIds={reviewedLeadIds}
+          onReviewLead={reviewLead}
+        />
       </SectionCard>
     </div>
   )

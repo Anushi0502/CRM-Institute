@@ -3,9 +3,11 @@ import kidsPlayLane from '../assets/kids-play-lane.svg'
 import kidsRainbowBanner from '../assets/kids-rainbow-banner.svg'
 import { ProgramCard } from '../components/ProgramCard'
 import { SectionCard } from '../components/SectionCard'
+import { useGamificationContext } from '../context/GamificationContext'
 import type { PageStateProps } from '../types/crm'
 
 export function ProgramsPage({ state }: PageStateProps) {
+  const { inspectProgram, inspectedProgramIds } = useGamificationContext()
   const averageFill =
     state.data.programs.length === 0
       ? 0
@@ -68,7 +70,12 @@ export function ProgramsPage({ state }: PageStateProps) {
       >
         <div className="grid gap-4 xl:grid-cols-2">
           {state.data.programs.map((program) => (
-            <ProgramCard key={program.id} program={program} />
+            <ProgramCard
+              key={program.id}
+              program={program}
+              inspectedProgramIds={inspectedProgramIds}
+              onInspectProgram={inspectProgram}
+            />
           ))}
         </div>
       </SectionCard>

@@ -1,19 +1,25 @@
-import { useState, type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import {
   BookOpenCheck,
   CalendarClock,
+  Flame,
   GraduationCap,
   LayoutDashboard,
   LogOut,
   MessageSquareHeart,
   ServerCog,
   Sparkles,
+  Trophy,
   Users,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { NavLink, useLocation } from 'react-router-dom'
+import { BadgeShelf } from '../components/BadgeShelf'
 import { BrandMark } from '../components/BrandMark'
+import { GameHud } from '../components/GameHud'
+import { QuestPanel } from '../components/QuestPanel'
 import kidsRainbowBanner from '../assets/kids-rainbow-banner.svg'
+import { useGamificationContext } from '../context/GamificationContext'
 import { signOutUser } from '../services/authService'
 import type { AuthState } from '../types/auth'
 import type { ConnectionState, DashboardState } from '../types/crm'
@@ -107,12 +113,25 @@ function isActivePath(currentPath: string, itemPath: string) {
 export function AppShell({ authState, dashboardState, children }: AppShellProps) {
   const location = useLocation()
   const [actionError, setActionError] = useState<string | null>(null)
+  const {
+    badges,
+    clearCelebration,
+    latestCelebration,
+    quests,
+    summary,
+    visitPage,
+  } = useGamificationContext()
   const pageMeta = pageTitles[location.pathname] ?? pageTitles['/']
   const highPriorityLeads = dashboardState.data.leads.filter((lead) => lead.priority === 'High').length
   const reviewStudents = dashboardState.data.students.filter(
     (student) => student.tuitionStatus === 'Review',
   ).length
   const pendingTasks = dashboardState.data.tasks.filter((task) => task.status !== 'Done').length
+  const spotlightBadges = badges.slice(0, 3)
+
+  useEffect(() => {
+    visitPage(location.pathname)
+  }, [location.pathname, visitPage])
 
   async function handleSignOut() {
     try {
@@ -126,7 +145,7 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
   }
 
   return (
-    <div className="relative min-h-screen overflow-x-clip">
+    <div className="crm-readable relative min-h-screen overflow-x-clip">
       <div className="crm-orb crm-orb--teal" />
       <div className="crm-orb crm-orb--coral" />
       <div className="crm-orb crm-orb--plum" />
@@ -206,6 +225,10 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
             </div>
             <p className="mt-3 text-sm leading-6 text-ink/80">{dashboardState.data.message}</p>
           </div>
+
+          <GameHud summary={summary} />
+          <QuestPanel quests={quests} />
+          <BadgeShelf badges={spotlightBadges} />
         </aside>
 
         <main className="min-w-0 flex-1 space-y-5">
@@ -254,6 +277,14 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
                   </span>
                   <span className="rounded-full border border-amber/30 bg-amber/20 px-3 py-1 text-xs font-semibold text-amber-700">
                     {pendingTasks} active tasks
+                  </span>
+                  <span className="rounded-full border border-plum/20 bg-plum/10 px-3 py-1 text-xs font-semibold text-plum">
+                    <Trophy className="mr-1 inline-flex h-3.5 w-3.5" />
+                    Level {summary.level}
+                  </span>
+                  <span className="rounded-full border border-coral/20 bg-coral/10 px-3 py-1 text-xs font-semibold text-coral">
+                    <Flame className="mr-1 inline-flex h-3.5 w-3.5" />
+                    {summary.streakDays} day streak
                   </span>
                 </div>
               </div>
@@ -318,6 +349,25 @@ export function AppShell({ authState, dashboardState, children }: AppShellProps)
             {authState.error || actionError ? (
               <div className="relative z-10 mt-3 rounded-[24px] border border-coral/20 bg-coral/10 px-4 py-3 text-sm text-coral">
                 {actionError ?? authState.error}
+              </div>
+            ) : null}
+
+            <div className="relative z-10 mt-4 xl:hidden">
+              <GameHud summary={summary} compact />
+            </div>
+
+            {latestCelebration ? (
+              <div className="relative z-10 mt-4 rounded-[22px] border border-amber/35 bg-amber/20 px-4 py-3 text-sm text-ink shadow-soft">
+                <p className="font-semibold">
+                  {latestCelebration.title}: {latestCelebration.message}
+                  {latestCelebration.points ? ` (+${latestCelebration.points} XP)` : ''}
+                </p>
+                <button
+                  onClick={clearCelebration}
+                  className="mt-2 rounded-full border border-ink/20 bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-ink/70 transition hover:bg-white"
+                >
+                  Dismiss
+                </button>
               </div>
             ) : null}
           </header>

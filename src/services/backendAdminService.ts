@@ -84,7 +84,35 @@ interface StudentsResponse {
   students: BackendStudent[]
 }
 
-async function getAccessToken() {
+function getTokenExpiryEpoch(token: string) {
+  try {
+    const payloadSegment = token.split('.')[1]
+
+    if (!payloadSegment) {
+      return null
+    }
+
+    const base64Payload = payloadSegment.replace(/-/g, '+').replace(/_/g, '/')
+    const payload = JSON.parse(atob(base64Payload)) as { exp?: number }
+
+    return typeof payload.exp === 'number' ? payload.exp : null
+  } catch {
+    return null
+  }
+}
+
+function isTokenExpired(token: string, skewSeconds = 30) {
+  const expiryEpoch = getTokenExpiryEpoch(token)
+
+  if (!expiryEpoch) {
+    return false
+  }
+
+  const nowEpoch = Math.floor(Date.now() / 1000)
+  return expiryEpoch <= nowEpoch + skewSeconds
+}
+
+async function getAccessToken(forceRefresh = false) {
   if (!hasSupabaseConfig || !supabase) {
     throw new Error('Supabase is not configured yet.')
   }
@@ -95,10 +123,22 @@ async function getAccessToken() {
     throw new Error(error.message)
   }
 
-  const token = data.session?.access_token
+  const token = data.session?.access_token ?? ''
 
-  if (!token) {
-    throw new Error('No active session token found.')
+  if (forceRefresh || !token || isTokenExpired(token)) {
+    const { data: refreshData, error: refreshError } = await supabase.auth.refreshSession()
+
+    if (refreshError) {
+      throw new Error('Session expired. Please sign out and sign in again.')
+    }
+
+    const refreshedToken = refreshData.session?.access_token
+
+    if (!refreshedToken) {
+      throw new Error('Session expired. Please sign out and sign in again.')
+    }
+
+    return refreshedToken
   }
 
   return token
@@ -134,6 +174,15 @@ function toFriendlyBackendError(raw: string, status: number) {
     lower.includes('connection refused') ||
     lower.includes('connect error')
 
+  if (
+    lower.includes('invalid or expired token') ||
+    lower.includes('jwt expired') ||
+    lower.includes('invalid jwt') ||
+    lower.includes('missing bearer token')
+  ) {
+    return 'Session expired. Please sign out and sign in again.'
+  }
+
   // Prefer explicit backend JSON errors (even with 5xx) over generic reachability text.
   if (cleaned && !looksLikeNetworkProxyFailure) {
     return cleaned
@@ -146,12 +195,9 @@ function toFriendlyBackendError(raw: string, status: number) {
   return `Backend request failed (${status}).`
 }
 
-async function backendRequest<T>(path: string, init?: RequestInit) {
-  const accessToken = await getAccessToken()
-  let response: Response
-
+async function executeBackendFetch(path: string, init: RequestInit | undefined, accessToken: string) {
   try {
-    response = await fetch(`${backendApiBase}${path}`, {
+    return await fetch(`${backendApiBase}${path}`, {
       ...init,
       headers: {
         'Content-Type': 'application/json',
@@ -179,6 +225,20 @@ async function backendRequest<T>(path: string, init?: RequestInit) {
     }
 
     throw error
+  }
+}
+
+async function backendRequest<T>(path: string, init?: RequestInit) {
+  let accessToken = await getAccessToken()
+  let response = await executeBackendFetch(path, init, accessToken)
+
+  if (response.status === 401) {
+    try {
+      accessToken = await getAccessToken(true)
+      response = await executeBackendFetch(path, init, accessToken)
+    } catch {
+      // Let the existing 401 response below surface as a friendly auth error.
+    }
   }
 
   if (response.status === 204) {

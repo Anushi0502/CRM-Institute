@@ -125,7 +125,7 @@ export function LoginPage({ authState }: LoginPageProps) {
   }
 
   return (
-    <div className="relative min-h-screen overflow-x-clip px-4 py-4 lg:px-6">
+    <div className="crm-readable relative min-h-screen overflow-x-clip px-4 py-4 lg:px-6">
       <div className="crm-orb crm-orb--teal" />
       <div className="crm-orb crm-orb--coral" />
       <div className="crm-orb crm-orb--plum" />

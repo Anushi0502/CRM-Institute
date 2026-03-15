@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
+import { GamificationProvider } from './context/GamificationContext'
 import { useDashboardData } from './hooks/useDashboardData'
+import { useGamification } from './hooks/useGamification'
 import { useSupabaseAuth } from './hooks/useSupabaseAuth'
 import { AppShell } from './layouts/AppShell'
 import { AdmissionsPage } from './pages/AdmissionsPage'
@@ -13,10 +15,12 @@ import { StudentsPage } from './pages/StudentsPage'
 import { initializeCrmTheme } from './services/themeService'
 import type { AuthState } from './types/auth'
 import type { DashboardState } from './types/crm'
+import type { GamificationContextValue } from './types/gamification'
 
 interface ProtectedLayoutProps {
   authState: AuthState
   dashboardState: DashboardState
+  gamification: GamificationContextValue
 }
 
 function AuthLoadingScreen() {
@@ -32,7 +36,7 @@ function AuthLoadingScreen() {
   )
 }
 
-function ProtectedLayout({ authState, dashboardState }: ProtectedLayoutProps) {
+function ProtectedLayout({ authState, dashboardState, gamification }: ProtectedLayoutProps) {
   if (authState.isConfigured && authState.isLoading) {
     return <AuthLoadingScreen />
   }
@@ -42,23 +46,26 @@ function ProtectedLayout({ authState, dashboardState }: ProtectedLayoutProps) {
   }
 
   return (
-    <AppShell authState={authState} dashboardState={dashboardState}>
-      <Routes>
-        <Route index element={<DashboardPage state={dashboardState} />} />
-        <Route path="/admissions" element={<AdmissionsPage state={dashboardState} />} />
-        <Route path="/students" element={<StudentsPage state={dashboardState} />} />
-        <Route path="/programs" element={<ProgramsPage state={dashboardState} />} />
-        <Route path="/engagement" element={<EngagementPage state={dashboardState} />} />
-        <Route path="/backend" element={<BackendPage />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </AppShell>
+    <GamificationProvider value={gamification}>
+      <AppShell authState={authState} dashboardState={dashboardState}>
+        <Routes>
+          <Route index element={<DashboardPage state={dashboardState} />} />
+          <Route path="/admissions" element={<AdmissionsPage state={dashboardState} />} />
+          <Route path="/students" element={<StudentsPage state={dashboardState} />} />
+          <Route path="/programs" element={<ProgramsPage state={dashboardState} />} />
+          <Route path="/engagement" element={<EngagementPage state={dashboardState} />} />
+          <Route path="/backend" element={<BackendPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </AppShell>
+    </GamificationProvider>
   )
 }
 
 function App() {
   const authState = useSupabaseAuth()
   const dashboardState = useDashboardData(authState.user?.id)
+  const gamification = useGamification()
 
   useEffect(() => {
     initializeCrmTheme()
@@ -81,7 +88,11 @@ function App() {
       <Route
         path="/*"
         element={
-          <ProtectedLayout authState={authState} dashboardState={dashboardState} />
+          <ProtectedLayout
+            authState={authState}
+            dashboardState={dashboardState}
+            gamification={gamification}
+          />
         }
       />
     </Routes>

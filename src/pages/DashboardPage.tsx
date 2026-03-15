@@ -8,9 +8,18 @@ import { StatCard } from '../components/StatCard'
 import { TaskPanel } from '../components/TaskPanel'
 import kidsPlayLane from '../assets/kids-play-lane.svg'
 import kidsRainbowBanner from '../assets/kids-rainbow-banner.svg'
+import { useGamificationContext } from '../context/GamificationContext'
 import type { PageStateProps } from '../types/crm'
 
 export function DashboardPage({ state }: PageStateProps) {
+  const {
+    completeTask,
+    completedTaskIds,
+    inspectProgram,
+    inspectedProgramIds,
+    reviewLead,
+    reviewedLeadIds,
+  } = useGamificationContext()
   const spotlightPrograms = state.data.programs.slice(0, 2)
   const spotlightLeads = state.data.leads.slice(0, 4)
   const highPriorityLeads = state.data.leads.filter((lead) => lead.priority === 'High').length
@@ -124,7 +133,11 @@ export function DashboardPage({ state }: PageStateProps) {
           description="The next actions most likely to move enrollment, retention, or family confidence."
           actionLabel="High focus"
         >
-          <TaskPanel tasks={state.data.tasks.slice(0, 3)} />
+          <TaskPanel
+            tasks={state.data.tasks.slice(0, 3)}
+            completedTaskIds={completedTaskIds}
+            onCompleteTask={completeTask}
+          />
         </SectionCard>
       </div>
 
@@ -145,7 +158,12 @@ export function DashboardPage({ state }: PageStateProps) {
         >
           <div className="grid gap-4 lg:grid-cols-2">
             {spotlightPrograms.map((program) => (
-              <ProgramCard key={program.id} program={program} />
+              <ProgramCard
+                key={program.id}
+                program={program}
+                inspectedProgramIds={inspectedProgramIds}
+                onInspectProgram={inspectProgram}
+              />
             ))}
           </div>
         </SectionCard>
@@ -165,7 +183,11 @@ export function DashboardPage({ state }: PageStateProps) {
         description="These families are closest to movement. Keep their next step visible and warm."
         actionLabel="Admissions shortlist"
       >
-        <LeadTable leads={spotlightLeads} />
+        <LeadTable
+          leads={spotlightLeads}
+          reviewedLeadIds={reviewedLeadIds}
+          onReviewLead={reviewLead}
+        />
         <div className="mt-5 flex flex-wrap items-center gap-3 text-sm text-ink/80">
           <span className="inline-flex items-center gap-2 rounded-full border border-amber/30 bg-amber/20 px-4 py-2 font-semibold text-ink">
             <Star className="h-4 w-4 text-amber" />

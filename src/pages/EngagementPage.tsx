@@ -4,9 +4,11 @@ import kidsRainbowBanner from '../assets/kids-rainbow-banner.svg'
 import { ActivityFeed } from '../components/ActivityFeed'
 import { SectionCard } from '../components/SectionCard'
 import { TaskPanel } from '../components/TaskPanel'
+import { useGamificationContext } from '../context/GamificationContext'
 import type { PageStateProps } from '../types/crm'
 
 export function EngagementPage({ state }: PageStateProps) {
+  const { completeTask, completedTaskIds } = useGamificationContext()
   const todayTasks = state.data.tasks.filter((task) => task.status === 'Today').length
   const thisWeekTasks = state.data.tasks.filter((task) => task.status === 'This Week').length
   const highPriorityTasks = state.data.tasks.filter((task) => task.priority === 'High').length
@@ -86,7 +88,11 @@ export function EngagementPage({ state }: PageStateProps) {
           title="Open communication tasks"
           description="Admissions, family care, and director actions stay visible in one lane."
         >
-          <TaskPanel tasks={state.data.tasks} />
+          <TaskPanel
+            tasks={state.data.tasks}
+            completedTaskIds={completedTaskIds}
+            onCompleteTask={completeTask}
+          />
         </SectionCard>
       </div>
 

@@ -1,6 +1,19 @@
 import type { Program } from '../types/crm'
+import { PROGRAM_INSPECT_POINTS } from '../services/gamificationService'
 
-export function ProgramCard({ program }: { program: Program }) {
+interface ProgramCardProps {
+  program: Program
+  inspectedProgramIds?: string[]
+  onInspectProgram?: (programId: string) => void
+}
+
+export function ProgramCard({
+  program,
+  inspectedProgramIds = [],
+  onInspectProgram,
+}: ProgramCardProps) {
+  const isInspected = inspectedProgramIds.includes(program.id)
+
   return (
     <article className="kid-panel group relative overflow-hidden rounded-[24px] border border-ink/5 bg-white/90 p-5 shadow-soft transition duration-300 hover:-translate-y-1 hover:shadow-float">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-[var(--crm-gradient-section-top)]" />
@@ -37,6 +50,20 @@ export function ProgramCard({ program }: { program: Program }) {
           <span className="kid-ribbon rounded-full border border-amber/40 bg-amber/22 px-3 py-1 text-xs font-semibold text-amber-700">
             {program.waitlist} waitlist
           </span>
+          {onInspectProgram ? (
+            <button
+              type="button"
+              disabled={isInspected}
+              onClick={() => onInspectProgram(program.id)}
+              className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] transition ${
+                isInspected
+                  ? 'cursor-not-allowed border border-teal/25 bg-teal/10 text-teal'
+                  : 'kid-ghost-button hover:bg-white'
+              }`}
+            >
+              {isInspected ? 'Scouted' : `Scout demand (+${PROGRAM_INSPECT_POINTS} XP)`}
+            </button>
+          ) : null}
         </div>
 
         <div className="mt-5 space-y-2 text-sm text-ink/80">
