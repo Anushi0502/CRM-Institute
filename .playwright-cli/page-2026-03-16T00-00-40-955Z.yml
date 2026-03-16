@@ -1,0 +1,132 @@
+- generic [ref=e4]:
+  - generic [ref=e6]:
+    - generic [ref=e7]:
+      - generic [ref=e8]:
+        - img "BrightMinds Institute campus and learning atmosphere" [ref=e9]
+        - generic [ref=e12]:
+          - img [ref=e13]
+          - text: BrightMinds CRM
+        - generic [ref=e18]:
+          - img [ref=e19]
+          - text: Built for ages 6m to 7y
+        - generic [ref=e22]:
+          - paragraph [ref=e23]: Little learners operations suite
+          - heading "A joyful CRM login for infant, toddler, and early-years care teams." [level=1] [ref=e24]
+          - paragraph [ref=e25]: Unified access to family communication, learning milestones, and admissions flow for children from 6 months to 7 years.
+          - generic [ref=e26]:
+            - generic [ref=e27]: Role-aware routing
+            - generic [ref=e28]: Multi-child family portal
+            - generic [ref=e29]: Supabase auth and sync
+      - generic [ref=e30]:
+        - generic [ref=e32]:
+          - generic [ref=e33]:
+            - img "Rainbow classroom visual" [ref=e34]
+            - generic [ref=e36]:
+              - paragraph [ref=e37]: Joyful visuals for little learners
+              - paragraph [ref=e38]: Story-led classrooms and playful parent touchpoints
+          - img "Play lane themed visual" [ref=e40]
+        - generic [ref=e41]:
+          - paragraph [ref=e42]: Product pulse
+          - generic [ref=e43]:
+            - generic [ref=e44]:
+              - paragraph [ref=e45]: Parent app
+              - paragraph [ref=e46]: Admissions, attendance, messaging, billing, and family records in one household workspace.
+            - generic [ref=e47]:
+              - paragraph [ref=e48]: Admin crm
+              - paragraph [ref=e49]: Lead flow, student operations, theme controls, and role-protected management.
+    - generic [ref=e50]:
+      - generic [ref=e51]:
+        - generic [ref=e52]:
+          - img [ref=e54]
+          - paragraph [ref=e56]: Little learners enrolled
+          - paragraph [ref=e57]: "128"
+          - paragraph [ref=e58]: Across infant, toddler, and early-years programs
+        - generic [ref=e59]:
+          - img [ref=e61]
+          - paragraph [ref=e64]: Family reply speed
+          - paragraph [ref=e65]: 18m
+          - paragraph [ref=e66]: Average response handling for active parent conversations
+        - generic [ref=e67]:
+          - img [ref=e69]
+          - paragraph [ref=e78]: Happy retention outlook
+          - paragraph [ref=e79]: 96%
+          - paragraph [ref=e80]: Confidence signal from family touchpoints and renewal flow
+      - generic [ref=e81]:
+        - article [ref=e82]:
+          - img [ref=e84]
+          - paragraph [ref=e87]: Infant nest
+          - paragraph [ref=e88]: 6 months to 18 months
+        - article [ref=e89]:
+          - img [ref=e91]
+          - paragraph [ref=e93]: Toddler explorers
+          - paragraph [ref=e94]: 18 months to 3 years
+        - article [ref=e95]:
+          - img [ref=e97]
+          - paragraph [ref=e100]: Early years launch
+          - paragraph [ref=e101]: 3 years to 7 years
+    - generic [ref=e102]:
+      - article [ref=e103]:
+        - generic [ref=e104]:
+          - img [ref=e106]
+          - generic [ref=e111]: Core
+        - paragraph [ref=e112]: Admissions command center
+        - paragraph [ref=e113]: Track inquiries, tours, applications, and waitlist movement with a single family timeline.
+      - article [ref=e114]:
+        - generic [ref=e115]:
+          - img [ref=e117]
+          - generic [ref=e120]: Core
+        - paragraph [ref=e121]: Student care visibility
+        - paragraph [ref=e122]: Attendance, milestones, and support focus stay connected to operations and guardian communication.
+      - article [ref=e123]:
+        - generic [ref=e124]:
+          - img [ref=e126]
+          - generic [ref=e129]: Core
+        - paragraph [ref=e130]: Secure backend controls
+        - paragraph [ref=e131]: Supabase auth management and role-aware backend actions from one protected interface.
+  - generic [ref=e132]:
+    - generic [ref=e133]:
+      - paragraph [ref=e134]: Secure sign in
+      - heading "Welcome back, care team" [level=2] [ref=e135]
+      - paragraph [ref=e136]: Continue into your kid-focused CRM workspace.
+      - generic [ref=e137]:
+        - img [ref=e138]
+        - text: Infant to age 7 family journey
+    - generic [ref=e143]:
+      - generic [ref=e144]:
+        - img [ref=e145]
+        - text: Growth dashboards
+      - generic [ref=e147]:
+        - img [ref=e148]
+        - text: Daily classroom sync
+    - generic [ref=e152]:
+      - generic [ref=e153]:
+        - text: Email address
+        - generic [ref=e154]:
+          - img [ref=e155]
+          - textbox "Email address" [ref=e158]:
+            - /placeholder: you@institute.com
+      - generic [ref=e159]:
+        - text: Password
+        - generic [ref=e160]:
+          - img [ref=e161]
+          - textbox "Password Show password" [ref=e164]:
+            - /placeholder: Enter password
+          - button "Show password" [ref=e165] [cursor=pointer]:
+            - img [ref=e166]
+      - generic [ref=e169]:
+        - checkbox "Remember this device" [checked] [ref=e170]
+        - text: Remember this device
+      - button "Sign in with email" [disabled] [ref=e171]:
+        - img [ref=e172]
+        - text: Sign in with email
+    - generic [ref=e174]: or
+    - button "Continue with Google" [disabled] [ref=e177]:
+      - img [ref=e178]
+      - text: Continue with Google
+    - generic [ref=e183]:
+      - generic [ref=e184]:
+        - img [ref=e185]
+        - text: Secure auth pipeline ready
+      - paragraph [ref=e188]: Supabase session handling is active for email/password and Google OAuth.
+      - paragraph [ref=e189]: "Verified staff are routed into the admin CRM, while parent accounts land in the family app at `/user`."
+    - paragraph [ref=e190]: Supabase auth is not configured yet. Add the URL and anon key in environment variables to enable sign in.

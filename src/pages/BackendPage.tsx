@@ -22,6 +22,7 @@ import {
   deleteBackendUser,
   listBackendStudents,
   listBackendUsers,
+  updateBackendUserRole,
   updateBackendUserSignIn,
   type BackendStudent,
   type BackendStudentTuitionStatus,
@@ -107,15 +108,22 @@ export function BackendPage() {
   const [isSavingUser, setIsSavingUser] = useState(false)
   const [isSavingStudent, setIsSavingStudent] = useState(false)
   const [togglingUserIds, setTogglingUserIds] = useState<Record<string, boolean>>({})
+  const [roleUserIds, setRoleUserIds] = useState<Record<string, boolean>>({})
   const [deletingStudentIds, setDeletingStudentIds] = useState<Record<string, boolean>>({})
   const [userError, setUserError] = useState<string | null>(null)
   const [studentError, setStudentError] = useState<string | null>(null)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [allowSignIn, setAllowSignIn] = useState(true)
+  const [newUserRole, setNewUserRole] = useState<'admin' | 'parent'>('parent')
   const [studentForm, setStudentForm] = useState<StudentFormState>(initialStudentForm)
   const [selectedTheme, setSelectedTheme] = useState<CrmThemeKey>(() => getStoredCrmTheme())
   const activeTheme = crmThemes.find((theme) => theme.key === selectedTheme) ?? crmThemes[0]
+  const backendPaletteSet = new Set<CrmThemeKey>([
+    'midnight-ops',
+    'terracotta-ledger',
+    'evergreen-circuit',
+  ])
 
   async function loadUsers() {
     try {
@@ -179,11 +187,13 @@ export function BackendPage() {
         email: email.trim(),
         password,
         allowSignIn,
+        appRole: newUserRole,
       })
 
       setEmail('')
       setPassword('')
       setAllowSignIn(true)
+      setNewUserRole('parent')
       await loadUsers()
     } catch (createError) {
       setUserError(
@@ -232,6 +242,31 @@ export function BackendPage() {
           ? deleteError.message
           : 'User deletion failed.',
       )
+    }
+  }
+
+  async function handleToggleUserRole(user: BackendUser) {
+    const nextRole = user.appRole === 'admin' ? 'parent' : 'admin'
+
+    try {
+      setUserError(null)
+      setRoleUserIds((previous) => ({
+        ...previous,
+        [user.id]: true,
+      }))
+      await updateBackendUserRole(user.id, nextRole)
+      await loadUsers()
+    } catch (roleError) {
+      setUserError(
+        roleError instanceof Error
+          ? roleError.message
+          : 'User role update failed.',
+      )
+    } finally {
+      setRoleUserIds((previous) => ({
+        ...previous,
+        [user.id]: false,
+      }))
     }
   }
 
@@ -320,8 +355,8 @@ export function BackendPage() {
   return (
     <div className="space-y-5">
       <SectionCard
-        title="Supabase backend controls"
-        description="Manage authenticated users through the secured backend API."
+        title="Supabase access controls"
+        description="Manage authenticated users through the project admin routes and Supabase auth."
         actionLabel={`${users.length} user records`}
       >
         <div className="mb-4 grid gap-3 md:grid-cols-[1.2fr,0.8fr]">
@@ -342,10 +377,10 @@ export function BackendPage() {
         </div>
 
         <p className="mb-4 text-xs font-semibold uppercase tracking-[0.12em] text-ink/60">
-          API endpoint: {backendEndpointLabel}
+          Project admin endpoint: {backendEndpointLabel}
         </p>
 
-        <form onSubmit={handleCreateUser} className="grid gap-3 md:grid-cols-3">
+        <form onSubmit={handleCreateUser} className="grid gap-3 md:grid-cols-4">
           <label className="space-y-2">
             <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/60">
               Email
@@ -389,7 +424,23 @@ export function BackendPage() {
             </button>
           </div>
 
-          <label className="md:col-span-3 flex items-center gap-3 rounded-2xl border border-ink/10 bg-cloud px-3 py-2.5 text-sm text-ink/80">
+          <label className="space-y-2">
+            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/60">
+              App role
+            </span>
+            <select
+              value={newUserRole}
+              onChange={(event) => {
+                setNewUserRole(event.target.value === 'admin' ? 'admin' : 'parent')
+              }}
+              className="kid-ghost-button w-full rounded-2xl border border-ink/10 bg-white px-3 py-2.5 text-sm text-ink outline-none transition focus:border-teal/60"
+            >
+              <option value="parent">Parent</option>
+              <option value="admin">Admin</option>
+            </select>
+          </label>
+
+          <label className="md:col-span-4 flex items-center gap-3 rounded-2xl border border-ink/10 bg-cloud px-3 py-2.5 text-sm text-ink/80">
             <input
               type="checkbox"
               checked={allowSignIn}
@@ -410,8 +461,8 @@ export function BackendPage() {
       </SectionCard>
 
       <SectionCard
-        title="Student backend controls"
-        description="Create new students in crm_students through the secured backend API."
+        title="Student data controls"
+        description="Create new students in crm_students through the project admin routes."
         actionLabel={`${students.length} student records`}
       >
         <div className="mb-4 flex flex-wrap items-center gap-2">
@@ -590,11 +641,12 @@ export function BackendPage() {
 
       <SectionCard
         title="Theme palette flair"
-        description="Switch between three full-page palettes. The selected theme is saved for next sign-in."
+        description="Switch between six full-page palettes. Admin-focused palettes are marked as 4, 5, and 6."
       >
         <div className="mb-4 grid gap-2 lg:grid-cols-3">
-          {crmThemes.map((theme) => {
+          {crmThemes.map((theme, index) => {
             const isActive = selectedTheme === theme.key
+            const isBackendPalette = backendPaletteSet.has(theme.key)
 
             return (
               <button
@@ -609,10 +661,28 @@ export function BackendPage() {
                     : 'border-ink/10 bg-white text-ink/75 hover:border-teal/40 hover:bg-cloud/90'
                 }`}
               >
-                <p className="text-sm font-semibold">{theme.label}</p>
+                <div className="flex items-start justify-between gap-2">
+                  <p className="text-sm font-semibold">{theme.label}</p>
+                  <span
+                    className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] ${
+                      isActive
+                        ? 'border-white/30 bg-white/15 text-white'
+                        : isBackendPalette
+                        ? 'border-teal/30 bg-teal/10 text-teal'
+                        : 'border-ink/12 bg-cloud text-ink/60'
+                    }`}
+                  >
+                    Palette {index + 1}
+                  </span>
+                </div>
                 <p className={`mt-1 inline-flex rounded-full border px-2 py-0.5 text-xs ${isActive ? 'border-white/30 bg-white/15 text-white' : theme.chipClassName}`}>
                   {theme.subtitle}
                 </p>
+                {isBackendPalette ? (
+                  <p className={`mt-2 text-xs ${isActive ? 'text-white/80' : 'text-ink/60'}`}>
+                    Optimized for dense admin workflows.
+                  </p>
+                ) : null}
               </button>
             )
           })}
@@ -635,13 +705,13 @@ export function BackendPage() {
         </div>
         <div className="mt-4 flex items-center gap-2 rounded-2xl border border-teal/20 bg-teal/10 px-4 py-3 text-sm text-ink/75">
           <Paintbrush className="h-4 w-4 text-teal" />
-          Active theme: {activeTheme.label}. Palette now applies across all pages.
+          Active theme: {activeTheme.label}. Palette now applies across all pages and login.
         </div>
       </SectionCard>
 
       <SectionCard
         title="Auth users"
-        description="These users are loaded with service-role access from your backend API."
+        description="These users are loaded through Supabase-authenticated project admin routes."
       >
         {isLoadingUsers ? (
           <div className="flex items-center gap-2 rounded-2xl bg-cloud px-4 py-3 text-sm text-ink/80">
@@ -659,6 +729,7 @@ export function BackendPage() {
               <thead>
                 <tr className="text-xs uppercase tracking-[0.12em] text-ink/60">
                   <th className="px-3 py-2">Email</th>
+                  <th className="px-3 py-2">Role</th>
                   <th className="px-3 py-2">Created</th>
                   <th className="px-3 py-2">Last sign in</th>
                   <th className="px-3 py-2">Signin</th>
@@ -668,11 +739,23 @@ export function BackendPage() {
               <tbody className="divide-y divide-ink/10">
                 {users.map((user) => {
                   const isToggling = togglingUserIds[user.id]
+                  const isUpdatingRole = roleUserIds[user.id]
                   const isBlocked = Boolean(user.bannedUntil)
 
                   return (
                     <tr key={user.id}>
                       <td className="px-3 py-2.5 text-ink/75">{user.email ?? 'No email'}</td>
+                      <td className="px-3 py-2.5 text-ink/80">
+                        <span
+                          className={`rounded-full px-2 py-1 text-xs font-semibold ${
+                            user.appRole === 'admin'
+                              ? 'bg-ink text-white'
+                              : 'bg-cloud text-ink/80'
+                          }`}
+                        >
+                          {user.appRole}
+                        </span>
+                      </td>
                       <td className="px-3 py-2.5 text-ink/80">
                         {new Date(user.createdAt).toLocaleString()}
                       </td>
@@ -692,6 +775,16 @@ export function BackendPage() {
                       </td>
                       <td className="px-3 py-2.5 text-right">
                         <div className="inline-flex items-center gap-2">
+                          <button
+                            onClick={() => {
+                              void handleToggleUserRole(user)
+                            }}
+                            disabled={isUpdatingRole}
+                            className="kid-ghost-button inline-flex items-center gap-1 rounded-xl border border-ink/10 bg-white px-3 py-1.5 text-xs font-semibold text-ink transition hover:bg-cloud disabled:cursor-not-allowed disabled:opacity-50"
+                          >
+                            <ShieldUser className="h-3.5 w-3.5 text-teal" />
+                            {user.appRole === 'admin' ? 'Make parent' : 'Make admin'}
+                          </button>
                           <button
                             onClick={() => {
                               void handleToggleUserSignIn(user)

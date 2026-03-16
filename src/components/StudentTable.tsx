@@ -44,7 +44,7 @@ export function StudentTable({ students }: { students: Student[] }) {
                     <p className="font-semibold text-ink">{student.attendance}</p>
                     <div className="mt-2 h-1.5 w-28 rounded-full bg-ink/10">
                       <div
-                        className="h-1.5 rounded-full bg-[var(--crm-gradient-progress)]"
+                        className="h-1.5 rounded-full crm-bg-progress"
                         style={{ width: `${attendancePercent}%` }}
                       />
                     </div>

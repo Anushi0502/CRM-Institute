@@ -1,4 +1,10 @@
-export type CrmThemeKey = 'playful-meadow' | 'sunrise-carnival' | 'lagoon-breeze'
+export type CrmThemeKey =
+  | 'playful-meadow'
+  | 'sunrise-carnival'
+  | 'lagoon-breeze'
+  | 'midnight-ops'
+  | 'terracotta-ledger'
+  | 'evergreen-circuit'
 
 interface ThemePaletteSwatch {
   name: string
@@ -47,16 +53,58 @@ export const crmThemes: CrmTheme[] = [
   },
   {
     key: 'lagoon-breeze',
-    label: 'Lagoon Breeze',
-    subtitle: 'Bold aqua-citrus with crisp contrast',
-    chipClassName: 'border-sky/45 bg-sky/12 text-sky-700',
+    label: 'Citrus Atelier',
+    subtitle: 'Peach, marigold, and raspberry with boutique warmth',
+    chipClassName: 'border-orange-300/60 bg-orange-100/70 text-orange-800',
     palette: [
-      { name: 'Deep blue', hex: '#0f3451' },
-      { name: 'Aqua', hex: '#00a3a9' },
-      { name: 'Cyan', hex: '#3ac7ff' },
-      { name: 'Leaf', hex: '#68d397' },
-      { name: 'Lemon', hex: '#fcce41' },
-      { name: 'Coral', hex: '#ff6d5a' },
+      { name: 'Espresso', hex: '#4a2d24' },
+      { name: 'Apricot', hex: '#f29b77' },
+      { name: 'Marigold', hex: '#f5be3b' },
+      { name: 'Raspberry', hex: '#d8576b' },
+      { name: 'Blush', hex: '#f7d7cf' },
+      { name: 'Cream', hex: '#fff1db' },
+    ],
+  },
+  {
+    key: 'midnight-ops',
+    label: 'Midnight Ops',
+    subtitle: 'Deep navy and mint for backend clarity',
+    chipClassName: 'border-sky/40 bg-sky/15 text-sky-700',
+    palette: [
+      { name: 'Night ink', hex: '#1a2344' },
+      { name: 'Signal mint', hex: '#1fb794' },
+      { name: 'Control cyan', hex: '#3cb9e8' },
+      { name: 'Alert coral', hex: '#ff6f7a' },
+      { name: 'Energy amber', hex: '#f6ba4f' },
+      { name: 'Lavender', hex: '#9d87f5' },
+    ],
+  },
+  {
+    key: 'terracotta-ledger',
+    label: 'Terracotta Ledger',
+    subtitle: 'Warm clay tones with professional contrast',
+    chipClassName: 'border-amber/45 bg-amber/15 text-amber-700',
+    palette: [
+      { name: 'Ledger ink', hex: '#3a2b2f' },
+      { name: 'Terracotta', hex: '#d56f4e' },
+      { name: 'Sand', hex: '#efce9a' },
+      { name: 'Olive', hex: '#5f8755' },
+      { name: 'Slate blue', hex: '#5a6ea9' },
+      { name: 'Rose', hex: '#cf6d8c' },
+    ],
+  },
+  {
+    key: 'evergreen-circuit',
+    label: 'Velvet Bloom',
+    subtitle: 'Plum, lilac, and rose with luxe evening contrast',
+    chipClassName: 'border-fuchsia-300/55 bg-fuchsia-100/65 text-fuchsia-800',
+    palette: [
+      { name: 'Mulberry ink', hex: '#2f223d' },
+      { name: 'Plum', hex: '#7c4d9e' },
+      { name: 'Lilac', hex: '#c7afe9' },
+      { name: 'Rose', hex: '#e06c8d' },
+      { name: 'Champagne', hex: '#f1dfc7' },
+      { name: 'Soft mist', hex: '#f7f2fb' },
     ],
   },
 ]

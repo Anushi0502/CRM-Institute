@@ -29,6 +29,7 @@ export default async function handler(req, res) {
 
   if (req.method === 'PATCH') {
     const allowSignIn = req.body?.allowSignIn === undefined ? true : Boolean(req.body?.allowSignIn)
+    const appRole = req.body?.appRole === 'admin' ? 'admin' : req.body?.appRole === 'parent' ? 'parent' : undefined
 
     if (!allowSignIn && authUser.id === userId) {
       sendJson(res, 400, { error: 'You cannot block your own active account.' })
@@ -45,7 +46,7 @@ export default async function handler(req, res) {
     }
 
     try {
-      const syncedUser = await upsertBackendUserRecord(data.user)
+      const syncedUser = await upsertBackendUserRecord(data.user, { appRole })
       sendJson(res, 200, { user: syncedUser })
     } catch (syncError) {
       sendJson(res, 500, {

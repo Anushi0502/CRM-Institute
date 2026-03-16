@@ -30,7 +30,7 @@ export function GameHud({ summary, compact = false }: GameHudProps) {
         </div>
         <div className="h-2.5 rounded-full bg-ink/10">
           <div
-            className="h-2.5 rounded-full bg-[var(--crm-gradient-progress)] transition-[width] duration-300"
+            className="h-2.5 rounded-full crm-bg-progress transition-[width] duration-300"
             style={{ width: `${progress}%` }}
           />
         </div>

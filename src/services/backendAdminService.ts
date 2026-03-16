@@ -41,16 +41,24 @@ export interface BackendUser {
   emailConfirmedAt: string | null
   isAnonymous: boolean | null
   bannedUntil: string | null
+  appRole: 'admin' | 'parent'
 }
 
 interface UsersResponse {
   users: BackendUser[]
 }
 
+export interface BackendAccess {
+  email: string | null
+  isAdmin: boolean
+  appRole: 'admin' | 'parent'
+}
+
 export interface CreateBackendUserInput {
   email: string
   password: string
   allowSignIn?: boolean
+  appRole?: 'admin' | 'parent'
 }
 
 export type BackendStudentTuitionStatus = 'Current' | 'Review'
@@ -155,10 +163,10 @@ function isLocalRuntime() {
 
 function unreachableBackendMessage(target: string) {
   if (isLocalRuntime()) {
-    return `Cannot reach backend API (${target}). Start it with "npm run dev" (or "npm run backend:dev").`
+    return `Cannot reach project admin routes (${target}). Use the local Vite app with /api routes, or point VITE_BACKEND_API_URL at a deployed project API origin.`
   }
 
-  return `Cannot reach backend API (${target}). Check deployment API routes and env vars (SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, BACKEND_ADMIN_EMAILS).`
+  return `Cannot reach project admin routes (${target}). Check your deployed /api routes or Supabase-backed admin integration.`
 }
 
 function toFriendlyBackendError(raw: string, status: number) {
@@ -215,7 +223,7 @@ async function executeBackendFetch(path: string, init: RequestInit | undefined, 
     if (lowerMessage.includes('did not match the expected pattern')) {
       const target = backendApiBase || 'same-origin /api proxy'
       throw new Error(
-        `Backend URL is invalid (${target}). Set VITE_BACKEND_API_URL to a valid URL like "http://127.0.0.1:8787" or leave it blank for same-origin.`,
+        `Admin route URL is invalid (${target}). Set VITE_BACKEND_API_URL to a valid deployed app origin like "https://your-app-domain.com" or leave it blank for same-origin /api routes.`,
       )
     }
 
@@ -279,6 +287,10 @@ export async function listBackendUsers() {
   return payload.users
 }
 
+export async function getBackendAccess() {
+  return backendRequest<BackendAccess>('/api/backend/access')
+}
+
 export async function createBackendUser(input: CreateBackendUserInput) {
   return backendRequest<{ user: BackendUser }>('/api/backend/users', {
     method: 'POST',
@@ -287,6 +299,7 @@ export async function createBackendUser(input: CreateBackendUserInput) {
       password: input.password,
       emailConfirm: true,
       allowSignIn: input.allowSignIn ?? true,
+      appRole: input.appRole ?? 'parent',
     }),
   })
 }
@@ -295,6 +308,13 @@ export async function updateBackendUserSignIn(userId: string, allowSignIn: boole
   return backendRequest<{ user: BackendUser }>(`/api/backend/users/${userId}`, {
     method: 'PATCH',
     body: JSON.stringify({ allowSignIn }),
+  })
+}
+
+export async function updateBackendUserRole(userId: string, appRole: 'admin' | 'parent') {
+  return backendRequest<{ user: BackendUser }>(`/api/backend/users/${userId}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ appRole }),
   })
 }
 

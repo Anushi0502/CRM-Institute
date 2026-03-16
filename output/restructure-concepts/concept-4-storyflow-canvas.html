@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Concept 4 - Storyflow Canvas</title>
+  <style>
+    :root { --ink:#102033; --bg:#f4fbff; --card:#fff; --line:rgba(16,32,51,.1); }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Manrope", system-ui, sans-serif;
+      background: radial-gradient(circle at 82% 12%, rgba(90,169,255,.2), transparent 36%),
+                  radial-gradient(circle at 12% 88%, rgba(255,164,92,.2), transparent 35%),
+                  var(--bg);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+    .frame {
+      width: min(1520px, 100%);
+      border-radius: 30px;
+      border: 1px solid rgba(255,255,255,.85);
+      background: rgba(255,255,255,.7);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 28px 58px rgba(24,37,70,.14);
+      padding: 16px;
+    }
+    .hero {
+      border-radius: 22px;
+      padding: 18px;
+      background: linear-gradient(125deg,#0f3451,#00a3a9,#3ac7ff);
+      color: #fff;
+      display: grid;
+      grid-template-columns: 1.6fr .8fr;
+      gap: 12px;
+      align-items: end;
+    }
+    h1 { margin: 0; font-size: 38px; }
+    p { margin: 8px 0 0; }
+    .strip {
+      margin-top: 10px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 10px;
+      display: flex;
+      gap: 8px;
+      overflow: auto;
+    }
+    .token { white-space: nowrap; border-radius: 999px; border: 1px solid var(--line); padding: 7px 10px; font-size: 12px; font-weight: 700; }
+    .token.on { background: #102033; color: #fff; border-color: #102033; }
+    .story {
+      margin-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+    .lane {
+      border-radius: 18px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: 12px;
+      min-height: 130px;
+      box-shadow: 0 10px 22px rgba(26,39,68,.08);
+      position: relative;
+    }
+    .lane::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+      border-radius: 18px 0 0 18px;
+      background: linear-gradient(180deg,#00a3a9,#ff6d5a);
+      opacity: .7;
+    }
+    .legend { margin-left: 10px; font-size: 11px; text-transform: uppercase; letter-spacing: .14em; color: rgba(16,32,51,.55); font-weight: 800; }
+    .cap { margin-left: 10px; margin-top: 8px; font-size: 16px; font-weight: 800; }
+    .grid {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .box { border-radius: 14px; border: 1px solid var(--line); background: #fbfdff; height: 96px; }
+    .f { margin-top: 10px; text-align: right; font-size: 12px; opacity: .65; }
+  </style>
+</head>
+<body>
+  <main class="frame">
+    <section class="hero">
+      <div>
+        <h1>Storyflow Canvas</h1>
+        <p>A narrative-first layout where every CRM route becomes a guided mission lane.</p>
+      </div>
+      <div>
+        <p><strong>Concept 4</strong></p>
+        <p>Ideal for director + admissions workflow storytelling.</p>
+      </div>
+    </section>
+
+    <div class="strip">
+      <span class="token on">Dashboard</span><span class="token">Admissions</span><span class="token">Students</span><span class="token">Programs</span><span class="token">Engagement</span><span class="token">Backend</span>
+    </div>
+
+    <section class="story">
+      <article class="lane"><div class="legend">Lane 01 · Priorities</div><div class="cap">Top mission strip with conversion, retention, and engagement targets</div></article>
+      <article class="lane"><div class="legend">Lane 02 · Active Work</div><div class="cap">Route-specific main workspace (board, table, or timeline)</div><div class="grid"><div class="box"></div><div class="box"></div></div></article>
+      <article class="lane"><div class="legend">Lane 03 · Support Systems</div><div class="cap">Theme control, gamification, sync pulse, and stage cards integrated below</div></article>
+    </section>
+
+    <p class="f">CRM Institute · Structural Redesign Preview</p>
+  </main>
+</body>
+</html>

@@ -57,7 +57,7 @@ export function QuestPanel({ quests }: QuestPanelProps) {
 
               <div className="mt-2 h-2 rounded-full bg-ink/10">
                 <div
-                  className="h-2 rounded-full bg-[var(--crm-gradient-progress)] transition-[width] duration-300"
+                  className="h-2 rounded-full crm-bg-progress transition-[width] duration-300"
                   style={{ width: `${Math.min(progressPercent, 100)}%` }}
                 />
               </div>

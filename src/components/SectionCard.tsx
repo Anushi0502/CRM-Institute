@@ -16,9 +16,9 @@ export function SectionCard({
   children,
 }: SectionCardProps) {
   return (
-    <section className="kid-panel group relative overflow-hidden rounded-[32px] border border-white/85 bg-[var(--crm-gradient-section-card)] p-6 shadow-soft backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:shadow-float">
+    <section className="kid-panel group relative overflow-hidden rounded-[32px] border border-white/85 crm-bg-section-card p-6 shadow-soft backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:shadow-float">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-2 bg-white/70" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[var(--crm-gradient-section-top)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-24 crm-bg-section-top" />
       <div className="pointer-events-none absolute -right-6 top-4 h-16 w-16 rounded-full bg-sun/25 blur-md" />
       <div className="pointer-events-none absolute bottom-4 left-5 h-10 w-10 rounded-full bg-leaf/25 blur-sm" />
       <div className="kid-confetti kid-confetti--one" />

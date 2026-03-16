@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Concept 3 - Split Focus</title>
+  <style>
+    :root { --ink:#151b31; --bg:#fff8f0; --line:rgba(21,27,49,.1); --panel:#fff; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Manrope", system-ui, sans-serif;
+      background: radial-gradient(circle at 10% 10%, rgba(255,118,76,.2), transparent 36%),
+                  radial-gradient(circle at 86% 90%, rgba(120,104,255,.2), transparent 36%),
+                  var(--bg);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      color: var(--ink);
+    }
+    .screen {
+      width: min(1500px, 100%);
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,.82);
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 24px 56px rgba(37,28,64,.16);
+      padding: 16px;
+    }
+    .head {
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: linear-gradient(130deg,#1c1638,#3f2e7b,#6b3f8f);
+      color: #fff;
+      padding: 18px;
+    }
+    .head h1 { margin: 0; font-size: 36px; }
+    .head p { margin: 8px 0 0; opacity: .9; }
+    .grid {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 12px;
+    }
+    .left, .right { display: grid; gap: 10px; }
+    .card {
+      border-radius: 18px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 24px rgba(22,24,50,.08);
+      padding: 12px;
+    }
+    .tall { height: 360px; }
+    .mid { height: 170px; }
+    .short { height: 120px; }
+    .legend { text-transform: uppercase; font-size: 11px; letter-spacing: .14em; color: rgba(21,27,49,.55); font-weight: 700; }
+    .cap { margin-top: 8px; font-size: 16px; font-weight: 800; }
+    .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .chip { padding: 6px 10px; border-radius: 999px; border: 1px solid var(--line); font-size: 12px; font-weight: 700; }
+    .mini-nav { display: flex; gap: 7px; flex-wrap: wrap; }
+    .mini-nav span { font-size: 12px; padding: 7px 10px; border-radius: 999px; background: #fff; border: 1px solid var(--line); font-weight: 700; }
+    .mini-nav .a { background: #151b31; color: #fff; border-color: #151b31; }
+    .f { margin-top: 10px; text-align: right; font-size: 12px; opacity: .65; }
+  </style>
+</head>
+<body>
+  <main class="screen">
+    <section class="head">
+      <div class="mini-nav"><span class="a">Dashboard</span><span>Admissions</span><span>Students</span><span>Programs</span><span>Engagement</span></div>
+      <h1>Split Focus Studio</h1>
+      <p>Left side for uninterrupted execution. Right side for context, insights, and rewards.</p>
+    </section>
+
+    <section class="grid">
+      <div class="left">
+        <article class="card short"><div class="legend">Command strip</div><div class="chips"><span class="chip">128 High-intent leads</span><span class="chip">14 Active tasks</span><span class="chip">96% retention</span></div></article>
+        <article class="card tall"><div class="legend">Primary workspace</div><div class="cap">Admissions board / student table / timeline by route</div></article>
+        <article class="card mid"><div class="legend">Quick actions</div><div class="cap">Handoff cards + one-click workflow jumps</div></article>
+      </div>
+      <aside class="right">
+        <article class="card short"><div class="legend">Sync</div><div class="cap">Live status + last update</div></article>
+        <article class="card mid"><div class="legend">Game mode</div><div class="cap">Level, quests, streak</div></article>
+        <article class="card mid"><div class="legend">Theme + filters</div><div class="cap">Workspace personalization</div></article>
+        <article class="card short"><div class="legend">Family stage bands</div><div class="cap">Infant · Toddler · Early years</div></article>
+      </aside>
+    </section>
+
+    <p class="f">Concept 3 · CRM Institute Structural Redesign Preview</p>
+  </main>
+</body>
+</html>

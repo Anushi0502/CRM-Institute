@@ -117,6 +117,42 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.crm-bg-brand {
+  background: var(--crm-gradient-brand);
+}
+
+.crm-bg-brand-overlay {
+  background: var(--crm-gradient-brand-overlay);
+}
+
+.crm-bg-banner-overlay {
+  background: var(--crm-gradient-banner-overlay);
+}
+
+.crm-bg-login-shell {
+  background: var(--crm-gradient-login-shell);
+}
+
+.crm-bg-login-overlay {
+  background: var(--crm-gradient-login-overlay);
+}
+
+.crm-bg-section-card {
+  background: var(--crm-gradient-section-card);
+}
+
+.crm-bg-section-top {
+  background: var(--crm-gradient-section-top);
+}
+
+.crm-bg-progress {
+  background: var(--crm-gradient-progress);
+}
+
+.crm-bg-task-rail {
+  background: var(--crm-gradient-task-rail);
+}
+
 [data-crm-theme='playful-meadow'] {
   --crm-color-canvas: 248 253 244;
   --crm-color-white: 255 255 251;
@@ -170,9 +206,9 @@
   --crm-shadow-color: 41, 35, 72;
   --crm-body-text: rgb(var(--crm-color-ink));
   --crm-surface: rgb(var(--crm-color-canvas));
-  --crm-bg-radial-1: rgba(255, 122, 89, 0.42);
-  --crm-bg-radial-2: rgba(255, 95, 135, 0.36);
-  --crm-bg-radial-3: rgba(255, 190, 61, 0.34);
+  --crm-bg-radial-1: rgba(255, 90, 49, 0.42);
+  --crm-bg-radial-2: rgba(248, 49, 99, 0.36);
+  --crm-bg-radial-3: rgba(255, 180, 29, 0.34);
   --crm-bg-gradient-start: #ffefda;
   --crm-bg-gradient-mid: #ffe2ef;
   --crm-bg-gradient-end: #fff1cf;
@@ -184,36 +220,135 @@
 }
 
 [data-crm-theme='lagoon-breeze'] {
-  --crm-color-canvas: 236 250 255;
-  --crm-color-white: 248 255 255;
-  --crm-color-ink: 10 43 72;
-  --crm-color-teal: 0 163 169;
-  --crm-color-mint: 181 247 233;
-  --crm-color-coral: 255 109 90;
-  --crm-color-amber: 252 206 65;
-  --crm-color-amber-700: 139 99 14;
-  --crm-color-plum: 66 108 182;
-  --crm-color-cloud: 229 246 252;
-  --crm-color-sky: 58 199 255;
-  --crm-color-sky-700: 0 112 170;
-  --crm-color-sun: 251 228 100;
-  --crm-color-berry: 255 124 159;
-  --crm-color-leaf: 104 211 151;
-  --crm-color-lilac: 155 203 255;
-  --crm-shadow-color: 15, 52, 81;
+  --crm-color-canvas: 255 246 238;
+  --crm-color-white: 255 251 247;
+  --crm-color-ink: 74 45 36;
+  --crm-color-teal: 242 155 119;
+  --crm-color-mint: 247 215 207;
+  --crm-color-coral: 216 87 107;
+  --crm-color-amber: 245 190 59;
+  --crm-color-amber-700: 145 89 22;
+  --crm-color-plum: 198 99 128;
+  --crm-color-cloud: 255 239 229;
+  --crm-color-sky: 255 209 182;
+  --crm-color-sky-700: 164 97 73;
+  --crm-color-sun: 255 226 148;
+  --crm-color-berry: 223 111 137;
+  --crm-color-leaf: 238 170 120;
+  --crm-color-lilac: 245 196 178;
+  --crm-shadow-color: 96, 62, 48;
   --crm-body-text: rgb(var(--crm-color-ink));
   --crm-surface: rgb(var(--crm-color-canvas));
-  --crm-bg-radial-1: rgba(104, 211, 151, 0.35);
-  --crm-bg-radial-2: rgba(58, 199, 255, 0.4);
-  --crm-bg-radial-3: rgba(252, 206, 65, 0.32);
-  --crm-bg-gradient-start: #ecfbff;
-  --crm-bg-gradient-mid: #e2fff2;
-  --crm-bg-gradient-end: #fff8da;
-  --crm-orb-teal: 0, 163, 169;
-  --crm-orb-coral: 58, 199, 255;
-  --crm-orb-plum: 255, 109, 90;
-  --crm-sprinkle-2: 252, 206, 65;
-  --crm-sprinkle-3: 104, 211, 151;
+  --crm-bg-radial-1: rgba(242, 155, 119, 0.34);
+  --crm-bg-radial-2: rgba(216, 87, 107, 0.28);
+  --crm-bg-radial-3: rgba(245, 190, 59, 0.24);
+  --crm-bg-gradient-start: #fff6ee;
+  --crm-bg-gradient-mid: #ffe6dc;
+  --crm-bg-gradient-end: #fff0dc;
+  --crm-orb-teal: 242, 155, 119;
+  --crm-orb-coral: 216, 87, 107;
+  --crm-orb-plum: 245, 190, 59;
+  --crm-sprinkle-2: 245, 190, 59;
+  --crm-sprinkle-3: 247, 215, 207;
+}
+
+[data-crm-theme='midnight-ops'] {
+  --crm-color-canvas: 238 244 255;
+  --crm-color-white: 248 252 255;
+  --crm-color-ink: 24 34 68;
+  --crm-color-teal: 31 183 148;
+  --crm-color-mint: 176 234 220;
+  --crm-color-coral: 255 111 122;
+  --crm-color-amber: 246 186 79;
+  --crm-color-amber-700: 136 89 24;
+  --crm-color-plum: 100 123 210;
+  --crm-color-cloud: 229 238 252;
+  --crm-color-sky: 60 185 232;
+  --crm-color-sky-700: 34 97 146;
+  --crm-color-sun: 246 211 104;
+  --crm-color-berry: 255 125 147;
+  --crm-color-leaf: 81 201 157;
+  --crm-color-lilac: 161 138 245;
+  --crm-shadow-color: 24, 34, 68;
+  --crm-body-text: rgb(var(--crm-color-ink));
+  --crm-surface: rgb(var(--crm-color-canvas));
+  --crm-bg-radial-1: rgba(60, 185, 232, 0.34);
+  --crm-bg-radial-2: rgba(100, 123, 210, 0.32);
+  --crm-bg-radial-3: rgba(246, 186, 79, 0.3);
+  --crm-bg-gradient-start: #ebf1ff;
+  --crm-bg-gradient-mid: #edf6ff;
+  --crm-bg-gradient-end: #f8f3e8;
+  --crm-orb-teal: 31, 183, 148;
+  --crm-orb-coral: 100, 123, 210;
+  --crm-orb-plum: 255, 111, 122;
+  --crm-sprinkle-2: 246, 186, 79;
+  --crm-sprinkle-3: 60, 185, 232;
+}
+
+[data-crm-theme='terracotta-ledger'] {
+  --crm-color-canvas: 252 244 236;
+  --crm-color-white: 255 250 245;
+  --crm-color-ink: 58 43 47;
+  --crm-color-teal: 95 135 85;
+  --crm-color-mint: 223 235 209;
+  --crm-color-coral: 213 111 78;
+  --crm-color-amber: 229 168 82;
+  --crm-color-amber-700: 132 78 30;
+  --crm-color-plum: 90 110 169;
+  --crm-color-cloud: 245 232 220;
+  --crm-color-sky: 126 163 220;
+  --crm-color-sky-700: 70 93 150;
+  --crm-color-sun: 240 194 107;
+  --crm-color-berry: 207 109 140;
+  --crm-color-leaf: 111 156 95;
+  --crm-color-lilac: 177 164 224;
+  --crm-shadow-color: 72, 52, 42;
+  --crm-body-text: rgb(var(--crm-color-ink));
+  --crm-surface: rgb(var(--crm-color-canvas));
+  --crm-bg-radial-1: rgba(213, 111, 78, 0.3);
+  --crm-bg-radial-2: rgba(126, 163, 220, 0.26);
+  --crm-bg-radial-3: rgba(229, 168, 82, 0.26);
+  --crm-bg-gradient-start: #fcf2e9;
+  --crm-bg-gradient-mid: #f9ede4;
+  --crm-bg-gradient-end: #f4ebdf;
+  --crm-orb-teal: 95, 135, 85;
+  --crm-orb-coral: 213, 111, 78;
+  --crm-orb-plum: 90, 110, 169;
+  --crm-sprinkle-2: 229, 168, 82;
+  --crm-sprinkle-3: 111, 156, 95;
+}
+
+[data-crm-theme='evergreen-circuit'] {
+  --crm-color-canvas: 251 247 255;
+  --crm-color-white: 255 252 255;
+  --crm-color-ink: 75 53 95;
+  --crm-color-teal: 140 95 179;
+  --crm-color-mint: 216 194 240;
+  --crm-color-coral: 231 132 166;
+  --crm-color-amber: 243 228 207;
+  --crm-color-amber-700: 132 99 63;
+  --crm-color-plum: 90 66 109;
+  --crm-color-cloud: 245 238 251;
+  --crm-color-sky: 199 175 233;
+  --crm-color-sky-700: 109 81 138;
+  --crm-color-sun: 241 223 199;
+  --crm-color-berry: 224 108 141;
+  --crm-color-leaf: 174 144 214;
+  --crm-color-lilac: 221 204 244;
+  --crm-shadow-color: 68, 49, 89;
+  --crm-body-text: rgb(var(--crm-color-ink));
+  --crm-surface: rgb(var(--crm-color-canvas));
+  --crm-bg-radial-1: rgba(140, 95, 179, 0.26);
+  --crm-bg-radial-2: rgba(224, 108, 141, 0.22);
+  --crm-bg-radial-3: rgba(241, 223, 199, 0.24);
+  --crm-bg-gradient-start: #fbf7ff;
+  --crm-bg-gradient-mid: #f3ebfb;
+  --crm-bg-gradient-end: #f9f1f7;
+  --crm-orb-teal: 140, 95, 179;
+  --crm-orb-coral: 224, 108, 141;
+  --crm-orb-plum: 199, 175, 233;
+  --crm-sprinkle-2: 241, 223, 199;
+  --crm-sprinkle-3: 216, 194, 240;
 }
 
 html {
@@ -384,6 +519,17 @@ button:focus-visible {
   }
 }
 
+@keyframes crm-page-slide {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0) scale(0.995);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
 .crm-orb {
   position: absolute;
   border-radius: 9999px;
@@ -550,21 +696,23 @@ button:focus-visible {
 
 .kid-ghost-button {
   border-radius: 1rem;
-  border: 1px dashed rgba(var(--crm-color-ink), 0.34);
-  background: rgba(var(--crm-color-white), 0.94);
+  border: 1px solid rgba(var(--crm-color-ink), 0.24);
+  background: rgba(var(--crm-color-white), 0.98);
   box-shadow: 0 8px 18px rgba(var(--crm-shadow-color), 0.12);
+  backdrop-filter: blur(10px);
 }
 
 .kid-panel {
   position: relative;
   border-radius: 1.4rem;
-  border: 1px solid rgba(var(--crm-color-white), 0.75);
+  border: 1px solid rgba(var(--crm-color-white), 0.9);
   background: linear-gradient(
     155deg,
-    rgba(var(--crm-color-white), 0.95),
-    rgba(var(--crm-color-canvas), 0.88)
+    rgba(var(--crm-color-white), 0.98),
+    rgba(var(--crm-color-canvas), 0.94)
   );
   box-shadow: 0 14px 34px rgba(var(--crm-shadow-color), 0.15);
+  backdrop-filter: blur(12px);
 }
 
 .kid-panel::before {
@@ -597,6 +745,135 @@ button:focus-visible {
   font-weight: 700;
   letter-spacing: 0.06em;
   animation: kid-bob 5.6s ease-in-out infinite;
+}
+
+.crm-page-reveal {
+  animation: crm-page-slide 320ms ease-out both;
+}
+
+.crm-command-shell {
+  position: relative;
+  overflow: hidden;
+}
+
+.crm-command-shell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 8% 18%, rgba(var(--crm-color-sky), 0.2), transparent 32%),
+    radial-gradient(circle at 88% 6%, rgba(var(--crm-color-berry), 0.16), transparent 35%);
+  opacity: 0.7;
+}
+
+.crm-command-nav {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.crm-command-nav__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 999px;
+  border: 1px solid rgba(var(--crm-color-ink), 0.12);
+  background: rgba(var(--crm-color-white), 0.9);
+  color: rgba(var(--crm-color-ink), 0.82);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 0.42rem 0.85rem;
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease;
+  backdrop-filter: blur(8px);
+}
+
+.crm-command-nav__item:hover {
+  transform: translateY(-1px);
+  border-color: rgba(var(--crm-color-teal), 0.3);
+  background: rgba(var(--crm-color-white), 0.94);
+  box-shadow: 0 8px 18px rgba(var(--crm-shadow-color), 0.12);
+}
+
+.crm-command-nav__item--active {
+  border-color: rgba(var(--crm-color-ink), 0.16);
+  background: var(--crm-gradient-nav-active);
+  color: rgba(var(--crm-color-white), 0.98);
+  box-shadow: 0 10px 22px rgba(var(--crm-shadow-color), 0.16);
+}
+
+.crm-mobile-dock {
+  position: fixed;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 45;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.4rem;
+  border-radius: 1.1rem;
+  border: 1px solid rgba(var(--crm-color-white), 0.82);
+  background:
+    linear-gradient(
+      160deg,
+      rgba(var(--crm-color-white), 0.98),
+      rgba(var(--crm-color-canvas), 0.94)
+    );
+  padding: 0.45rem;
+  box-shadow: 0 12px 30px rgba(var(--crm-shadow-color), 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.crm-mobile-dock__item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.24rem;
+  border-radius: 0.85rem;
+  border: 1px solid transparent;
+  color: rgba(var(--crm-color-ink), 0.78);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.38rem 0.22rem;
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease;
+}
+
+.crm-mobile-dock__item:hover {
+  transform: translateY(-1px);
+  border-color: rgba(var(--crm-color-teal), 0.28);
+  background: rgba(var(--crm-color-white), 0.84);
+}
+
+.crm-mobile-dock__item--active {
+  border-color: rgba(var(--crm-color-coral), 0.42);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(var(--crm-color-teal), 0.16),
+      rgba(var(--crm-color-coral), 0.16)
+    );
+  color: rgba(var(--crm-color-ink), 0.98);
+}
+
+@media (min-width: 1280px) {
+  .crm-mobile-dock {
+    display: none;
+  }
 }
 
 .crm-readable {

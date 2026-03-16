@@ -48,7 +48,28 @@ create table if not exists public.crm_backend_users (
   is_anonymous boolean,
   banned_until timestamptz,
   allow_sign_in boolean not null default true,
+  app_role text not null default 'parent',
   updated_at timestamptz not null default now()
+);
+
+alter table public.crm_backend_users
+  add column if not exists app_role text not null default 'parent';
+
+alter table public.crm_backend_users
+  drop constraint if exists crm_backend_users_app_role_check;
+
+alter table public.crm_backend_users
+  add constraint crm_backend_users_app_role_check
+  check (app_role in ('parent', 'admin'));
+
+create table if not exists public.crm_parent_portal_state (
+  user_id uuid primary key references auth.users (id) on delete cascade,
+  portal_state jsonb not null default '{}'::jsonb,
+  updated_at timestamptz not null default now(),
+  constraint crm_parent_portal_state_children_limit check (
+    jsonb_typeof(coalesce(portal_state -> 'children', '[]'::jsonb)) = 'array'
+    and jsonb_array_length(coalesce(portal_state -> 'children', '[]'::jsonb)) <= 20
+  )
 );
 
 create table if not exists public.crm_programs (
@@ -63,6 +84,56 @@ create table if not exists public.crm_programs (
   description text not null,
   created_at timestamptz not null default now()
 );
+
+create or replace function public.sync_backend_user_from_auth()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  insert into public.crm_backend_users (
+    id,
+    email,
+    created_at,
+    last_sign_in_at,
+    email_confirmed_at,
+    is_anonymous,
+    banned_until,
+    allow_sign_in,
+    app_role,
+    updated_at
+  )
+  values (
+    new.id,
+    new.email,
+    coalesce(new.created_at, now()),
+    new.last_sign_in_at,
+    new.email_confirmed_at,
+    new.is_anonymous,
+    new.banned_until,
+    new.banned_until is null,
+    'parent',
+    now()
+  )
+  on conflict (id) do update set
+    email = excluded.email,
+    last_sign_in_at = excluded.last_sign_in_at,
+    email_confirmed_at = excluded.email_confirmed_at,
+    is_anonymous = excluded.is_anonymous,
+    banned_until = excluded.banned_until,
+    allow_sign_in = excluded.allow_sign_in,
+    updated_at = now();
+
+  return new;
+end;
+$$;
+
+drop trigger if exists on_auth_user_synced_to_backend on auth.users;
+
+create trigger on_auth_user_synced_to_backend
+after insert or update on auth.users
+for each row execute function public.sync_backend_user_from_auth();
 
 create table if not exists public.crm_tasks (
   id text primary key,
@@ -89,6 +160,7 @@ alter table public.crm_overview_metrics enable row level security;
 alter table public.crm_leads enable row level security;
 alter table public.crm_students enable row level security;
 alter table public.crm_backend_users enable row level security;
+alter table public.crm_parent_portal_state enable row level security;
 alter table public.crm_programs enable row level security;
 alter table public.crm_tasks enable row level security;
 alter table public.crm_activity enable row level security;
@@ -96,6 +168,10 @@ alter table public.crm_activity enable row level security;
 drop policy if exists "Authenticated users can read metrics" on public.crm_overview_metrics;
 drop policy if exists "Authenticated users can read leads" on public.crm_leads;
 drop policy if exists "Authenticated users can read students" on public.crm_students;
+drop policy if exists "Users can read own backend profile" on public.crm_backend_users;
+drop policy if exists "Users can read own parent portal state" on public.crm_parent_portal_state;
+drop policy if exists "Users can insert own parent portal state" on public.crm_parent_portal_state;
+drop policy if exists "Users can update own parent portal state" on public.crm_parent_portal_state;
 drop policy if exists "Authenticated users can read programs" on public.crm_programs;
 drop policy if exists "Authenticated users can read tasks" on public.crm_tasks;
 drop policy if exists "Authenticated users can read activity" on public.crm_activity;
@@ -115,6 +191,27 @@ create policy "Authenticated users can read students"
   to authenticated
   using (true);
 
+create policy "Users can read own backend profile"
+  on public.crm_backend_users for select
+  to authenticated
+  using (auth.uid() = id);
+
+create policy "Users can read own parent portal state"
+  on public.crm_parent_portal_state for select
+  to authenticated
+  using (auth.uid() = user_id);
+
+create policy "Users can insert own parent portal state"
+  on public.crm_parent_portal_state for insert
+  to authenticated
+  with check (auth.uid() = user_id);
+
+create policy "Users can update own parent portal state"
+  on public.crm_parent_portal_state for update
+  to authenticated
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
+
 create policy "Authenticated users can read programs"
   on public.crm_programs for select
   to authenticated
@@ -129,6 +226,39 @@ create policy "Authenticated users can read activity"
   on public.crm_activity for select
   to authenticated
   using (true);
+
+insert into public.crm_backend_users (
+  id,
+  email,
+  created_at,
+  last_sign_in_at,
+  email_confirmed_at,
+  is_anonymous,
+  banned_until,
+  allow_sign_in,
+  app_role,
+  updated_at
+)
+select
+  users.id,
+  users.email,
+  coalesce(users.created_at, now()),
+  users.last_sign_in_at,
+  users.email_confirmed_at,
+  users.is_anonymous,
+  users.banned_until,
+  users.banned_until is null,
+  'parent',
+  now()
+from auth.users as users
+on conflict (id) do update set
+  email = excluded.email,
+  last_sign_in_at = excluded.last_sign_in_at,
+  email_confirmed_at = excluded.email_confirmed_at,
+  is_anonymous = excluded.is_anonymous,
+  banned_until = excluded.banned_until,
+  allow_sign_in = excluded.allow_sign_in,
+  updated_at = now();
 
 insert into public.crm_overview_metrics (id, label, value, change, detail, tone, sort_order)
 values

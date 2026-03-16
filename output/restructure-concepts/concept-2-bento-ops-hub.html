@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Concept 2 - Bento Ops Hub</title>
+  <style>
+    :root {
+      --ink:#18203a; --bg:#f2f6ff; --card:#ffffff; --blue:#375dff; --mint:#15b79f; --orange:#ff8447; --pink:#ff4f8b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Manrope", system-ui, sans-serif;
+      background: radial-gradient(circle at 85% 7%, rgba(55,93,255,.16), transparent 35%),
+                  radial-gradient(circle at 12% 90%, rgba(255,132,71,.16), transparent 32%),
+                  var(--bg);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+    .wrap {
+      width: min(1480px, 100%);
+      border-radius: 28px;
+      border: 1px solid rgba(24,32,58,.08);
+      background: #fbfdff;
+      box-shadow: 0 28px 58px rgba(31,45,91,.12);
+      padding: 16px;
+    }
+    .top {
+      border-radius: 20px;
+      background: #fff;
+      border: 1px solid rgba(24,32,58,.08);
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .logo { font-weight: 900; letter-spacing: .04em; }
+    .tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tab { padding: 7px 11px; border-radius: 999px; border: 1px solid rgba(24,32,58,.1); background: #fff; font-size: 12px; font-weight: 700; }
+    .tab.active { background: #18203a; color: #fff; border-color: #18203a; }
+    .status { padding: 8px 12px; border-radius: 999px; font-size: 12px; font-weight: 800; background: rgba(21,183,159,.14); color: #0b6a5d; }
+    .hero {
+      margin-top: 12px;
+      border-radius: 20px;
+      padding: 18px;
+      color: #fff;
+      background: linear-gradient(120deg, #375dff, #6a42f5, #ff4f8b);
+    }
+    .hero h1 { margin: 0; font-size: 38px; }
+    .hero p { margin: 8px 0 0; opacity: .95; }
+
+    .bento {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr .8fr;
+      grid-template-rows: 150px 170px 250px;
+      gap: 10px;
+    }
+    .item {
+      border-radius: 18px;
+      background: var(--card);
+      border: 1px solid rgba(24,32,58,.09);
+      box-shadow: 0 10px 22px rgba(31,45,91,.08);
+      padding: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .item::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -40px auto;
+      width: 120px;
+      height: 120px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(55,93,255,.15), transparent 65%);
+    }
+    .big { grid-row: 1 / 3; }
+    .wide { grid-column: 2 / 4; }
+    .full { grid-column: 1 / 3; }
+    .legend { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(24,32,58,.55); font-weight: 800; }
+    .title { margin-top: 8px; font-weight: 800; font-size: 16px; }
+    .badge-row { margin-top: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
+    .badge { border-radius: 999px; font-size: 11px; padding: 6px 8px; font-weight: 700; background: rgba(55,93,255,.1); }
+    .f { margin-top: 10px; font-size: 12px; text-align: right; opacity: .65; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="top">
+      <div class="logo">CRM INSTITUTE</div>
+      <div class="tabs">
+        <span class="tab active">Dashboard</span><span class="tab">Admissions</span><span class="tab">Students</span><span class="tab">Programs</span><span class="tab">Engagement</span>
+      </div>
+      <span class="status">Concept 2 · Bento Ops Hub</span>
+    </div>
+
+    <section class="hero">
+      <h1>Bento Operations Hub</h1>
+      <p>A modular card architecture with glanceable priority zones and fast context switching.</p>
+    </section>
+
+    <section class="bento">
+      <article class="item big"><div class="legend">Main Mission Board</div><div class="title">Pipeline + daily execution</div><div class="badge-row"><span class="badge">High Priority</span><span class="badge">Tour Conversion</span><span class="badge">Renewals</span></div></article>
+      <article class="item"><div class="legend">Gamification</div><div class="title">XP + streak</div></article>
+      <article class="item"><div class="legend">Theme</div><div class="title">Palette switcher</div></article>
+      <article class="item wide"><div class="legend">Quick Actions</div><div class="title">Admissions lane · Student support · Care follow-up</div></article>
+      <article class="item full"><div class="legend">Deep Analytics</div><div class="title">Attendance trends · Revenue health · Sentiment timeline</div></article>
+      <article class="item"><div class="legend">Right Dock</div><div class="title">Quests + badges</div></article>
+    </section>
+
+    <p class="f">CRM Institute · Structural Redesign Preview</p>
+  </main>
+</body>
+</html>

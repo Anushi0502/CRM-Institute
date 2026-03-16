@@ -62,28 +62,15 @@ By default, backend calls use same-origin `/api/backend`. Set `VITE_BACKEND_API_
 
 ## Backend admin setup
 
-Copy backend env values:
-
-```bash
-cp backend/.env.example .env.backend
-```
-
-Required backend variables:
+Required serverless admin variables:
 
 - `SUPABASE_URL`
 - `SUPABASE_SERVICE_ROLE_KEY`
-- `BACKEND_PORT`
 - `BACKEND_ADMIN_EMAILS` (comma-separated allowlist for admin users; supports exact emails plus `@domain.com`, `*@domain.com`, or `*`)
 
-Run backend API:
+The frontend `/backend` path uses the signed-in Supabase access token and calls the project `api/` routes to list/create/delete auth users, toggle user sign-in access, and create/delete student records securely. The parent portal at `/user` syncs directly against Supabase and stores a single-account household record with up to 20 children.
 
-```bash
-npm run backend:dev
-```
-
-The frontend `/backend` path uses the signed-in Supabase access token and calls this API to list/create/delete auth users, toggle user sign-in access, and create/delete student records securely.
-
-User list records are now persisted in `public.crm_backend_users`. Run the latest [`supabase/schema.sql`](./supabase/schema.sql) once in Supabase SQL Editor before using backend user management.
+User records are persisted in `public.crm_backend_users`, and parent account state is stored in `public.crm_parent_portal_state`. Run the latest [`supabase/schema.sql`](./supabase/schema.sql) once in Supabase SQL Editor before using role-based admin access or server-backed parent sync.
 
 ## Vercel hosting
 

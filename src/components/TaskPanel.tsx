@@ -38,7 +38,7 @@ export function TaskPanel({
             key={task.id}
             className="kid-panel group relative overflow-hidden rounded-[22px] border border-ink/5 bg-white/92 p-4 shadow-soft transition duration-300 hover:-translate-y-0.5 hover:shadow-float"
           >
-            <div className="pointer-events-none absolute inset-y-3 left-0 w-1 rounded-r-full bg-[var(--crm-gradient-task-rail)]" />
+            <div className="pointer-events-none absolute inset-y-3 left-0 w-1 rounded-r-full crm-bg-task-rail" />
 
             <div className="ml-2 flex items-start justify-between gap-3">
               <div>

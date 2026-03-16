@@ -6,3 +6,11 @@ export interface AuthState {
   error: string | null
   isConfigured: boolean
 }
+
+export type AppRole = 'guest' | 'parent' | 'admin'
+
+export interface AppAccessState {
+  role: AppRole
+  isLoading: boolean
+  error: string | null
+}

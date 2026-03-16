@@ -43,6 +43,7 @@ export default async function handler(req, res) {
   const password = String(req.body?.password ?? '')
   const emailConfirm = Boolean(req.body?.emailConfirm ?? true)
   const allowSignIn = req.body?.allowSignIn === undefined ? true : Boolean(req.body?.allowSignIn)
+  const appRole = req.body?.appRole === 'admin' ? 'admin' : 'parent'
 
   if (!email) {
     sendJson(res, 400, { error: 'Email is required.' })
@@ -86,7 +87,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const syncedUser = await upsertBackendUserRecord(createdUser)
+    const syncedUser = await upsertBackendUserRecord(createdUser, { appRole })
     sendJson(res, 201, { user: syncedUser })
   } catch (syncError) {
     sendJson(res, 500, {

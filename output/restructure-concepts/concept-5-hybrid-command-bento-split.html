@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Concept 5 - Hybrid Command Bento Split</title>
+  <style>
+    :root {
+      --ink:#1a1e39; --bg1:#ffefda; --bg2:#ffe5ef; --bg3:#eef7ff; --card:#ffffff;
+      --line:rgba(26,30,57,.1); --teal:#ff6a4c; --violet:#6b4cf3; --pink:#ff4f8b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin:0; min-height:100vh; font-family:"Manrope",system-ui,sans-serif; color:var(--ink);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(255,106,76,.24), transparent 34%),
+        radial-gradient(circle at 88% 84%, rgba(90,120,255,.22), transparent 36%),
+        linear-gradient(180deg,var(--bg1) 0%, var(--bg2) 45%, var(--bg3) 100%);
+      display:grid; place-items:center; padding:20px;
+    }
+    .frame {
+      width:min(1540px,100%); border-radius:30px; border:1px solid rgba(255,255,255,.84);
+      background:linear-gradient(160deg, rgba(255,255,255,.86), rgba(255,252,247,.84));
+      box-shadow:0 28px 58px rgba(35,28,72,.16); padding:16px;
+    }
+    .header {
+      border-radius:24px; color:#fff; padding:18px;
+      background:linear-gradient(125deg,#ff6a4c,#296fb3,#8a4ea2);
+      position:relative; overflow:hidden;
+    }
+    .header::after {
+      content:""; position:absolute; inset:0;
+      background:radial-gradient(circle at 80% 8%, rgba(255,255,255,.3), transparent 28%);
+    }
+    .header-inner { position:relative; z-index:1; display:grid; grid-template-columns:1.5fr .8fr; gap:12px; align-items:end; }
+    h1 { margin:0; font-size:40px; line-height:1.05; }
+    .sub { margin:8px 0 0; font-size:14px; opacity:.92; }
+    .meta { display:grid; gap:8px; }
+    .meta div {
+      border-radius:999px; border:1px solid rgba(255,255,255,.34);
+      background:rgba(255,255,255,.12); padding:8px 12px; font-size:12px; font-weight:800;
+    }
+    .nav {
+      margin-top:10px; border-radius:16px; background:#fff; border:1px solid var(--line);
+      display:flex; gap:7px; flex-wrap:wrap; padding:10px;
+    }
+    .tab { border-radius:999px; padding:8px 11px; border:1px solid var(--line); font-size:12px; font-weight:700; }
+    .tab.active { background:#1a1e39; color:#fff; border-color:#1a1e39; }
+    .layout {
+      margin-top:10px; display:grid; grid-template-columns:1.35fr .75fr; gap:10px;
+    }
+    .left, .right { display:grid; gap:10px; }
+    .panel {
+      border-radius:18px; border:1px solid var(--line); background:var(--card);
+      box-shadow:0 10px 24px rgba(29,36,67,.08); padding:12px; position:relative; overflow:hidden;
+    }
+    .panel::after {
+      content:""; position:absolute; width:120px; height:120px; right:-36px; bottom:-40px;
+      border-radius:999px; background:radial-gradient(circle, rgba(107,76,243,.13), transparent 65%);
+    }
+    .label { font-size:11px; text-transform:uppercase; letter-spacing:.14em; color:rgba(26,30,57,.55); font-weight:800; }
+    .title { margin-top:8px; font-size:17px; font-weight:800; }
+    .chips { margin-top:10px; display:flex; gap:6px; flex-wrap:wrap; }
+    .chip { border-radius:999px; padding:6px 9px; font-size:11px; font-weight:700; background:rgba(107,76,243,.1); }
+    .main { height:340px; }
+    .split { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .slot { border-radius:12px; border:1px solid var(--line); background:#fbfcff; height:96px; }
+    .f { margin-top:10px; text-align:right; font-size:12px; opacity:.65; }
+  </style>
+</head>
+<body>
+  <main class="frame">
+    <section class="header">
+      <div class="header-inner">
+        <div>
+          <h1>Hybrid Command Bento Split</h1>
+          <p class="sub">Concept 1 command shell + Concept 2 bento module density + Concept 3 split focus discipline.</p>
+        </div>
+        <div class="meta">
+          <div>128 High-intent leads</div>
+          <div>14 Active tasks</div>
+          <div>Level 5 · 4-day streak</div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="nav">
+      <span class="tab active">Dashboard</span><span class="tab">Admissions</span><span class="tab">Students</span><span class="tab">Programs</span><span class="tab">Engagement</span><span class="tab">Backend</span>
+    </nav>
+
+    <section class="layout">
+      <div class="left">
+        <article class="panel">
+          <div class="label">Command strip</div>
+          <div class="title">Executive pulse + quick route cards</div>
+          <div class="chips"><span class="chip">Conversion</span><span class="chip">Retention</span><span class="chip">Capacity</span><span class="chip">Sentiment</span></div>
+        </article>
+
+        <article class="panel main">
+          <div class="label">Primary workspace</div>
+          <div class="title">Route-specific mission board</div>
+          <div class="split" style="margin-top:12px;"><div class="slot"></div><div class="slot"></div></div>
+        </article>
+
+        <article class="panel">
+          <div class="label">Quick actions</div>
+          <div class="title">One-click handoff cards + grouped workflows</div>
+        </article>
+      </div>
+
+      <aside class="right">
+        <article class="panel"><div class="label">Gamification</div><div class="title">XP + quests + streak</div></article>
+        <article class="panel"><div class="label">Data pulse</div><div class="title">Sync health + alert stream</div></article>
+        <article class="panel"><div class="label">Theme + filters</div><div class="title">Live personalization controls</div></article>
+        <article class="panel"><div class="label">Family stage bands</div><div class="title">Infant · Toddler · Early years</div></article>
+      </aside>
+    </section>
+
+    <p class="f">Concept 5 · CRM Institute Hybrid Redesign Preview</p>
+  </main>
+</body>
+</html>

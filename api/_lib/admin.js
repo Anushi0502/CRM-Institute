@@ -7,7 +7,7 @@ const adminEmails = (process.env.BACKEND_ADMIN_EMAILS ?? '')
   .map((entry) => entry.trim().toLowerCase())
   .filter(Boolean)
 const backendUsersTableSelect =
-  'id, email, created_at, last_sign_in_at, email_confirmed_at, is_anonymous, banned_until'
+  'id, email, created_at, last_sign_in_at, email_confirmed_at, is_anonymous, banned_until, app_role'
 const missingUsersTableMessage =
   'Missing table "crm_backend_users". Run supabase/schema.sql in Supabase SQL Editor.'
 
@@ -32,7 +32,7 @@ function parseBearerToken(headerValue = '') {
 
 function isAllowedAdminEmail(email) {
   if (adminEmails.length === 0) {
-    return true
+    return false
   }
 
   return adminEmails.some((rule) => {
@@ -79,6 +79,7 @@ export function mapBackendUserRow(row) {
     emailConfirmedAt: row.email_confirmed_at,
     isAnonymous: row.is_anonymous,
     bannedUntil: row.banned_until,
+    appRole: row.app_role ?? 'parent',
   }
 }
 
@@ -91,7 +92,36 @@ export function mapAuthUser(user) {
     emailConfirmedAt: user.email_confirmed_at,
     isAnonymous: user.is_anonymous,
     bannedUntil: user.banned_until,
+    appRole: 'parent',
   }
+}
+
+async function getStoredAppRole(userId) {
+  const { data, error } = await supabaseAdmin
+    .from('crm_backend_users')
+    .select('app_role')
+    .eq('id', userId)
+    .maybeSingle()
+
+  if (error) {
+    if (isMissingUsersTableError(error)) {
+      return null
+    }
+
+    throw new Error(toBackendUsersTableErrorMessage(error))
+  }
+
+  return data?.app_role === 'admin' ? 'admin' : data?.app_role === 'parent' ? 'parent' : null
+}
+
+export async function resolveAppRole(userId, email) {
+  const storedRole = await getStoredAppRole(userId)
+
+  if (storedRole) {
+    return storedRole
+  }
+
+  return isAllowedAdminEmail(email) ? 'admin' : 'parent'
 }
 
 export function sendJson(res, statusCode, body) {
@@ -108,7 +138,7 @@ export function assertMethod(req, res, allowedMethods) {
   return false
 }
 
-export async function requireAdminUser(req, res) {
+export async function getAuthenticatedUser(req, res) {
   const token = parseBearerToken(req.headers.authorization ?? '')
 
   if (!token) {
@@ -123,16 +153,30 @@ export async function requireAdminUser(req, res) {
     return null
   }
 
-  const email = data.user.email?.toLowerCase() ?? ''
+  return data.user
+}
 
-  if (!isAllowedAdminEmail(email)) {
+export async function requireAdminUser(req, res) {
+  const authUser = await getAuthenticatedUser(req, res)
+
+  if (!authUser) {
+    return null
+  }
+
+  const email = authUser.email?.toLowerCase() ?? ''
+  const appRole = await resolveAppRole(authUser.id, email)
+
+  if (appRole !== 'admin') {
     sendJson(res, 403, {
-      error: `This user is not allowed for backend admin. Add "${email}" to BACKEND_ADMIN_EMAILS.`,
+      error: `This user is not allowed for backend admin. Set app_role to "admin" for "${email}".`,
     })
     return null
   }
 
-  return data.user
+  return {
+    ...authUser,
+    appRole,
+  }
 }
 
 export async function listBackendUsersPage(page, perPage) {
@@ -202,6 +246,7 @@ export async function listBackendUsersPage(page, perPage) {
         is_anonymous: user.is_anonymous,
         banned_until: toIsoOrNull(user.banned_until),
         allow_sign_in: !user.banned_until,
+        app_role: isAllowedAdminEmail(user.email?.toLowerCase() ?? '') ? 'admin' : 'parent',
         updated_at: new Date().toISOString(),
       }))
 
@@ -228,8 +273,13 @@ export async function listBackendUsersPage(page, perPage) {
   return rows.map(mapBackendUserRow)
 }
 
-export async function upsertBackendUserRecord(user) {
+export async function upsertBackendUserRecord(user, overrides = {}) {
   const mapped = mapAuthUser(user)
+  const resolvedEmail = mapped.email?.toLowerCase() ?? ''
+  const nextRole =
+    overrides.appRole === 'admin' || overrides.appRole === 'parent'
+      ? overrides.appRole
+      : await resolveAppRole(mapped.id, resolvedEmail)
   const { error } = await supabaseAdmin.from('crm_backend_users').upsert(
     {
       id: mapped.id,
@@ -240,6 +290,7 @@ export async function upsertBackendUserRecord(user) {
       is_anonymous: mapped.isAnonymous,
       banned_until: toIsoOrNull(mapped.bannedUntil),
       allow_sign_in: !mapped.bannedUntil,
+      app_role: nextRole,
       updated_at: new Date().toISOString(),
     },
     { onConflict: 'id' },
@@ -247,13 +298,19 @@ export async function upsertBackendUserRecord(user) {
 
   if (error) {
     if (isMissingUsersTableError(error)) {
-      return mapped
+      return {
+        ...mapped,
+        appRole: nextRole,
+      }
     }
 
     throw new Error(toBackendUsersTableErrorMessage(error))
   }
 
-  return mapped
+  return {
+    ...mapped,
+    appRole: nextRole,
+  }
 }
 
 export async function deleteBackendUserRecord(userId) {
@@ -273,4 +330,4 @@ export function formatBackendUserSyncError(prefix, error) {
   return `${prefix} ${message}`
 }
 
-export { supabaseAdmin }
+export { isAllowedAdminEmail, supabaseAdmin }
